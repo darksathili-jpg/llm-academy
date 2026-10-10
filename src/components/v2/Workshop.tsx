@@ -1,6 +1,7 @@
+import { learnerGuides, plainSteps } from '../../content/learnerGuides';
 import { laboratorySheets } from '../../content/laboratorySheets';
-import { useState } from 'react';
-import { activities, stages, type ExperimentId } from '../../content/activities';
+import { useEffect, useRef, useState } from 'react';
+import { activities, type ExperimentId } from '../../content/activities';
 import { emptyInvestigation, type Investigation } from '../../core/investigation';
 import { useProgress } from '../ProgressProvider';
 import { PythonWorkbench } from '../science/PythonWorkbench';
@@ -11,13 +12,18 @@ export function Workshop() {
     <article>
       <div className="eyebrow">ESPACE 01 / TERMINALE NSI</div>
       <h1>
-        Dix questions.
+        Dix activités guidées.
         <br />
-        Des preuves à construire.
+        Une question à la fois.
       </h1>
       <p className="lead">
-        Une hypothèse, une expérience, une explication. Les listes, dictionnaires et tests Python
-        servent d’appui ; les mécanismes des LLM sont des prolongements hors programme.
+        Lis une question, essaie une manipulation, puis explique ce que tu as vu. Tu peux commencer
+        sans connaître le vocabulaire de l’IA. La partie Python est facultative.
+      </p>
+      <p>
+        <a className="button" href="#/decouvrir">
+          Première visite ? Commence par la découverte en 5 minutes →
+        </a>
       </p>
       <p>
         Durées proposées, non mesurées en classe. Vos écrits restent locaux et s’exportent dans le
@@ -28,8 +34,8 @@ export function Workshop() {
           <a className="editorial-row" key={a.id} href={'#/activite/' + a.id}>
             <span className="row-number">{String(i + 1).padStart(2, '0')}</span>
             <div>
-              <h2>{a.title}</h2>
-              <p>{a.goal}</p>
+              <h2>{learnerGuides[a.id].title}</h2>
+              <p>{learnerGuides[a.id].goal}</p>
             </div>
             <span>
               {a.duration} min ·{' '}
@@ -51,6 +57,11 @@ export function Activity({ id }: { id: string }) {
   const [hints, setHints] = useState(0),
     [revealed, setRevealed] = useState(false),
     [checked, setChecked] = useState(false);
+  const stageHeading = useRef<HTMLHeadingElement>(null);
+  const currentStage = progress.investigations[id]?.stage ?? 0;
+  useEffect(() => {
+    stageHeading.current?.focus();
+  }, [id, currentStage]);
   if (!a)
     return (
       <article>
@@ -58,6 +69,7 @@ export function Activity({ id }: { id: string }) {
         <a href="#/atelier">Revenir à l’atelier</a>
       </article>
     );
+  const guide = learnerGuides[id];
   const data = progress.investigations[id] ?? emptyInvestigation(),
     stage = data.stage;
   function change(patch: Partial<Investigation>) {
@@ -76,33 +88,44 @@ export function Activity({ id }: { id: string }) {
   );
   return (
     <article className="investigation">
-      <a href="#/atelier">← Les dix investigations</a>
+      <a href="#/atelier">← Les dix activités</a>
       <div className="eyebrow">
-        {a.duration} MIN PROPOSÉES / OBJECTIF : {a.goal}
+        {a.duration} MIN PROPOSÉES / {guide.goal}
       </div>
-      <h1>{a.title}</h1>
-      <nav className="stage-nav" aria-label="Étapes de l’investigation">
-        {stages.map((s, i) => (
-          <button
-            key={s}
-            className={i === stage ? 'active' : ''}
-            aria-current={i === stage ? 'step' : undefined}
-            onClick={() => change({ stage: i })}
-          >
-            {i + 1}
-            <span>{s}</span>
-          </button>
-        ))}
-      </nav>
+      <h1>{guide.title}</h1>
+      <p>
+        Étape {stage + 1} sur 8 : {plainSteps[stage]}
+      </p>
+      <details className="stage-jump">
+        <summary>Aller à une autre étape</summary>
+        <nav className="stage-nav" aria-label="Étapes de l’activité">
+          {plainSteps.map((s, i) => (
+            <button
+              key={s}
+              className={i === stage ? 'active' : ''}
+              aria-current={i === stage ? 'step' : undefined}
+              onClick={() => change({ stage: i })}
+            >
+              {i + 1}
+              <span>{s}</span>
+            </button>
+          ))}
+        </nav>
+      </details>
       <section className="investigation-stage">
         <div className="eyebrow">ÉTAPE {stage + 1} / 8</div>
-        <h2>{stages[stage]}</h2>
+        <h2 ref={stageHeading} tabIndex={-1}>
+          {plainSteps[stage]}
+        </h2>
         {stage === 0 ? (
           <>
-            <p className="lead">{a.question}</p>
-            <p>{a.instruction}</p>
+            <p className="lead">{guide.question}</p>
+            <blockquote>{guide.example}</blockquote>
+            <p>
+              <strong>Ce que tu vas faire :</strong> {guide.goal}
+            </p>
             <details>
-              <summary>Public, prérequis et notions</summary>
+              <summary>Informations pour l’enseignant</summary>
               <p>{a.audience}</p>
               <p>{a.prerequisites}</p>
               <p>{a.notions}</p>
@@ -111,35 +134,62 @@ export function Activity({ id }: { id: string }) {
         ) : stage === 1 ? (
           <>
             <p>
-              Prédisez ce qui va se passer avant de lancer le calcul. Une hypothèse peut être
-              corrigée après l’expérience.
+              {guide.guess} Tu n’as pas besoin d’avoir la bonne réponse : écris ce que tu penses
+              pour le comparer après l’essai.
             </p>
-            {field('hypothesis', 'Mon hypothèse et ma justification')}
+            {field('hypothesis', 'Ce que je pense avant l’essai, et pourquoi')}
           </>
         ) : stage === 2 ? (
           <>
-            <p>{a.manipulation}</p>
+            <p className="lead">
+              <strong>À faire :</strong> {guide.tryIt}
+            </p>
+            <section className="command-vocabulary">
+              <h3>Les mots des commandes</h3>
+              <dl className="plain-glossary">
+                {guide.glossary.map(([term, meaning]) => (
+                  <div key={term}>
+                    <dt>{term}</dt>
+                    <dd>{meaning}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
             <Experiment id={a.experiment} />
           </>
         ) : stage === 3 ? (
           <>
-            <p>
-              Relevez un résultat concret. Comparez-le à votre hypothèse, sans effacer celle-ci.
-            </p>
-            {field('observation', 'Mes observations : valeurs, extraits et comparaison')}
+            <p>{guide.observe} Compare avec ce que tu pensais avant l’essai.</p>
+            {field('observation', 'Ce que j’ai vu pendant l’essai')}
           </>
         ) : stage === 4 ? (
           <>
-            <p>{a.science}</p>
-            <p className="notice">Erreur fréquente : {a.errors}</p>
+            <p className="lead">{guide.explain}</p>
+            <details>
+              <summary>Approfondir : explication scientifique</summary>
+              <p>{a.science}</p>
+              <p>À ne pas confondre : {a.errors}</p>
+            </details>
             {field('explanation', 'Mon explication du résultat')}
           </>
         ) : stage === 5 ? (
-          <PythonWorkbench initialCode={a.python} initialInput={a.input} />
+          <>
+            <p>
+              Cette partie permet de refaire un calcul avec Python, un langage de programmation. Tu
+              peux continuer sans l’utiliser.
+            </p>
+            <button className="secondary" onClick={() => change({ stage: 6 })}>
+              Passer sans Python →
+            </button>
+            <details>
+              <summary>Afficher le code Python</summary>
+              <PythonWorkbench initialCode={a.python} initialInput={a.input} />
+            </details>
+          </>
         ) : stage === 6 ? (
           <>
-            <p className="lead">{a.transfer}</p>
-            {field('transfer', 'Ma réponse à la situation de transfert')}
+            <p className="lead">{guide.transfer}</p>
+            {field('transfer', 'Ma réponse pour ce nouvel exemple')}
             <details>
               <summary>Approfondir</summary>
               <p>{a.deeper}</p>
@@ -148,6 +198,17 @@ export function Activity({ id }: { id: string }) {
         ) : (
           <>
             <h3>{a.quiz.question}</h3>
+            <details>
+              <summary>Un mot du quiz te bloque ?</summary>
+              <dl className="plain-glossary">
+                {guide.glossary.map(([term, meaning]) => (
+                  <div key={term}>
+                    <dt>{term}</dt>
+                    <dd>{meaning}</dd>
+                  </div>
+                ))}
+              </dl>
+            </details>
             <fieldset>
               <legend>Conclusion à vérifier</legend>
               {a.quiz.choices.map((c, i) => (
@@ -193,7 +254,7 @@ export function Activity({ id }: { id: string }) {
               }
             >
               {activities[activities.indexOf(a) + 1]
-                ? 'Investigation suivante →'
+                ? 'Activité suivante →'
                 : 'Ouvrir mon carnet →'}
             </a>
           </>
@@ -207,13 +268,21 @@ export function Activity({ id }: { id: string }) {
         >
           Une aide supplémentaire ({hints}/{a.hints.length})
         </button>
-        {a.hints.slice(0, hints).map((h) => (
+        {[guide.hint, guide.observe, guide.explain].slice(0, hints).map((h) => (
           <p key={h}>{h}</p>
         ))}
         <button className="secondary" onClick={() => setRevealed((v) => !v)}>
-          {revealed ? 'Masquer la correction' : 'Révéler la correction'}
+          {revealed ? 'Masquer la correction' : 'Voir une explication pour m’aider'}
         </button>
-        {revealed && <p className="feedback">{a.correction}</p>}
+        {revealed && (
+          <div className="feedback">
+            <p>{guide.explain}</p>
+            <details>
+              <summary>Correction détaillée</summary>
+              <p>{a.correction}</p>
+            </details>
+          </div>
+        )}
       </div>
       <div className="lab-toolbar">
         <button
@@ -262,6 +331,28 @@ export function Laboratory({ id }: { id?: string }) {
               Scientifique
             </label>
           </fieldset>
+          {!scientific &&
+            (() => {
+              const activity = activities.find((a) => a.experiment === instrument.id);
+              const guide = activity && learnerGuides[activity.id];
+              return guide ? (
+                <section className="lab-introduction">
+                  <h2>Pour commencer</h2>
+                  <p>{guide.tryIt}</p>
+                  <details>
+                    <summary>Les mots des commandes, expliqués simplement</summary>
+                    <dl className="plain-glossary">
+                      {guide.glossary.map(([term, meaning]) => (
+                        <div key={term}>
+                          <dt>{term}</dt>
+                          <dd>{meaning}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </details>
+                </section>
+              ) : null;
+            })()}
           <p>{instrument.summary}</p>
           <Experiment id={instrument.id as ExperimentId} scientific={scientific} />
           <details>

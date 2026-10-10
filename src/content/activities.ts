@@ -63,15 +63,15 @@ export const activities: ActivitySheet[] = [
     correction:
       'Une source contraire établit la contradiction ; sans source suffisante, concluez « insuffisant ».',
     criteria: [
-      'Distinguer fait étayé, contradiction et absence de preuve.',
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Comparer trois phrases avec un petit texte.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer: 'Évaluer une notice scientifique sans confondre le style et la preuve.',
     deeper: "Construire deux affirmations différentes à partir d'une même source.",
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
-      choices: ['Le ton de la réponse', 'Une preuve indépendante', 'Sa longueur'],
+      question: 'Pour vérifier une phrase, que faut-il regarder ?',
+      choices: ['Son ton assuré', 'Ce que dit la source', 'Sa longueur'],
       expected: 1,
     },
     python:
@@ -107,18 +107,18 @@ export const activities: ActivitySheet[] = [
     correction:
       'Le corpus et les règles de départ déterminent le vocabulaire. Sur « aaa », deux paires sont comptées, une seule est remplacée à cette étape.',
     criteria: [
-      'Prédire une fusion puis comparer le nombre de tokens avant/après.',
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Voir des lettres se regrouper en morceaux réutilisables.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer: "Comparer les découpages de « école », d'un emoji et d'un mot inconnu.",
     deeper: "Implémenter le choix déterministe d'une paire à égalité de fréquence.",
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
+      question: 'Qu’est-ce qu’un token ?',
       choices: [
-        'Un token est toujours un mot',
-        'Un ID est une entrée de vocabulaire',
-        'Un ID indique la vérité',
+        'Toujours un mot entier',
+        'Un morceau de texte',
+        'Une preuve que la phrase est vraie',
       ],
       expected: 1,
     },
@@ -152,18 +152,18 @@ export const activities: ActivitySheet[] = [
     correction:
       'À T=1, les scores 2/1/0 donnent environ 66,5/24,5/9,0 %. À T=0,5 : 86,7/11,7/1,6 %.',
     criteria: [
-      "Prédire puis mesurer la variation d'une distribution.",
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Comparer les chances de trois mots possibles.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer: 'Comparer les risques de choix dans un jeu aléatoire sans parler de vérité.',
     deeper: 'Retrouver ces valeurs en Python avec une exponentielle stabilisée.',
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
+      question: 'Que représentent les trois pourcentages affichés ?',
       choices: [
-        'Les probabilités totalisent 1',
-        'Les scores doivent totaliser 1',
-        'Le meilleur token est nécessairement vrai',
+        'Toutes les chances de choix, soit 100 % au total',
+        'La vérité de la phrase',
+        'La quantité de connaissances de la machine',
       ],
       expected: 0,
     },
@@ -200,18 +200,18 @@ export const activities: ActivitySheet[] = [
     correction:
       'Pour le marin, scores 0/1/2 : « mer » 66,5 %. Pour le chat, scores 2/1/0 : « mer » 9,0 %.',
     criteria: [
-      'Comparer deux distributions en gardant T et graine fixes.',
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Changer le début d’une phrase et comparer les suites possibles.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer: 'Concevoir un test à variable unique pour une classification NSI.',
     deeper: 'Comparer un vrai bigramme entraîné, limité au dernier token, à cette simulation.',
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
+      question: 'Comment vérifier l’effet du début de phrase ?',
       choices: [
-        'Changer toutes les variables',
-        'Garder T fixe et changer le contexte',
-        'Supprimer les observations',
+        'Changer tous les réglages à la fois',
+        'Garder le réglage de variété identique et changer le début',
+        'Ne pas comparer les résultats',
       ],
       expected: 1,
     },
@@ -246,18 +246,18 @@ export const activities: ActivitySheet[] = [
     correction:
       'Le cas proposé donne -0,6 en 3D et 1 dans le plan XY. La projection a perdu une dimension décisive.',
     criteria: [
-      'Comparer une similarité complète et une projection.',
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Voir ce que l’on perd en cachant une information.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer: "Étudier la perte d'information d'un tableau de données réduit à deux colonnes.",
     deeper: 'Créer un autre couple trompeur et expliciter les dimensions.',
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
+      question: 'Que peut-il se passer si on cache un nombre ?',
       choices: [
-        'Une projection conserve toutes les distances',
-        "Une projection peut perdre de l'information",
-        'La couleur prouve la similarité',
+        'On garde forcément toute l’information',
+        'On peut perdre une différence importante',
+        'Les objets deviennent réellement identiques',
       ],
       expected: 1,
     },
@@ -292,18 +292,18 @@ export const activities: ActivitySheet[] = [
     correction:
       'À la deuxième position, la troisième est interdite avec le masque causal. Sans masque, elle reçoit un poids calculé non nul.',
     criteria: [
-      'Prédire quels poids deviennent nuls avec un masque causal.',
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Voir pourquoi un mot pas encore écrit doit rester inaccessible.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer: "Tester une fuite d'information du futur dans un jeu de données chronologique.",
     deeper: 'Modifier les valeurs V sans changer Q/K et comparer les sorties.',
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
+      question: 'Quand l’accès à la suite est bloqué, que devient la barre du mot suivant ?',
       choices: [
-        'Le futur reçoit un poids nul',
-        'Le futur est forcément prioritaire',
-        'Le masque entraîne le modèle',
+        'Elle vaut exactement zéro',
+        'Elle devient la plus grande',
+        'La machine apprend de nouveaux exemples',
       ],
       expected: 0,
     },
@@ -341,18 +341,18 @@ export const activities: ActivitySheet[] = [
     correction:
       'Des poids changent réellement. Une amélioration sur le corpus vu ne garantit ni généralisation ni exactitude factuelle.',
     criteria: [
-      'Comparer les pertes avant/après optimisation et distinguer entraînement/validation.',
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Comparer les erreurs avant et après des essais d’apprentissage.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer: 'Séparer les données vues et les cas nouveaux dans un algorithme de classification.',
     deeper: "Modifier un corpus, relancer de zéro et mesurer l'effet d'un entraînement long.",
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
+      question: 'Pourquoi garder des exemples pour un test séparé ?',
       choices: [
-        'La validation sert à surveiller la généralisation',
-        'La validation est toujours parfaite',
-        'Un réseau mémorisé garantit la vérité',
+        'Pour vérifier si la machine progresse aussi sur des exemples non utilisés pour apprendre',
+        'Pour garantir que toutes les réponses seront vraies',
+        'Pour lui montrer les réponses du test pendant l’apprentissage',
       ],
       expected: 0,
     },
@@ -387,18 +387,18 @@ export const activities: ActivitySheet[] = [
     correction:
       'Avec top-k=1, les 20 tokens sont identiques ici ; avec la même graine et mêmes paramètres, la trace est identique.',
     criteria: [
-      'Répéter un tirage avec la même graine, puis comparer T et top-k.',
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Comparer des choix répétés avec les mêmes réglages.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer: 'Comparer deux algorithmes probabilistes sur un protocole reproductible.',
     deeper: 'Comparer filtrage top-k puis top-p et leur ordre.',
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
+      question: 'À quoi sert la graine dans cet essai ?',
       choices: [
-        'La graine reproduit la suite à paramètres fixes',
-        'La graine vérifie la vérité',
-        'La graine augmente le vocabulaire',
+        'À reproduire les mêmes choix avec les mêmes réglages',
+        'À vérifier si les phrases sont vraies',
+        'À apprendre de nouveaux mots',
       ],
       expected: 0,
     },
@@ -434,18 +434,18 @@ export const activities: ActivitySheet[] = [
     correction:
       '« Insuffisant » est une conclusion correcte lorsque les sources fournies ne permettent pas de trancher.',
     criteria: [
-      'Justifier chaque classement avec une source et une limite.',
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Distinguer une erreur d’une information absente.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer: 'Construire une question qui oblige à signaler une incertitude documentaire.',
     deeper: "Tester l'évaluation par un pair et expliciter un désaccord.",
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
+      question: 'Si le texte ne donne pas l’âge de Nora, que conclure ?',
       choices: [
-        'Sans preuve, toute affirmation est fausse',
-        'Sans preuve, suspendre le jugement',
-        'Avec un ton sûr, toute affirmation est vraie',
+        'Nora a forcément douze ans',
+        'On ne peut pas connaître son âge à partir de ce texte',
+        'Nora n’a forcément pas douze ans',
       ],
       expected: 1,
     },
@@ -482,19 +482,19 @@ export const activities: ActivitySheet[] = [
     correction:
       'Un terme inconnu dans tout le corpus donne un vecteur de requête nul et une abstention. Une citation reste à examiner.',
     criteria: [
-      'Relier chaque extrait à sa source et observer une abstention.',
-      'Citer une observation ou une preuve précise.',
-      "Distinguer le calcul observé de ce qu'il ne démontre pas.",
+      'Lire un passage retrouvé et vérifier d’où il vient.',
+      'Appuyer ma réponse sur un nombre ou un passage précis.',
+      'Dire ce que l’expérience ne permet pas de conclure.',
     ],
     transfer:
       'Définir des tests positifs, négatifs et adversariaux pour un assistant documentaire.',
     deeper: 'Comparer deux découpages avec une grille de pertinence et de traçabilité.',
     quiz: {
-      question: 'Quelle conclusion est justifiée ?',
+      question: 'Un passage retrouvé contient les mots de la question. Que faire ensuite ?',
       choices: [
-        'RAG supprime toutes les erreurs',
-        'Une source citée doit encore être vérifiée',
-        'Le score de recherche prouve la vérité',
+        'Le croire sans le lire',
+        'Le lire et vérifier qu’il répond à la question',
+        'Considérer son score comme une preuve de vérité',
       ],
       expected: 1,
     },

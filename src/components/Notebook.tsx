@@ -1,4 +1,5 @@
-import { activities, stages } from '../content/activities';
+import { activities } from '../content/activities';
+import { learnerGuides, plainSteps } from '../content/learnerGuides';
 import { useState, type ChangeEvent } from 'react';
 import { exercises, isCorrect } from '../core/exercises';
 import { modules } from '../content/modules';
@@ -83,7 +84,7 @@ export function Notebook() {
         </div>
       )}
       <section>
-        <h2>Mes investigations NSI</h2>
+        <h2>Mes activités guidées</h2>
         <p>
           Les écrits ne sont pas notés automatiquement. Les étapes indiquent la navigation, pas une
           compétence certifiée.
@@ -93,11 +94,11 @@ export function Notebook() {
           return (
             <details key={a.id}>
               <summary>
-                {a.title} — {trace ? stages[trace.stage] : 'à explorer'}
+                {learnerGuides[a.id].title} — {trace ? plainSteps[trace.stage] : 'à explorer'}
               </summary>
               {trace ? (
                 <>
-                  <p>Hypothèse : {trace.hypothesis}</p>
+                  <p>Avant l’essai : {trace.hypothesis}</p>
                   <p>Observation : {trace.observation}</p>
                   <p>Explication : {trace.explanation}</p>
                   <p>Transfert : {trace.transfer}</p>
@@ -105,7 +106,7 @@ export function Notebook() {
               ) : (
                 <p>Aucune trace enregistrée.</p>
               )}
-              <a href={'#/activite/' + a.id}>Reprendre cette investigation →</a>
+              <a href={'#/activite/' + a.id}>Reprendre cette activité →</a>
             </details>
           );
         })}

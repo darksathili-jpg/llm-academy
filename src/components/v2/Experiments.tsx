@@ -7,6 +7,7 @@ import { cosine } from '../../core/linear';
 import { chunkDocuments, retrieve } from '../../core/rag';
 import { cases, localDocuments } from '../../content/cases';
 import type { ExperimentId } from '../../content/activities';
+import { SimpleTokens } from './SimpleTokens';
 import { BpeLab } from '../BpeLab';
 const AttentionLab = lazy(() =>
   import('../science/AttentionLab').then((m) => ({ default: m.AttentionLab })),
@@ -27,52 +28,52 @@ export const instruments: { id: ExperimentId; title: string; summary: string }[]
   {
     id: 'prediction',
     title: 'La machine qui prédit',
-    summary: 'Contexte, température et continuations ; scores inventés, probabilités réelles.',
+    summary: 'Choisir un mot pour compléter une phrase ; comparer ses chances.',
   },
   {
     id: 'tokenizer',
-    title: 'Fabriquer un tokenizer',
-    summary: 'Caractères Unicode, comptage des paires et fusions BPE.',
+    title: 'Découper un texte en morceaux',
+    summary: 'Découper un texte en morceaux, puis regrouper ceux qui reviennent ensemble.',
   },
   {
     id: 'generation',
     title: 'Comparer les générations',
-    summary: 'Graines reproductibles, température, top-k et top-p.',
+    summary: 'Comparer des choix répétés et limiter les mots autorisés.',
   },
   {
     id: 'attention',
     title: 'Voir l’attention',
-    summary: 'Poids calculés et positions interdites par le masque causal.',
+    summary: 'Voir quels morceaux précédents peuvent être utilisés pour calculer la suite.',
   },
   {
     id: 'training',
     title: 'Faire apprendre un mini-modèle',
-    summary: 'Un réseau neural bigramme apprend vraiment par SGD.',
+    summary: 'Faire des essais d’apprentissage, puis vérifier les erreurs sur d’autres exemples.',
   },
   {
     id: 'detective',
-    title: 'Le détective des hallucinations',
-    summary: 'Six disciplines, affirmations originales et preuves à examiner.',
+    title: 'Vérifier une réponse',
+    summary: 'Comparer des phrases avec leur source : confirmé, contredit ou impossible à savoir.',
   },
   {
     id: 'prompting',
-    title: 'Le laboratoire de prompting',
-    summary: 'Réponses prédéfinies, critères mesurés et grille critique.',
+    title: 'Donner une consigne claire',
+    summary: 'Comparer deux réponses préparées et vérifier si elles suivent une consigne.',
   },
   {
     id: 'rag',
-    title: 'Le mini-RAG',
-    summary: 'Vecteurs lexicaux TF-IDF, cosinus, extraits et sources.',
+    title: 'Retrouver des informations dans des documents',
+    summary: 'Retrouver un passage dans des documents et lire sa source.',
   },
   {
     id: 'embeddings',
     title: 'Représenter et comparer',
-    summary: 'Vecteurs inventés ; ce qu’une projection peut masquer.',
+    summary: 'Décrire une information avec des nombres et voir ce qu’un dessin peut cacher.',
   },
   {
     id: 'transformer',
     title: 'Ouvrir un Transformer',
-    summary: 'Bloc pré-normalisé réduit, calculs inspectables et causalité.',
+    summary: 'Suivre les étapes de calcul d’un modèle miniature.',
   },
 ];
 export function ProbabilityBars({
@@ -252,7 +253,7 @@ export function PredictionLab({
       <p className="muted">
         {compact
           ? 'Une suite probable ne constitue pas une preuve.'
-          : 'Ces deux tables de scores sont une simulation explicite, pas un modèle entraîné. La température change la diversité, sans vérifier la vérité. Les tirages sont indépendants sur la même distribution ; ce n’est pas une génération autoregressive.'}
+          : 'Les préférences de cet exemple sont préparées, pas apprises par une IA. La température rend les choix plus ou moins variés ; elle ne vérifie pas la vérité. On répète ici un seul choix de mot : on ne construit pas une phrase entière.'}
       </p>
       {warning && <p role="status">{warning}</p>}
     </section>
@@ -277,7 +278,8 @@ export function IntuitiveAttention() {
     <section className="instrument">
       <h2>Quelles positions sont accessibles ?</h2>
       <p>
-        Q, K et V sont inventés. Choisissez une position, prédisez le poids du futur, puis calculez.
+        Choisis le mot « chat ». La case « Masque causal » empêche d’utiliser le mot situé après
+        lui. Clique sur « Calculer les poids » pour voir la part attribuée à chaque mot.
       </p>
       <label>
         Position consultée
@@ -313,14 +315,18 @@ export function IntuitiveAttention() {
             probabilities={result.weights[row]}
             labels={['1 · Le', '2 · chat', '3 · observe']}
           />
-          <p>
-            Positions futures : {causal ? 'interdites (poids exactement nul)' : 'autorisées'}.
-            Sortie pondérée : [{result.output[row].map((x) => x.toFixed(3)).join(', ')}].
-          </p>
+          <p>Positions futures : {causal ? 'interdites (poids exactement nul)' : 'autorisées'}.</p>
+          <details>
+            <summary>Voir les nombres du calcul</summary>
+            <p>
+              Q, K et V sont inventés. Sortie pondérée : [
+              {result.output[row].map((x) => x.toFixed(3)).join(', ')}].
+            </p>
+          </details>
         </>
       )}
       <p className="muted">
-        Ces poids ne sont pas une explication exhaustive du raisonnement d’un modèle.
+        Ces nombres décrivent ce petit calcul ; ils ne montrent pas une pensée humaine.
       </p>
     </section>
   );
@@ -364,10 +370,11 @@ export function DetectiveLab() {
   const c = cases[index];
   return (
     <section className="instrument">
-      <h2>Le détective des hallucinations</h2>
+      <h2>Comparer une réponse avec un texte</h2>
       <p>
-        Réponses originales prédéfinies ; dossier fictif ou données explicitement fournies, aucun
-        appel à un LLM.
+        Lis le texte, puis vérifie chacune des trois phrases. « Étayé » signifie confirmé par le
+        texte ; « contredit », que le texte dit le contraire ; « insuffisant », qu’on ne peut pas
+        savoir.
       </p>
       <label>
         Discipline
@@ -646,7 +653,11 @@ export function Experiment({ id, scientific = false }: { id: ExperimentId; scien
         {id === 'prediction' ? (
           <PredictionLab />
         ) : id === 'tokenizer' ? (
-          <BpeLab />
+          scientific ? (
+            <BpeLab />
+          ) : (
+            <SimpleTokens />
+          )
         ) : id === 'generation' ? (
           scientific ? (
             <GenerationLab />

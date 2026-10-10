@@ -4,6 +4,10 @@ Plateforme française pour voir, manipuler, programmer et expliquer les mécanis
 
 Refonte V2 sur la branche `refonte/atelier-v2` ; le domaine public n'est pas déclaré mis à jour tant que cette branche n'est pas fusionnée et vérifiée.
 
+## Première visite
+
+Commencer par `#/decouvrir` : quatre écrans en langage courant, sans code, pour choisir un mot puis vérifier une réponse. Les dix activités guidées expliquent les termes au voisinage des commandes ; les détails scientifiques restent accessibles. Voir [la reprise après retour enseignant](docs/PRISE_EN_MAIN_SIMPLE.md). L’ancienne appréciation de 91/100 ne représente plus une note actuelle d’utilisabilité.
+
 ## Trois espaces
 
 - Atelier Terminale NSI : dix investigations, huit étapes, hypothèses et observations locales, Python facultatif et grille de relecture.

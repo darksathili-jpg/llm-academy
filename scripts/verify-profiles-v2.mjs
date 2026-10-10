@@ -33,7 +33,7 @@ try {
     );
     await a('Écrire une hypothèse', () =>
       p
-        .getByLabel('Mon hypothèse et ma justification')
+        .getByLabel('Ce que je pense avant l’essai, et pourquoi')
         .fill('La température faible concentre les choix.'),
     );
     await a('Ouvrir l’expérience', () =>
@@ -45,14 +45,12 @@ try {
       p.getByRole('button', { name: 'Étape suivante', exact: true }).click(),
     );
     await a('Écrire la preuve', () =>
-      p.getByLabel('Mes observations').fill('86,7 % pour lune ; la somme est 100 %.'),
+      p.getByLabel('Ce que j’ai vu pendant l’essai').fill('86,7 % pour lune ; la somme est 100 %.'),
     );
     await a('Passer à l’explication', () =>
       p.getByRole('button', { name: 'Étape suivante', exact: true }).click(),
     );
-    await expect(p.locator('.investigation-stage')).toContainText(
-      /ne proviennent pas d.un réseau entraîné/u,
-    );
+    await expect(p.locator('.investigation-stage')).toContainText(/pas apprises par une IA/u);
   });
   await profile('B — Enseignant de lettres sans code', async (p, a) => {
     await a('Ouvrir le détective', () => p.goto(base + '#/experience/detective'));
@@ -107,7 +105,13 @@ try {
   });
   await profile('D — Enseignant NSI, Python et Transformer', async (p, a) => {
     await a('Ouvrir la programmation', () => p.goto(base + '#/activite/attention'));
-    await a('Afficher Python', () => p.locator('.stage-nav button').nth(5).click());
+    await a('Choisir une étape', () =>
+      p.getByText('Aller à une autre étape', { exact: true }).click(),
+    );
+    await a('Choisir Python', () => p.locator('.stage-nav button').nth(5).click());
+    await a('Afficher Python', () =>
+      p.getByText('Afficher le code Python', { exact: true }).click(),
+    );
     await expect(p.getByLabel('Code Python modifiable')).toContainText('masque');
     await a('Ouvrir le Transformer', () => p.goto(base + '#/experience/transformer'));
     await a('Choisir scientifique', () => p.getByLabel('Scientifique', { exact: true }).check());

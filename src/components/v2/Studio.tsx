@@ -127,6 +127,11 @@ export function Studio({ duration }: { duration?: number }) {
     <article>
       <div className="eyebrow">ESPACE 02 / STUDIO FORMATEUR</div>
       <h1>{scenario ? scenario.title : 'Une séance prête à animer.'}</h1>
+      <p>
+        Les termes de l’IA te sont encore peu familiers ?{' '}
+        <a href="#/decouvrir">Commence par une découverte courte, sans code</a>, avant de préparer
+        la séance.
+      </p>
       <p className="lead">
         Comprendre les mécanismes et exercer un jugement critique, avec des enseignants de toutes
         disciplines. Les durées constituent des propositions de conduite.

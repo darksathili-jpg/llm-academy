@@ -14,6 +14,10 @@ L'audit du domaine public au début de ce mandat a constaté la livraison phase 
 
 La [CI Linux #7](https://github.com/darksathili-jpg/llm-academy/actions/runs/38059760957) a réussi pour le commit 2809153 ; publication ignorée. Après autorisation : fusion de la branche, nouvelle validation sur main, publication Pages, puis node scripts/verify-live.mjs avec un navigateur neuf. Le rapport local ne suffit pas à certifier une publication.
 
+## Retour enseignant et reprise de la compréhension
+
+Un enseignant signale que les termes et explications sont trop difficiles. L’appréciation initiale de 91/100 est retirée comme note actuelle. Reprise par une découverte guidée sans code, dix activités en langage courant et un découpage simplifié. Voir PRISE_EN_MAIN_SIMPLE.md ; un nouvel essai humain reste nécessaire avant de juger la compréhension.
+
 ## Reste à faire
 
 Essais avec élèves et enseignants, matériel de projection, lecteurs d'écran, Firefox/Safari ; revue scientifique indépendante. Trois modules de la collection initiale restent à rédiger, notamment agents et évaluation approfondie. Les fonctionnalités d'expérimentation V2 ne sont pas assimilées à ces cours complets.

@@ -7,7 +7,7 @@ import { ModulePage } from './components/ModulePage';
 import { Notebook } from './components/Notebook';
 import { Workshop, Activity, Laboratory } from './components/v2/Workshop';
 import { Studio, Animation, Backstage } from './components/v2/Studio';
-import { PredictionLab } from './components/v2/Experiments';
+import { FirstSteps, StarterPreview } from './components/v2/FirstSteps';
 function readRoute() {
   return location.hash.startsWith('#/') ? location.hash.slice(2).split('?')[0] || 'home' : 'home';
 }
@@ -22,25 +22,25 @@ function Home() {
             <br />
             peut écrire.
             <br />
-            <em>À nous d’expliquer.</em>
+            <em>Comment fait-elle ?</em>
           </h1>
           <p className="lead">
-            Prédire. Manipuler. Douter. Programmer. Un atelier pour comprendre les modèles de
-            langage, du lycée à la formation des enseignants.
+            Comment une IA choisit-elle les mots d’une réponse ? Partons d’une phrase simple,
+            faisons un essai, puis expliquons ce qui se passe.
           </p>
-          <a className="button" href="#/activite/credibilite">
-            Faire la première investigation →
+          <a className="button" href="#/decouvrir">
+            Commencer en 5 minutes, sans code →
           </a>
-          <p className="hero-note">Sans compte · calculs locaux · aucune API de LLM</p>
+          <p className="hero-note">Aucune connaissance préalable · sans compte</p>
         </div>
-        <PredictionLab compact />
+        <StarterPreview />
       </section>
       <section className="space-entrances" aria-label="Les trois espaces">
         <a className="editorial-row" href="#/atelier">
           <span className="row-number">01</span>
           <div>
             <h2>Atelier Terminale NSI</h2>
-            <p>Dix investigations. Une hypothèse avant chaque expérience.</p>
+            <p>Dix activités guidées. À chaque fois : une question, un essai, une explication.</p>
           </div>
           <span>Entrer dans l’atelier ↗</span>
         </a>
@@ -56,7 +56,7 @@ function Home() {
           <span className="row-number">03</span>
           <div>
             <h2>Laboratoire scientifique</h2>
-            <p>Ouvrir les calculs, inspecter les matrices et vérifier les limites.</p>
+            <p>Pour aller plus loin : observer les calculs et comprendre leurs limites.</p>
           </div>
           <span>Explorer les instruments ↗</span>
         </a>
@@ -298,6 +298,7 @@ export default function App() {
     );
   let content;
   if (kind === 'home') content = <Home />;
+  else if (kind === 'decouvrir') content = <FirstSteps />;
   else if (kind === 'atelier') content = <Workshop />;
   else if (kind === 'activite') content = <Activity key={id} id={id} />;
   else if (kind === 'studio' && (!id || ['60', '120', '180', '360'].includes(id)))
@@ -331,6 +332,7 @@ export default function App() {
       <div className="academy-navigation">
         <nav aria-label="Navigation principale">
           {[
+            ['decouvrir', 'Commencer'],
             ['atelier', '01 Atelier NSI'],
             ['studio', '02 Studio formateur'],
             ['laboratoire', '03 Laboratoire'],

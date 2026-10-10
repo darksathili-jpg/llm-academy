@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { learnerGuides } from '../../src/content/learnerGuides';
 import { activities } from '../../src/content/activities';
 import { scenarios } from '../../src/content/scenarios';
 import { PRIVATE_KEY, SESSION_KEY } from '../../src/core/session';
@@ -13,32 +14,39 @@ test('parcours NSI complet : hypothèses, manipulations, transferts et carnet sa
   for (const a of activities) {
     await page.goto('./#/activite/' + a.id);
     await page.getByRole('button', { name: 'Étape suivante', exact: true }).click();
-    await page.getByLabel('Mon hypothèse et ma justification').fill('Hypothèse originale ' + a.id);
+    await page
+      .getByLabel('Ce que je pense avant l’essai, et pourquoi')
+      .fill('Hypothèse originale ' + a.id);
     await page.getByRole('button', { name: 'Étape suivante', exact: true }).click();
-    await expect(page.locator('.investigation-stage')).toContainText(a.manipulation);
+    await expect(page.locator('.investigation-stage')).toContainText(learnerGuides[a.id].tryIt);
     await page.getByRole('button', { name: 'Étape suivante', exact: true }).click();
-    await page.getByLabel('Mes observations').fill('Une observation vérifiable.');
+    await page.getByLabel('Ce que j’ai vu pendant l’essai').fill('Une observation vérifiable.');
     await page.getByRole('button', { name: 'Étape suivante', exact: true }).click();
     await page
       .getByLabel('Mon explication du résultat')
       .fill('Je distingue le calcul de la vérité.');
     await page.getByRole('button', { name: 'Étape suivante', exact: true }).click();
+    await page.getByText('Afficher le code Python', { exact: true }).click();
     await expect(page.getByLabel('Code Python modifiable')).toHaveValue(a.python);
     await page.getByRole('button', { name: 'Étape suivante', exact: true }).click();
     await page
-      .getByLabel('Ma réponse à la situation de transfert')
+      .getByLabel('Ma réponse pour ce nouvel exemple')
       .fill('Un cas différent et une source.');
     await page.getByRole('button', { name: 'Étape suivante', exact: true }).click();
     await page.getByLabel(a.quiz.choices[a.quiz.expected], { exact: true }).check();
     await page.getByRole('button', { name: 'Vérifier cette conclusion' }).click();
     await expect(page.getByRole('status').filter({ hasText: 'Conclusion validée' })).toBeVisible();
     await page.reload();
-    await expect(page.locator('.stage-nav button[aria-current=step]')).toContainText('8');
+    await expect(page.locator('.investigation-stage h2')).toHaveText('Vérifier ta compréhension');
   }
   await page.goto('./#/carnet');
-  await page.getByText('Comment fabriquer un tokenizer ? — Évaluation', { exact: true }).click();
+  await page
+    .getByText('Pourquoi découper un texte en petits morceaux ? — Vérifier ta compréhension', {
+      exact: true,
+    })
+    .click();
   await expect(
-    page.getByText('Hypothèse : Hypothèse originale tokens', { exact: true }),
+    page.getByText('Avant l’essai : Hypothèse originale tokens', { exact: true }),
   ).toBeVisible();
 });
 test('120 et 180 : étapes, corrections à la demande, démo précédente et reprise des horloges', async ({
@@ -143,7 +151,9 @@ test('sampling reproductible, attention causale et prompting aux critères mesur
 test('Python : réseau refusé, repli, input fourni et Worker arrêtable', async ({ page }) => {
   await page.route('https://cdn.jsdelivr.net/**', (route) => route.abort());
   await page.goto('./#/activite/tokens');
-  await page.getByRole('button', { name: /Programmation/ }).click();
+  await page.getByText('Aller à une autre étape', { exact: true }).click();
+  await page.getByRole('button', { name: /Coder/ }).click();
+  await page.getByText('Afficher le code Python', { exact: true }).click();
   await page.getByRole('button', { name: 'Exécuter Python' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'Erreur Python' })).toBeVisible({
     timeout: 10000,
@@ -176,6 +186,7 @@ for (const [theme, value] of [
     page.on('pageerror', (e) => errors.push(e.message));
     for (const route of [
       '',
+      '#/decouvrir',
       '#/atelier',
       '#/activite/probabilites',
       '#/studio',

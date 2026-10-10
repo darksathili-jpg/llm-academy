@@ -650,3 +650,110 @@ blockquote {
 .skip-link:not(:focus) {
   clip-path: inset(100%);
 }
+
+/* First contact: one action and concrete words before the scientific notation. */
+.starter-preview {
+  background: var(--panel);
+  border-top: 4px solid var(--ink);
+  padding: 2rem;
+  align-self: center;
+}
+.starter-preview h2 {
+  font-size: clamp(1.7rem, 4vw, 2.8rem);
+}
+.starter-words {
+  font-family: Georgia, serif;
+  font-size: 1.4rem;
+  border-block: 1px solid var(--line);
+  padding-block: 1rem;
+}
+.first-steps {
+  max-width: 56rem;
+  margin-inline: auto;
+}
+.first-steps h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+.first-steps blockquote {
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  margin-inline: 0;
+  padding: 1.5rem;
+  border-left: 4px solid var(--accent);
+  background: var(--panel);
+}
+.first-choice {
+  display: grid;
+  gap: 0.8rem;
+  margin-block: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+}
+.first-choice label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+.first-choice input {
+  width: auto;
+  flex: 0 0 auto;
+}
+.first-steps button {
+  margin-block: 0.5rem;
+}
+.choice-results {
+  border-block: 1px solid var(--line);
+  padding-block: 1rem;
+  margin-block: 1.5rem;
+}
+.choice-results ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.choice-results li strong {
+  font-size: 1.8rem;
+  display: inline-block;
+  min-width: 3ch;
+}
+.first-steps [aria-pressed='true'] {
+  border: 2px solid var(--accent);
+}
+.first-back {
+  margin-top: 2rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+.plain-glossary {
+  line-height: 1.7;
+}
+.plain-glossary dt {
+  font-weight: 700;
+}
+.plain-glossary dd {
+  margin: 0 0 0.75rem;
+}
+.stage-jump {
+  margin-bottom: 1.5rem;
+}
+.lab-introduction {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25rem;
+}
+.takeaways {
+  display: grid;
+  gap: 1rem;
+  padding-left: 1.5rem;
+}
+@media (max-width: 600px) {
+  .starter-preview {
+    padding: 1.25rem;
+  }
+  .first-steps .lab-toolbar {
+    display: grid;
+  }
+  .first-steps .lab-toolbar button {
+    width: 100%;
+  }
+}
