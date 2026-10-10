@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>C · Cahier de recherche — LLM Academy</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+      }
+      button,
+      a {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: default;
+      }
+      a {
+        text-underline-offset: 4px;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 5px;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      p {
+        margin: 0;
+      }
+      svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+        }
+      }
+
+      :root {
+        --focus: #076443;
+        --ink: #242924;
+        --muted: #586258;
+        --green: #145d40;
+        --line: #a5afa4;
+        --paper: #f6f4eb;
+        font:
+          16px/1.5 Georgia,
+          'Times New Roman',
+          serif;
+      }
+      body {
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .page {
+        max-width: 1472px;
+        min-height: 100svh;
+        margin: auto;
+        padding: 0 48px;
+        display: flex;
+        flex-direction: column;
+      }
+      .brand {
+        height: 75px;
+        border-bottom: 3px double var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+      }
+      .brand strong {
+        font-size: 19px;
+        font-weight: 500;
+        font-variant: small-caps;
+        letter-spacing: 0.02em;
+      }
+      .brand p {
+        font:
+          12px/1.5 Arial,
+          sans-serif;
+        color: var(--muted);
+      }
+      .edition {
+        font:
+          11px/1.5 Consolas,
+          monospace;
+        letter-spacing: 0.05em;
+      }
+      main {
+        flex: 1;
+        padding: 29px 0 16px;
+      }
+      .intro {
+        display: grid;
+        grid-template-columns: 250px minmax(0, 1fr);
+        gap: 45px;
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 24px;
+      }
+      .kicker {
+        font:
+          12px/1.5 Arial,
+          sans-serif;
+        letter-spacing: 0.05em;
+        color: var(--green);
+        padding-top: 7px;
+      }
+      h1 {
+        font-size: 30px;
+        line-height: 1.25;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      .intro .lead {
+        margin-top: 10px;
+        font-size: 16px;
+      }
+      .spread {
+        display: grid;
+        grid-template-columns: 250px minmax(0, 1fr);
+        gap: 45px;
+        padding-top: 25px;
+      }
+      .margin-note {
+        border-right: 1px solid var(--line);
+        padding-right: 24px;
+      }
+      .margin-note h2 {
+        font-size: 18px;
+        font-weight: 400;
+        font-style: italic;
+        margin: 0 0 14px;
+      }
+      .margin-note p {
+        font-size: 15px;
+        margin-bottom: 18px;
+      }
+      .margin-note .source {
+        font:
+          12px/1.65 Arial,
+          sans-serif;
+        color: var(--muted);
+        padding-top: 15px;
+        border-top: 1px solid var(--line);
+      }
+      .experiment {
+        min-width: 0;
+      }
+      .running {
+        font:
+          11px/1.5 Arial,
+          sans-serif;
+        letter-spacing: 0.07em;
+        color: var(--muted);
+        margin-bottom: 17px;
+      }
+      .sentence {
+        font-size: 31px;
+        line-height: 1.4;
+        letter-spacing: -0.02em;
+        font-weight: 400;
+        margin: 0 0 18px;
+      }
+      .sentence span {
+        font-style: italic;
+        color: var(--green);
+        border-bottom: 1px solid var(--green);
+      }
+      .prediction-label {
+        font:
+          13px/1.5 Arial,
+          sans-serif;
+        color: var(--muted);
+      }
+      .choices {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        margin-top: 12px;
+      }
+      .choices button {
+        justify-self: center;
+        color: var(--ink);
+        background: none;
+        border: 0;
+        border-bottom: 1px solid var(--ink);
+        font:
+          23px/1.3 Georgia,
+          serif;
+        padding: 8px 0;
+        min-width: 95px;
+      }
+      .choices button[aria-pressed='true'] {
+        color: var(--green);
+        border-bottom: 3px solid var(--green);
+        padding-bottom: 6px;
+        font-style: italic;
+      }
+      figure {
+        margin: 16px 0 18px;
+        border-block: 1px solid var(--line);
+        padding: 8px 0 13px;
+      }
+      .chance-figure {
+        max-width: 100%;
+        color: var(--green);
+      }
+      figcaption {
+        display: flex;
+        gap: 30px;
+        align-items: baseline;
+        font:
+          12px/1.5 Arial,
+          sans-serif;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      figcaption strong {
+        color: var(--ink);
+        font-weight: 500;
+        font-family: Georgia, serif;
+        font-style: italic;
+      }
+      .draw-row {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+      }
+      .draw {
+        border: 1px solid var(--green);
+        background: var(--green);
+        color: #fff;
+        font:
+          600 14px/1.5 Arial,
+          sans-serif;
+        padding: 12px 24px;
+        min-width: 175px;
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+      }
+      .draw:disabled {
+        color: #5c695d;
+        background: transparent;
+        border-color: #9aa699;
+      }
+      .counts {
+        font:
+          12px/1.5 Consolas,
+          monospace;
+        color: var(--muted);
+      }
+      .outcome {
+        margin-top: 22px;
+        font-size: 17px;
+        min-height: 42px;
+        max-width: 800px;
+      }
+      .afterword {
+        margin-top: 20px;
+        border-top: 1px solid var(--ink);
+        padding-top: 18px;
+        display: grid;
+        grid-template-columns: 250px minmax(0, 1fr);
+        gap: 45px;
+      }
+      .afterword h2 {
+        font:
+          12px/1.5 Arial,
+          sans-serif;
+        letter-spacing: 0.03em;
+        font-weight: 400;
+        margin: 0;
+        color: var(--muted);
+      }
+      .afterword p {
+        font-size: 14px;
+        max-width: 800px;
+      }
+      .review {
+        font:
+          11px/1.5 Arial,
+          sans-serif;
+        display: flex;
+        justify-content: space-between;
+        gap: 25px;
+        border-top: 3px double var(--ink);
+        padding: 17px 0 22px;
+        color: var(--muted);
+      }
+      .review nav {
+        display: flex;
+        gap: 20px;
+      }
+      .review a {
+        color: var(--ink);
+      }
+      .review a[aria-current='page'] {
+        font-weight: 700;
+      }
+      @media (min-width: 1700px) {
+        main {
+          padding-top: 39px;
+        }
+        .intro {
+          padding-bottom: 32px;
+          grid-template-columns: 270px minmax(0, 1fr);
+          gap: 55px;
+        }
+        .spread {
+          padding-top: 35px;
+          grid-template-columns: 270px minmax(0, 1fr);
+          gap: 55px;
+        }
+        .sentence {
+          font-size: 34px;
+        }
+        .choices {
+          margin-top: 18px;
+        }
+        figure {
+          margin: 28px 0;
+        }
+        .outcome {
+          margin-top: 27px;
+        }
+        .afterword {
+          margin-top: 34px;
+          grid-template-columns: 270px minmax(0, 1fr);
+          gap: 55px;
+        }
+      }
+      @media (max-width: 760px) {
+        .page {
+          padding: 0 20px;
+        }
+        .brand {
+          height: auto;
+          padding: 20px 0;
+          align-items: start;
+        }
+        .brand p {
+          display: none;
+        }
+        .edition {
+          max-width: 100px;
+        }
+        .intro {
+          display: block;
+        }
+        .kicker {
+          margin-bottom: 12px;
+        }
+        h1 {
+          font-size: 27px;
+        }
+        .spread {
+          display: block;
+        }
+        .margin-note {
+          border-right: 0;
+          padding: 0;
+        }
+        .margin-note p {
+          font-size: 14px;
+        }
+        .margin-note .source {
+          margin-bottom: 22px;
+        }
+        .sentence {
+          font-size: 25px;
+        }
+        .choices button {
+          min-width: 0;
+          font-size: 20px;
+        }
+        figcaption {
+          display: block;
+        }
+        figcaption span {
+          display: block;
+          margin-top: 5px;
+        }
+        .draw-row {
+          display: block;
+        }
+        .counts {
+          margin-top: 15px;
+        }
+        .afterword {
+          display: block;
+        }
+        .afterword h2 {
+          margin-bottom: 12px;
+        }
+        .review {
+          display: block;
+        }
+        .review nav {
+          margin-top: 12px;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="brand">
+        <strong>LLM Academy · Cahier d’expériences</strong>
+        <p>Observer avant d’expliquer.</p>
+        <span class="edition">ÉTUDE C / REVUE SCIENTIFIQUE</span>
+      </header>
+      <main>
+        <div class="intro">
+          <p class="kicker">LA QUESTION DU JOUR</p>
+          <div>
+            <h1>Peut-on prévoir le prochain mot ?</h1>
+            <p class="lead">
+              Propose une suite. Fais un essai. Compare ce qui était attendu et ce qui arrive.
+            </p>
+          </div>
+        </div>
+        <div class="spread">
+          <aside class="margin-note">
+            <h2>Avant le tirage</h2>
+            <p>« Canapé » a plus de chances de sortir. Est-ce une certitude ?</p>
+            <p>Choisis un mot dans la phrase, puis observe un tirage. Tu peux recommencer.</p>
+            <p class="source">
+              Les chances ont été préparées pour cet exemple : 60 %, 30 %, 10 %. Le tirage utilise
+              réellement le hasard du navigateur.
+            </p>
+          </aside>
+          <section class="experiment" aria-label="Expérience de prédiction">
+            <p class="running">EXPÉRIENCE 01 / COMPLÉTER UNE PHRASE</p>
+            <h2 class="sentence">« Le chat dort sur le <span data-result>…</span> »</h2>
+            <p class="prediction-label">Le mot que je prédis pour le prochain tirage :</p>
+            <div class="choices" role="group" aria-label="Le mot que je prédis">
+              <button type="button" data-choice="0" aria-pressed="false">canapé</button
+              ><button type="button" data-choice="1" aria-pressed="false">tapis</button
+              ><button type="button" data-choice="2" aria-pressed="false">bureau</button>
+            </div>
+            <figure>
+              <svg
+                class="chance-figure"
+                viewBox="0 0 900 130"
+                role="img"
+                aria-labelledby="dots-title"
+              >
+                <title id="dots-title">
+                  Chances préparées : six points pleins sur dix pour canapé, trois pour tapis, un
+                  pour bureau.
+                </title>
+                <circle
+                  cx="100"
+                  cy="40"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="125"
+                  cy="40"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="150"
+                  cy="40"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="175"
+                  cy="40"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="200"
+                  cy="40"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="100"
+                  cy="75"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="125"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="150"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="175"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="200"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="400"
+                  cy="40"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="425"
+                  cy="40"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="450"
+                  cy="40"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="475"
+                  cy="40"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="500"
+                  cy="40"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="400"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="425"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="450"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="475"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="500"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="700"
+                  cy="40"
+                  r="8"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="725"
+                  cy="40"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="750"
+                  cy="40"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="775"
+                  cy="40"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="800"
+                  cy="40"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="700"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="725"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="750"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="775"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="800"
+                  cy="75"
+                  r="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <g fill="currentColor" font-family="Arial,sans-serif" font-size="16">
+                  <text x="134" y="113">60 %</text>
+                  <text x="434" y="113">30 %</text>
+                  <text x="734" y="113">10 %</text>
+                </g>
+              </svg>
+              <figcaption>
+                <strong>Fig. 01 — Les chances de départ.</strong
+                ><span>Un point plein représente une chance sur dix.</span>
+              </figcaption>
+            </figure>
+            <div class="draw-row">
+              <button type="button" class="draw" data-draw disabled>
+                Tirer un mot <span aria-hidden="true">↗</span>
+              </button>
+              <p class="counts" data-counts>Aucun tirage pour le moment.</p>
+            </div>
+            <p class="outcome" data-outcome role="status" aria-live="polite">
+              Choisis un mot avant de lancer le tirage.
+            </p>
+          </section>
+        </div>
+        <div class="afterword">
+          <h2>À OBSERVER</h2>
+          <p>
+            Un mot peut être favorisé sans sortir à chaque essai. Ces trois mots entiers
+            représentent ici des morceaux de texte, appelés « tokens ». Le jeu illustre un choix ;
+            il ne vérifie pas si la phrase est vraie.
+          </p>
+        </div>
+      </main>
+      <footer class="review">
+        <p>Maquette d’accueil · interaction de démonstration · aucune IA entraînée</p>
+        <nav aria-label="Comparer les propositions">
+          <a href="a-instrument.html">A · Instrument</a><a href="b-musee.html">B · Musée</a
+          ><a href="c-revue.html" aria-current="page">C · Revue</a>
+        </nav>
+      </footer>
+    </div>
+    <script src="interaction.js" defer></script>
+  </body>
+</html>

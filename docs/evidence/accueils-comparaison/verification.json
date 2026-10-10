@@ -1,0 +1,336 @@
+{
+  "checkedAt": "2026-10-10T15:58:25.949Z",
+  "scope": "Trois maquettes autonomes, application inchangée",
+  "views": [
+    {
+      "file": "a-instrument",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "a-instrument-1440x900.png",
+      "measures": {
+        "title": {
+          "x": 48,
+          "y": 131,
+          "width": 558.171875,
+          "height": 36,
+          "bottom": 167,
+          "right": 606.171875
+        },
+        "sentence": {
+          "x": 48,
+          "y": 225,
+          "width": 1030,
+          "height": 43.1875,
+          "bottom": 268.1875,
+          "right": 1078
+        },
+        "choices": {
+          "x": 48,
+          "y": 324.6875,
+          "width": 111.0625,
+          "height": 49,
+          "bottom": 373.6875,
+          "right": 159.0625
+        },
+        "draw": {
+          "x": 48,
+          "y": 618.1875,
+          "width": 186.765625,
+          "height": 50,
+          "bottom": 668.1875,
+          "right": 234.765625
+        },
+        "footer": {
+          "x": 48,
+          "y": 843.5,
+          "width": 1344,
+          "height": 56.5,
+          "bottom": 900,
+          "right": 1392
+        },
+        "overflowX": false,
+        "overflowY": false,
+        "titleFontSize": "30px"
+      },
+      "axeViolations": 0,
+      "afterDrawAxeViolations": 0,
+      "controlledDraws": "canapé, tapis, bureau : passed",
+      "errors": []
+    },
+    {
+      "file": "a-instrument",
+      "width": 1920,
+      "height": 1080,
+      "screenshot": "a-instrument-1920x1080.png",
+      "measures": {
+        "title": {
+          "x": 232,
+          "y": 141,
+          "width": 558.171875,
+          "height": 36,
+          "bottom": 177,
+          "right": 790.171875
+        },
+        "sentence": {
+          "x": 232,
+          "y": 254,
+          "width": 1076,
+          "height": 48.59375,
+          "bottom": 302.59375,
+          "right": 1308
+        },
+        "choices": {
+          "x": 232,
+          "y": 359.09375,
+          "width": 111.0625,
+          "height": 49,
+          "bottom": 408.09375,
+          "right": 343.0625
+        },
+        "draw": {
+          "x": 232,
+          "y": 680.59375,
+          "width": 186.765625,
+          "height": 50,
+          "bottom": 730.59375,
+          "right": 418.765625
+        },
+        "footer": {
+          "x": 232,
+          "y": 1023.5,
+          "width": 1456,
+          "height": 56.5,
+          "bottom": 1080,
+          "right": 1688
+        },
+        "overflowX": false,
+        "overflowY": false,
+        "titleFontSize": "30px"
+      },
+      "axeViolations": 0,
+      "afterDrawAxeViolations": 0,
+      "controlledDraws": "canapé, tapis, bureau : passed",
+      "errors": []
+    },
+    {
+      "file": "b-musee",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "b-musee-1440x900.png",
+      "measures": {
+        "title": {
+          "x": 48,
+          "y": 105,
+          "width": 613.921875,
+          "height": 37.6875,
+          "bottom": 142.6875,
+          "right": 661.921875
+        },
+        "sentence": {
+          "x": 308,
+          "y": 231.1875,
+          "width": 1084,
+          "height": 47.59375,
+          "bottom": 278.78125,
+          "right": 1392
+        },
+        "choices": {
+          "x": 561.171875,
+          "y": 430.78125,
+          "width": 97.640625,
+          "height": 50.5,
+          "bottom": 481.28125,
+          "right": 658.8125
+        },
+        "draw": {
+          "x": 749.203125,
+          "y": 563.78125,
+          "width": 201.59375,
+          "height": 50,
+          "bottom": 613.78125,
+          "right": 950.796875
+        },
+        "footer": {
+          "x": 48,
+          "y": 843.5,
+          "width": 1344,
+          "height": 56.5,
+          "bottom": 900,
+          "right": 1392
+        },
+        "overflowX": false,
+        "overflowY": false,
+        "titleFontSize": "29px"
+      },
+      "axeViolations": 0,
+      "afterDrawAxeViolations": 0,
+      "controlledDraws": "canapé, tapis, bureau : passed",
+      "errors": []
+    },
+    {
+      "file": "b-musee",
+      "width": 1920,
+      "height": 1080,
+      "screenshot": "b-musee-1920x1080.png",
+      "measures": {
+        "title": {
+          "x": 232,
+          "y": 115,
+          "width": 613.921875,
+          "height": 37.6875,
+          "bottom": 152.6875,
+          "right": 845.921875
+        },
+        "sentence": {
+          "x": 532,
+          "y": 255.1875,
+          "width": 1100,
+          "height": 53.1875,
+          "bottom": 308.375,
+          "right": 1632
+        },
+        "choices": {
+          "x": 759.84375,
+          "y": 479.8125,
+          "width": 97.640625,
+          "height": 50.5,
+          "bottom": 530.3125,
+          "right": 857.484375
+        },
+        "draw": {
+          "x": 981.203125,
+          "y": 612.8125,
+          "width": 201.59375,
+          "height": 50,
+          "bottom": 662.8125,
+          "right": 1182.796875
+        },
+        "footer": {
+          "x": 232,
+          "y": 1023.5,
+          "width": 1456,
+          "height": 56.5,
+          "bottom": 1080,
+          "right": 1688
+        },
+        "overflowX": false,
+        "overflowY": false,
+        "titleFontSize": "29px"
+      },
+      "axeViolations": 0,
+      "afterDrawAxeViolations": 0,
+      "controlledDraws": "canapé, tapis, bureau : passed",
+      "errors": []
+    },
+    {
+      "file": "c-revue",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "c-revue-1440x900.png",
+      "measures": {
+        "title": {
+          "x": 343,
+          "y": 104,
+          "width": 1049,
+          "height": 37.5,
+          "bottom": 141.5,
+          "right": 1392
+        },
+        "sentence": {
+          "x": 343,
+          "y": 259,
+          "width": 1049,
+          "height": 43.390625,
+          "bottom": 302.390625,
+          "right": 1392
+        },
+        "choices": {
+          "x": 470.328125,
+          "y": 351.890625,
+          "width": 95,
+          "height": 46.890625,
+          "bottom": 398.78125,
+          "right": 565.328125
+        },
+        "draw": {
+          "x": 343,
+          "y": 627.296875,
+          "width": 175,
+          "height": 47,
+          "bottom": 674.296875,
+          "right": 518
+        },
+        "footer": {
+          "x": 48,
+          "y": 841.5,
+          "width": 1344,
+          "height": 58.5,
+          "bottom": 900,
+          "right": 1392
+        },
+        "overflowX": false,
+        "overflowY": false,
+        "titleFontSize": "30px"
+      },
+      "axeViolations": 0,
+      "afterDrawAxeViolations": 0,
+      "controlledDraws": "canapé, tapis, bureau : passed",
+      "errors": []
+    },
+    {
+      "file": "c-revue",
+      "width": 1920,
+      "height": 1080,
+      "screenshot": "c-revue-1920x1080.png",
+      "measures": {
+        "title": {
+          "x": 597,
+          "y": 114,
+          "width": 1051,
+          "height": 37.5,
+          "bottom": 151.5,
+          "right": 1648
+        },
+        "sentence": {
+          "x": 597,
+          "y": 287,
+          "width": 1051,
+          "height": 47.59375,
+          "bottom": 334.59375,
+          "right": 1648
+        },
+        "choices": {
+          "x": 724.65625,
+          "y": 390.09375,
+          "width": 95,
+          "height": 46.890625,
+          "bottom": 436.984375,
+          "right": 819.65625
+        },
+        "draw": {
+          "x": 597,
+          "y": 687.78125,
+          "width": 175,
+          "height": 47,
+          "bottom": 734.78125,
+          "right": 772
+        },
+        "footer": {
+          "x": 272,
+          "y": 1021.5,
+          "width": 1376,
+          "height": 58.5,
+          "bottom": 1080,
+          "right": 1648
+        },
+        "overflowX": false,
+        "overflowY": false,
+        "titleFontSize": "30px"
+      },
+      "axeViolations": 0,
+      "afterDrawAxeViolations": 0,
+      "controlledDraws": "canapé, tapis, bureau : passed",
+      "errors": []
+    }
+  ]
+}

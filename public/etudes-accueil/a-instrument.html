@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>A · Instrument de mesure — LLM Academy</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+      }
+      button,
+      a {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: default;
+      }
+      a {
+        text-underline-offset: 4px;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 5px;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      p {
+        margin: 0;
+      }
+      svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+        }
+      }
+
+      :root {
+        --focus: #003fbb;
+        --ink: #16282b;
+        --muted: #485b60;
+        --blue: #124fc1;
+        --paper: #f7f9f8;
+        --line: #afbdbf;
+        font:
+          16px/1.5 Arial,
+          sans-serif;
+      }
+      body {
+        color: var(--ink);
+        background: var(--paper);
+      }
+      .page {
+        max-width: 1552px;
+        min-height: 100svh;
+        margin: auto;
+        padding: 0 48px;
+        display: flex;
+        flex-direction: column;
+      }
+      .brand {
+        height: 74px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--ink);
+        gap: 20px;
+        font-size: 13px;
+      }
+      .brand strong {
+        letter-spacing: 0.08em;
+        font-size: 14px;
+      }
+      .brand p {
+        color: var(--muted);
+      }
+      .edition {
+        font:
+          12px/1.5 Consolas,
+          monospace;
+      }
+      main {
+        flex: 1;
+        padding: 30px 0 22px;
+      }
+      .intro {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 32px;
+        padding-bottom: 27px;
+      }
+      .eyebrow {
+        font:
+          12px/1.5 Consolas,
+          monospace;
+        letter-spacing: 0.08em;
+        color: var(--blue);
+        margin-bottom: 9px;
+      }
+      h1 {
+        font-size: 30px;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin: 0;
+        font-weight: 600;
+      }
+      .intro > p {
+        max-width: 410px;
+        font-size: 15px;
+        color: var(--muted);
+      }
+      .instrument {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 270px;
+        gap: 44px;
+        border-top: 1px solid var(--line);
+        padding-top: 26px;
+      }
+      .experiment {
+        min-width: 0;
+      }
+      .sentence {
+        font-size: 32px;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+        margin: 4px 0 25px;
+        font-weight: 500;
+      }
+      .sentence span {
+        color: var(--blue);
+        border-bottom: 2px solid var(--blue);
+        padding-bottom: 3px;
+      }
+      .action-label {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+      .choices {
+        display: flex;
+        gap: 12px;
+      }
+      .choices button {
+        border: 1px solid #72878b;
+        color: var(--ink);
+        background: transparent;
+        padding: 10px 25px;
+        min-width: 105px;
+        font-size: 18px;
+      }
+      .choices button[aria-pressed='true'] {
+        border-color: var(--blue);
+        background: var(--blue);
+        color: #fff;
+      }
+      .figure {
+        margin: 30px 0 23px;
+      }
+      .figure figcaption {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 12px;
+        margin-bottom: 19px;
+      }
+      .legend {
+        display: flex;
+        gap: 26px;
+        font-size: 13px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .legend span {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .key {
+        width: 12px;
+        height: 12px;
+        border: 1px solid var(--ink);
+        display: inline-block;
+      }
+      .blue {
+        background: var(--blue);
+      }
+      .striped {
+        background: repeating-linear-gradient(90deg, #16282b 0 1px, #f7f9f8 1px 4px);
+      }
+      .ruler {
+        height: 58px;
+        display: flex;
+        position: relative;
+        border: 1px solid var(--ink);
+      }
+      .ruler > span:not(.pointer) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font:
+          16px/1 Consolas,
+          monospace;
+      }
+      .z0 {
+        width: 60%;
+        background: var(--blue);
+        color: white;
+      }
+      .z1 {
+        width: 30%;
+        background: repeating-linear-gradient(90deg, #dce4e5 0 2px, #f7f9f8 2px 7px);
+        border-left: 1px solid var(--ink);
+      }
+      .z2 {
+        width: 10%;
+        background: #fff;
+        border-left: 1px solid var(--ink);
+      }
+      .pointer {
+        position: absolute;
+        top: -10px;
+        bottom: -10px;
+        width: 3px;
+        background: var(--ink);
+        box-shadow: 0 0 0 1px white;
+        transform: translateX(-50%);
+      }
+      .axis {
+        display: flex;
+        justify-content: space-between;
+        font:
+          11px/1.5 Consolas,
+          monospace;
+        color: var(--muted);
+        padding-top: 9px;
+      }
+      .caption {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 13px;
+      }
+      .draw-row {
+        display: flex;
+        align-items: center;
+        gap: 23px;
+        padding-top: 5px;
+      }
+      .draw {
+        background: var(--blue);
+        color: white;
+        border: 1px solid var(--blue);
+        padding: 12px 22px;
+        font-weight: 600;
+        display: flex;
+        gap: 36px;
+        justify-content: space-between;
+        min-width: 170px;
+      }
+      .draw:disabled {
+        background: #dfe5e4;
+        color: #4c5f64;
+        border-color: #a9b8ba;
+      }
+      .counts {
+        font:
+          12px/1.5 Consolas,
+          monospace;
+        color: var(--muted);
+      }
+      .outcome {
+        margin-top: 22px;
+        min-height: 46px;
+        font-size: 16px;
+        max-width: 700px;
+        border-left: 2px solid var(--blue);
+        padding-left: 16px;
+      }
+      aside {
+        border-left: 1px solid var(--line);
+        padding-left: 25px;
+      }
+      aside h2 {
+        font-size: 15px;
+        margin: 5px 0 20px;
+      }
+      aside ol {
+        padding: 0;
+        list-style: none;
+        margin: 0;
+        counter-reset: steps;
+      }
+      aside li {
+        counter-increment: steps;
+        position: relative;
+        padding: 0 0 24px 31px;
+        font-size: 14px;
+      }
+      aside li:before {
+        content: '0' counter(steps);
+        position: absolute;
+        left: 0;
+        font:
+          12px/1.6 Consolas,
+          monospace;
+        color: var(--blue);
+      }
+      aside p {
+        font-size: 13px;
+        color: var(--muted);
+        border-top: 1px solid var(--line);
+        padding-top: 20px;
+      }
+      .path {
+        border-top: 1px solid var(--line);
+        display: flex;
+        gap: 24px;
+        align-items: baseline;
+        font-size: 12px;
+        color: var(--muted);
+        padding: 19px 0 0;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+      .path strong {
+        color: var(--ink);
+        font-weight: 500;
+      }
+      .path span {
+        white-space: nowrap;
+      }
+      .review {
+        font-size: 11px;
+        border-top: 1px solid var(--ink);
+        padding: 17px 0 22px;
+        color: var(--muted);
+        display: flex;
+        gap: 24px;
+        justify-content: space-between;
+      }
+      .review nav {
+        display: flex;
+        gap: 20px;
+      }
+      .review a {
+        color: var(--ink);
+      }
+      .review a[aria-current='page'] {
+        font-weight: 700;
+      }
+      @media (min-width: 1700px) {
+        main {
+          padding-top: 40px;
+        }
+        .intro {
+          padding-bottom: 34px;
+        }
+        .instrument {
+          padding-top: 38px;
+          gap: 60px;
+          grid-template-columns: minmax(0, 1fr) 320px;
+        }
+        .figure {
+          margin-top: 40px;
+        }
+        .ruler {
+          height: 76px;
+        }
+        .sentence {
+          font-size: 36px;
+        }
+        .outcome {
+          margin-top: 27px;
+        }
+        .path {
+          margin-top: 35px;
+        }
+      }
+      @media (max-width: 760px) {
+        .page {
+          padding: 0 20px;
+        }
+        .brand {
+          height: auto;
+          padding: 20px 0;
+          align-items: start;
+        }
+        .edition {
+          max-width: 110px;
+        }
+        .brand p {
+          display: none;
+        }
+        .intro {
+          display: block;
+        }
+        .intro > p {
+          margin-top: 14px;
+        }
+        .instrument {
+          display: block;
+        }
+        .sentence {
+          font-size: 25px;
+        }
+        .choices {
+          gap: 8px;
+        }
+        .choices button {
+          padding: 10px 13px;
+          min-width: 0;
+          flex: 1;
+        }
+        .figure figcaption {
+          display: block;
+        }
+        .figure figcaption span {
+          display: block;
+        }
+        .legend {
+          gap: 16px;
+        }
+        aside {
+          border-left: 0;
+          border-top: 1px solid var(--line);
+          padding: 20px 0 0;
+          margin-top: 25px;
+        }
+        aside ol {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 15px;
+        }
+        aside li {
+          max-width: 180px;
+        }
+        .draw-row {
+          display: block;
+        }
+        .counts {
+          margin-top: 15px;
+        }
+        .review {
+          display: block;
+        }
+        .review nav {
+          margin-top: 12px;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="brand">
+        <strong>LLM ACADEMY</strong>
+        <p>Expérimenter pour comprendre.</p>
+        <span class="edition">ÉTUDE A / INSTRUMENT DE MESURE</span>
+      </header>
+      <main>
+        <div class="intro">
+          <div>
+            <p class="eyebrow">EXPÉRIENCE 01 · UN MOT À PRÉDIRE</p>
+            <h1>Le mot le plus probable sort-il toujours ?</h1>
+          </div>
+          <p>Fais une prédiction, puis observe ce que le hasard choisit. Aucun prérequis.</p>
+        </div>
+        <div class="instrument">
+          <section class="experiment" aria-label="Expérience de prédiction">
+            <h2 class="sentence">Le chat dort sur le <span data-result>…</span></h2>
+            <p class="action-label">01 — Quel mot prédis-tu pour le prochain tirage ?</p>
+            <div class="choices" role="group" aria-label="Le mot que je prédis">
+              <button type="button" data-choice="0" aria-pressed="false">canapé</button
+              ><button type="button" data-choice="1" aria-pressed="false">tapis</button
+              ><button type="button" data-choice="2" aria-pressed="false">bureau</button>
+            </div>
+            <figure class="figure">
+              <figcaption>
+                Chances préparées pour cet essai <span>6 + 3 + 1 = 10 parts</span>
+              </figcaption>
+              <div class="legend">
+                <span><i class="key blue" aria-hidden="true"></i>canapé · 60 %</span
+                ><span><i class="key striped" aria-hidden="true"></i>tapis · 30 %</span
+                ><span><i class="key" aria-hidden="true"></i>bureau · 10 %</span>
+              </div>
+              <div
+                class="ruler"
+                role="img"
+                aria-label="Trois zones, de largeurs 60 %, 30 % et 10 %. Le repère indique le dernier tirage."
+              >
+                <span class="z0">60 %</span><span class="z1">30 %</span><span class="z2">10 %</span
+                ><span class="pointer" data-pointer hidden aria-hidden="true"></span>
+              </div>
+              <div class="axis" aria-hidden="true">
+                <span>0</span><span>Une règle de hasard →</span><span>1</span>
+              </div>
+              <p class="caption">Le repère tombe dans une zone : cette zone donne le mot choisi.</p>
+            </figure>
+            <div class="draw-row">
+              <button type="button" class="draw" data-draw disabled>
+                Tirer un mot <span aria-hidden="true">↗</span>
+              </button>
+              <p class="counts" data-counts>Aucun tirage pour le moment.</p>
+            </div>
+            <p class="outcome" data-outcome role="status" aria-live="polite">
+              Choisis un mot avant de lancer le tirage.
+            </p>
+          </section>
+          <aside>
+            <h2>Une expérience, trois gestes.</h2>
+            <ol>
+              <li>Choisir le mot que l’on pense voir sortir.</li>
+              <li>Tirer un mot, puis recommencer.</li>
+              <li>Comparer sa prédiction aux résultats.</li>
+            </ol>
+            <p>
+              Les chances ont été préparées pour cet exemple : 60 %, 30 %, 10 %. Le tirage utilise
+              réellement le hasard du navigateur.
+            </p>
+          </aside>
+        </div>
+        <div class="path" aria-label="Sujets du parcours, non ouverts dans cette maquette">
+          <strong>Le parcours</strong><span>01 Choisir un mot</span><span>02 Découper le texte</span
+          ><span>03 Faire varier les choix</span><span>04 Changer le contexte</span
+          ><span>05 Apprendre</span><span>06 Vérifier</span>
+        </div>
+      </main>
+      <footer class="review">
+        <p>Maquette d’accueil · interaction de démonstration · aucune IA entraînée</p>
+        <nav aria-label="Comparer les propositions">
+          <a href="a-instrument.html" aria-current="page">A · Instrument</a
+          ><a href="b-musee.html">B · Musée</a><a href="c-revue.html">C · Revue</a>
+        </nav>
+      </footer>
+    </div>
+    <script src="interaction.js" defer></script>
+  </body>
+</html>
