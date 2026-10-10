@@ -118,7 +118,9 @@ function Home() {
               <a className="module-card" key={m.id} href={'#/module/' + m.id}>
                 <span className="module-number">{m.id}</span>
                 <div>
-                  <span className="eyebrow">{Number(m.id)>=7 ? "Construction et entraînement" : "Fondations"} · disponible</span>
+                  <span className="eyebrow">
+                    {Number(m.id) >= 7 ? 'Construction et entraînement' : 'Fondations'} · disponible
+                  </span>
                   <h3>{m.title}</h3>
                   <p>{m.subtitle}</p>
                   <span className="module-meta">
@@ -170,9 +172,24 @@ function Home() {
             <p>Suivez les formes et les valeurs d’un passage avant complet.</p>
             <span>Ouvrir le laboratoire →</span>
           </a>
-<a href="#/module/07?section=experience"><span className="lab-index">EX / 07</span><h3>Mini-model Builder</h3><p>Décalez les cibles puis tracez une génération autorégressive.</p><span>Ouvrir le laboratoire →</span></a>
-<a href="#/module/08?section=experience"><span className="lab-index">EX / 08</span><h3>Training Lab</h3><p>Entraînez de vrais poids et comparez deux pertes mesurées.</p><span>Ouvrir le laboratoire →</span></a>
-<a href="#/module/09?section=experience"><span className="lab-index">EX / 09</span><h3>Generation & Adaptation</h3><p>Filtrez une distribution, puis adaptez des poids avec LoRA.</p><span>Ouvrir le laboratoire →</span></a>
+          <a href="#/module/07?section=experience">
+            <span className="lab-index">EX / 07</span>
+            <h3>Mini-model Builder</h3>
+            <p>Décalez les cibles puis tracez une génération autorégressive.</p>
+            <span>Ouvrir le laboratoire →</span>
+          </a>
+          <a href="#/module/08?section=experience">
+            <span className="lab-index">EX / 08</span>
+            <h3>Training Lab</h3>
+            <p>Entraînez de vrais poids et comparez deux pertes mesurées.</p>
+            <span>Ouvrir le laboratoire →</span>
+          </a>
+          <a href="#/module/09?section=experience">
+            <span className="lab-index">EX / 09</span>
+            <h3>Generation & Adaptation</h3>
+            <p>Filtrez une distribution, puis adaptez des poids avec LoRA.</p>
+            <span>Ouvrir le laboratoire →</span>
+          </a>
         </div>
       </section>
       <section className="future">
@@ -183,7 +200,7 @@ function Home() {
           </div>
           <span className="tag">En préparation · aucun cours accessible</span>
         </div>
-        <ol start={modules.length+1}>
+        <ol start={modules.length + 1}>
           {upcoming.map((title, i) => (
             <li key={title}>
               <span>{String(i + modules.length + 1).padStart(2, '0')}</span>

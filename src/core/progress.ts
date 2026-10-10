@@ -27,7 +27,8 @@ export function parseProgress(raw: string): Progress {
   if (!value || typeof value !== 'object' || Array.isArray(value))
     throw new Error('Format de carnet invalide.');
   const v = value as Record<string, unknown>;
-  if (v.version !== 1 && v.version !== 2 && v.version !== 3) throw new Error('Version de carnet non prise en charge.');
+  if (v.version !== 1 && v.version !== 2 && v.version !== 3)
+    throw new Error('Version de carnet non prise en charge.');
   if (
     typeof v.theme !== 'string' ||
     !['light', 'dark', 'projector'].includes(v.theme) ||
@@ -44,13 +45,12 @@ export function parseProgress(raw: string): Progress {
     Array.isArray(v.notes)
   )
     throw new Error('Réponses ou notes invalides.');
-  const required: readonly string[] = v.version === 1 ? ['01', '02'] : v.version === 2 ? MODULE_IDS.slice(0, 6) : MODULE_IDS;
+  const required: readonly string[] =
+    v.version === 1 ? ['01', '02'] : v.version === 2 ? MODULE_IDS.slice(0, 6) : MODULE_IDS;
   const answers: Record<string, string> = {};
   for (const [id, answer] of Object.entries(v.answers)) {
     if (
-      !exercises.some(
-        (e) => e.id === id && required.includes(e.module),
-      ) ||
+      !exercises.some((e) => e.id === id && required.includes(e.module)) ||
       typeof answer !== 'string' ||
       answer.length > 300
     )

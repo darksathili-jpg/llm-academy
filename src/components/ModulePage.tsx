@@ -1,6 +1,6 @@
-import {ModelLab} from './science/ModelLab';
-import {TrainingLab} from './science/TrainingLab';
-import {GenerationLab} from './science/GenerationLab';
+import { ModelLab } from './science/ModelLab';
+import { TrainingLab } from './science/TrainingLab';
+import { GenerationLab } from './science/GenerationLab';
 import type { ComponentType } from 'react';
 import type { ModuleId } from '../core/exercises';
 import { EmbeddingLab } from './science/EmbeddingLab';
@@ -67,7 +67,9 @@ export function ModulePage({ module }: { module: Module }) {
     <article className="module-page">
       <header className="page-heading">
         <span className="eyebrow">
-          Module {module.id} / {Number(module.id) >= 7 ? "Construction et entraînement" : "Fondations"} · {module.duration}
+          Module {module.id} /{' '}
+          {Number(module.id) >= 7 ? 'Construction et entraînement' : 'Fondations'} ·{' '}
+          {module.duration}
         </span>
         <h1>{module.title}</h1>
         <p className="lead">{module.subtitle}</p>
