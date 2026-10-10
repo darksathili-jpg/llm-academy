@@ -57,7 +57,7 @@ export function trainBpe(corpus: string, maxMerges = 12): Snapshot[] {
 export function encodeBpe(text: string, snapshot: Snapshot): Encoded[] {
   validateText(text);
   const ids = new Map(snapshot.vocabulary.map((token, i) => [token, i + 1]));
-  return text.split(/(\s+)/u).filter(Boolean).flatMap(part => {
+  return text.split(/(\s+)/u).filter(Boolean).flatMap<Encoded>(part => {
     if (/^\s+$/u.test(part)) return [{ text: part, id: null, unknown: false, original: part }];
     let tokens = Array.from(part);
     for (const pair of snapshot.merges) tokens = mergeTokens(tokens, pair);
