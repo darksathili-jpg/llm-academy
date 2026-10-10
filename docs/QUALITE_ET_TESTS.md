@@ -17,3 +17,14 @@ Un scan automatique ne certifie pas WCAG 2.2 AA. Lecteur d'écran réel et plusi
 Les textes libres ne sont pas évalués sémantiquement par une IA ; la grille est une aide à la relecture.
 Voir ROADMAP pour les résultats effectivement obtenus.
 
+## Résultats observés — 10 octobre 2026
+- TypeScript strict : réussi ; build de production : réussi.
+- 52 tests unitaires et 14 scénarios Chromium : réussis localement et dans GitHub Actions/Linux.
+- Axe sur accueil, deux modules, carnet et références dans trois thèmes : zéro violation relevée.
+- Débordement horizontal contrôlé à 390, 768 et 1440 px ; captures bureau/mobile relues.
+- Sauvegarde, import/export, stockage refusé, corrections, navigation et hors ligne : réussis.
+- npm audit : zéro vulnérabilité signalée après mise à jour de Vitest.
+- Site public : HTTP 200, exercices/progression et BPE vérifiés, rechargement hors ligne réussi, zéro erreur JavaScript.
+Preuve : [workflow de livraison](https://github.com/darksathili-jpg/llm-academy/actions/runs/38033954722).
+Commande de contrôle public : node scripts/verify-live.mjs. Les résultats ci-dessus décrivent les observations ; ils ne constituent pas une certification d’accessibilité ou de pédagogie.
+

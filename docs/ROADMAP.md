@@ -12,7 +12,10 @@ Test hors ligne avec réseau coupé réussi. Audit npm de production : aucune vu
 Vulnérabilités initiales de Vitest 3 corrigées par Vitest 5.
 ## Déploiement
 Workflow de validation avant publication avec les actions officielles Pages.
-Statut de publication à compléter après validation du workflow et ouverture du site public.
+Publication réussie pour le commit applicatif 7e971bb : [workflow vérifié](https://github.com/darksathili-jpg/llm-academy/actions/runs/38033954722).
+Site : https://darksathili-jpg.github.io/llm-academy/
+Vérification Chromium sur le domaine public le 10 octobre 2026 : HTTP 200, modules 01/02, BPE 10 → 7 tokens, progression conservée après rechargement, rechargement hors ligne réussi, aucune erreur JavaScript.
+Commande reproductible : node scripts/verify-live.mjs. Ce test utilise un navigateur neuf, sans accès au carnet personnel de l’utilisateur.
 ## Limites connues
 Aucune certification WCAG : audit manuel multi-navigateurs/lecteurs d’écran encore nécessaire.
 Activités libres à relire ; aucune correction sémantique par IA.
