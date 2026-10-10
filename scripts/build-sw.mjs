@@ -1,4 +1,4 @@
-﻿import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 const root = 'dist';
@@ -39,7 +39,8 @@ self.addEventListener('fetch', event => {
  const scope = new URL(self.registration.scope);
  if(event.request.method !== 'GET' || url.origin !== scope.origin || !url.pathname.startsWith(scope.pathname)) return;
  if(event.request.mode === 'navigate') {
-  event.respondWith(caches.open(CACHE).then(async cache => (await cache.match(new URL('./index.html',scope), { ignoreVary: true })) || fetch(event.request)));
+  const page = url.pathname.startsWith(new URL('./maquettes/',scope).pathname) ? event.request : new URL('./index.html',scope);
+  event.respondWith(caches.open(CACHE).then(async cache => (await cache.match(page, { ignoreVary: true })) || fetch(event.request)));
  } else {
   event.respondWith(caches.open(CACHE).then(async cache => (await cache.match(event.request, { ignoreVary: true })) || fetch(event.request)));
  }

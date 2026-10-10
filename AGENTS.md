@@ -1,18 +1,22 @@
-# LLM Academy — consignes de reprise
+# LLM Academy — reconstruction par simplification
 
-Dépôt dédié : https://github.com/darksathili-jpg/llm-academy. Refonte V2 sur refonte/atelier-v2 ; conserver les changements et le carnet historique.
+Le dernier mandat utilisateur remplace l’architecture V2 à trois espaces. Dépôt dédié llm-academy ; ne pas toucher formation-ia ni la configuration globale Codex.
 
-## Exigences
+## Contrat actuel
 
-Français, contenu original, sources primaires datées, simplifications au voisinage des expériences. React/TypeScript strict/Vite, base /llm-academy/. Aucun résultat fictif, score libre inventé ou vrai LLM local prétendu. Trois espaces : atelier NSI, studio formateur prioritaire, laboratoire.
+Une seule application pour Terminale NSI et enseignants, un seul parcours. Accueil à six expériences, sans jargon. Construire seulement la première : question, hypothèse, manipulation, observation, explication. Python et commandes formateur sont des prolongements de cette même expérience.
 
-Dix investigations et quatre scénarios disponibles ; neuf modules approfondis, trois cours de la collection initiale encore à venir. Moteurs purs testables. Carnet schéma 4, migrations 1/2/3 et même clé ; imports bornés 2 Mo. Notes privées uniquement en Coulisses : ne jamais les lire dans Projection ni les exporter dans le carnet/fiches.
+Branche simplification/demonstrateur-01 depuis 55dc4aa. Conserver les données et l’historique ; aucun nettoyage destructif, force-push, déploiement ou fusion. Anciennes sources et tests conservés, hors du parcours courant. App.tsx est l’unique entrée applicative ; ne pas ajouter un deuxième shell ni réintroduire les anciens espaces.
 
-Pyodide 0.28.3 à la demande en Worker ; code .py en repli ; aucun quota mémoire dur revendiqué. Pas de compte, clé privée, télémétrie ni service LLM obligatoire. Garder clair/sombre/projection/impression, clavier, responsive et hors ligne.
+## Arrêt obligatoire
 
-Ne pas copier un livre. Pas de force-push, suppression destructive, modification des réglages globaux Codex ou déploiement non autorisé.
+Une fois le démonstrateur et les trois maquettes vérifiés, ARRÊTER le développement et attendre une validation humaine explicite. Ne pas construire les cinq autres expériences. Ne pas déployer ni fusionner. Ne pas attribuer une note de compréhension à partir des tests techniques.
 
-## Validation
+## Science et données
+
+Chances préparées 6/3/1 normalisées en 60/30/10 %. Vrais tirages via sample ; aucun LLM entraîné prétendu. Répétitions d’un choix de mot, pas génération d’un texte entier. Les notes de cette expérience utilisent DEMO_KEY ; préserver STORAGE_KEY et les clés antérieures. Ne jamais lire ou exporter les notes privées du formateur.
+
+## Vérification
 
 npm run format:check
 npm run typecheck
@@ -21,9 +25,4 @@ npm run build
 npx playwright test
 npm audit
 
-Optionnel avec réseau et Python/PyTorch local :
-python scripts/verify-notebooks.py
-node scripts/verify-python-browser.mjs
-node scripts/verify-profiles-v2.mjs
-
-Les scripts navigateur nécessitent le serveur de preview sur 4173. Lire docs/RAPPORT_VALIDATION_V2.md et docs/LIMITES_CONNUES.md. Inspecter les captures, pas seulement les tests. Rapporter les résultats observés en français, les limites et l'état réel de publication.
+Playwright sélectionne simplification.spec.ts ; les anciens tests d’interface restent historiques. Inspecter les captures mobile, bureau, projection et les trois maquettes. Optionnel : node scripts/verify-demonstrator.mjs --python avec preview sur 4173. Voir docs/SIMPLIFICATION_DEMONSTRATEUR.md.

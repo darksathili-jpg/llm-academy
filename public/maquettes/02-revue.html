@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>LLM Academy — Maquette La Revue</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 0.2em;
+      }
+      p {
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.05;
+        overflow-wrap: anywhere;
+      }
+      .review-nav {
+        font:
+          14px/1.6 Arial,
+          sans-serif;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+        padding: 1rem 3vw;
+        border-bottom: 1px solid currentColor;
+      }
+      .review-nav span {
+        margin-right: auto;
+      }
+      .contents {
+        list-style: none;
+        padding: 0;
+      }
+      .contents li {
+        display: flex;
+        gap: 1rem;
+        padding: 0.75rem 0;
+      }
+      .contents span {
+        font: 1rem monospace;
+      }
+      .label {
+        font: 13px/1.6 monospace;
+        letter-spacing: 0.1em;
+      }
+      .maquette-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .maquette-actions button {
+        font:
+          700 1rem Arial,
+          sans-serif;
+        border: 1px solid currentColor;
+        color: inherit;
+        background: transparent;
+        padding: 1rem;
+        min-height: 48px;
+      }
+      button:disabled {
+        opacity: 0.65;
+      }
+      .theme-controls {
+        margin: 1rem 0;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        font:
+          14px Arial,
+          sans-serif;
+      }
+      .theme-controls label {
+        display: flex;
+        gap: 0.3rem;
+      }
+      figure {
+        margin: 2rem 0;
+      }
+      figcaption {
+        font:
+          14px/1.7 Arial,
+          sans-serif;
+      }
+      svg {
+        display: block;
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+      }
+      footer {
+        padding: 2rem 5vw;
+        border-top: 1px solid currentColor;
+        font:
+          14px/1.7 Arial,
+          sans-serif;
+      }
+      footer p {
+        max-width: 55rem;
+      }
+      :focus-visible {
+        outline: 3px solid currentColor;
+        outline-offset: 5px;
+      }
+      section {
+        scroll-margin-top: 1rem;
+      }
+      .theme-controls input {
+        accent-color: currentColor;
+      }
+      :root {
+        color: #26211b;
+        background: #f3eee1;
+        font-family: 'Times New Roman', serif;
+      }
+      html[data-theme='dark'] {
+        color: #f4ebd4;
+        background: #2a241b;
+      }
+      html[data-theme='projector'] {
+        color: #000;
+        background: #fff;
+        font-size: 22px;
+      }
+      .journal {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 4vw;
+      }
+      .masthead {
+        font-variant: small-caps;
+        text-align: center;
+        font-size: clamp(2.7rem, 7vw, 5.5rem);
+        border-block: 4px double currentColor;
+        padding: 0.6rem 0;
+        margin: 0.5rem 0 2rem;
+        letter-spacing: 0.04em;
+      }
+      .journal-columns {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 3rem;
+      }
+      .journal-columns > div + div {
+        border-left: 1px solid currentColor;
+        padding-left: 2rem;
+      }
+      .journal-columns h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        margin: 0.5rem 0;
+      }
+      .lede {
+        font-size: 1.3rem;
+      }
+      .contents li {
+        border-top: 1px solid currentColor;
+        font-size: 1.15rem;
+      }
+      .spread {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 2rem;
+        border-top: 4px double currentColor;
+        padding-top: 2rem;
+        margin-top: 4rem;
+      }
+      .margin-note {
+        font-style: italic;
+        font-size: 1rem;
+        border-top: 1px solid currentColor;
+      }
+      .spread h2 {
+        font-size: 3rem;
+        margin: 0.4rem 0;
+      }
+      .pullquote {
+        font-size: clamp(1.5rem, 3vw, 2.4rem);
+        font-style: italic;
+        border-block: 1px solid currentColor;
+        padding: 1rem 0;
+      }
+      .side-count {
+        display: block;
+        font-size: 3rem;
+        margin-top: 1.4rem;
+      }
+      .caption {
+        font-size: 0.85rem;
+      }
+      .spread svg {
+        border-bottom: 1px solid currentColor;
+      }
+      @media (max-width: 800px) {
+        .journal-columns,
+        .spread {
+          display: block;
+        }
+        .journal-columns > div + div {
+          border-left: 0;
+          padding-left: 0;
+        }
+        .spread aside {
+          margin-top: 2rem;
+        }
+        .masthead {
+          letter-spacing: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="review-nav">
+      <a href="../#/maquettes">← Les trois maquettes</a
+      ><span>Maquette statique · aucun tirage exécuté</span><a href="#accueil">Accueil</a
+      ><a href="#essai">Manipulation</a>
+    </div>
+    <main class="journal">
+      <fieldset class="theme-controls">
+        <legend>Affichage de la maquette</legend>
+        <label><input type="radio" name="mode" value="light" checked />Clair</label
+        ><label><input type="radio" name="mode" value="dark" />Sombre</label
+        ><label><input type="radio" name="mode" value="projector" />Projection</label>
+      </fieldset>
+      <p class="masthead">La revue des mots</p>
+      <section id="accueil" class="journal-columns">
+        <div>
+          <p class="label">02 / ÉDITION D’EXPÉRIMENTATION</p>
+          <h1>Le langage,<br />à l’épreuve du hasard.</h1>
+          <p class="lede">Pour comprendre comment une machine écrit, commençons par un seul mot.</p>
+          <p>
+            Six expériences composent un même parcours. Les élèves et les enseignants partent de la
+            même question.
+          </p>
+          <p>La première expérience est le démonstrateur proposé à la discussion.</p>
+        </div>
+        <div>
+          <ol class="contents">
+            <li><span>01</span><strong>Choisir le mot suivant</strong></li>
+            <li><span>02</span><strong>Découper une phrase</strong></li>
+            <li><span>03</span><strong>Faire varier les choix</strong></li>
+            <li><span>04</span><strong>Changer le début de la phrase</strong></li>
+            <li><span>05</span><strong>Faire apprendre une machine</strong></li>
+            <li><span>06</span><strong>Vérifier une réponse</strong></li>
+          </ol>
+        </div>
+      </section>
+      <section id="essai" class="spread">
+        <aside class="margin-note">
+          <h3>La question dans la marge</h3>
+          <p>Plus de chances signifie-t-il toujours choisi ?</p>
+          <p>Proposer une réponse avant de faire l’essai.</p>
+        </aside>
+        <div>
+          <p class="label">3 / 5 — LE TIRAGE</p>
+          <h2>Un mot parmi trois.</h2>
+          <p class="pullquote">« Le chat dort sur le tapis. »</p>
+          <figure>
+            <figcaption>Chances préparées : canapé 60 % · tapis 30 % · bureau 10 %</figcaption>
+            <svg
+              viewBox="0 0 600 90"
+              role="img"
+              aria-label="Trois zones représentant 60, 30 et 10 pour cent"
+            >
+              <rect x="0" y="25" width="360" height="34" fill="currentColor" />
+              <rect x="360" y="25" width="180" height="34" fill="currentColor" opacity=".45" />
+              <rect x="540" y="25" width="59" height="34" fill="none" stroke="currentColor" />
+              <path d="M420 5v75" stroke="currentColor" stroke-width="3" />
+            </svg>
+          </figure>
+          <div class="maquette-actions"><button disabled>Tirer un mot — maquette</button></div>
+          <p class="caption">
+            Figure 1. Le repère tombe dans la zone « tapis ». Exemple dessiné, non exécuté.
+          </p>
+        </div>
+        <aside>
+          <h3>Observer</h3>
+          <p><span class="side-count">60 %</span>Les chances préparées pour « canapé ».</p>
+          <p>Un favori peut ne pas sortir lors d’un essai.</p>
+        </aside>
+      </section>
+    </main>
+    <footer>
+      <p>
+        Les nombres représentés sont ceux du jeu de démonstration préparé. Cette page propose une
+        composition graphique, pas un second parcours.
+      </p>
+      <a href="../#/experience/01">Ouvrir le démonstrateur qui fonctionne →</a>
+    </footer>
+    <script>
+      document.querySelectorAll('input[name=mode]').forEach((input) =>
+        input.addEventListener('change', () => {
+          document.documentElement.dataset.theme = input.value;
+        }),
+      );
+    </script>
+  </body>
+</html>

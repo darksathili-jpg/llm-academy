@@ -1,391 +1,191 @@
-import { useEffect, useRef, useState } from 'react';
-import { modules, upcoming } from './content/modules';
-import { exercises, isModuleId } from './core/exercises';
-import { moduleScore, type Theme } from './core/progress';
+import { useEffect, useState } from 'react';
+import { Experience01 } from './components/Experience01';
 import { useProgress } from './components/ProgressProvider';
-import { ModulePage } from './components/ModulePage';
-import { Notebook } from './components/Notebook';
-import { Workshop, Activity, Laboratory } from './components/v2/Workshop';
-import { Studio, Animation, Backstage } from './components/v2/Studio';
-import { FirstSteps, StarterPreview } from './components/v2/FirstSteps';
-function readRoute() {
-  return location.hash.startsWith('#/') ? location.hash.slice(2).split('?')[0] || 'home' : 'home';
+import type { Theme } from './core/progress';
+const experiences = [
+  ['Choisir le mot suivant', 'Pourquoi ce mot plutôt qu’un autre ?'],
+  ['Découper une phrase', 'Quels morceaux la machine utilise-t-elle ?'],
+  ['Faire varier les choix', 'Pourquoi deux réponses peuvent-elles être différentes ?'],
+  ['Changer le début de la phrase', 'Que change ce qui a déjà été écrit ?'],
+  ['Faire apprendre une machine', 'Que change le fait de lui montrer des exemples ?'],
+  ['Vérifier une réponse', 'Comment savoir si ce qui est écrit est juste ?'],
+];
+function routeFromHash() {
+  return location.hash.startsWith('#/') ? location.hash.slice(2) : '';
 }
 function Home() {
   return (
-    <>
-      <section className="editorial-hero">
-        <div>
-          <div className="eyebrow">COMPRENDRE EN FAISANT / ÉDITION 02</div>
-          <h1>
-            Une machine
-            <br />
-            peut écrire.
-            <br />
-            <em>Comment fait-elle ?</em>
-          </h1>
-          <p className="lead">
-            Comment une IA choisit-elle les mots d’une réponse ? Partons d’une phrase simple,
-            faisons un essai, puis expliquons ce qui se passe.
-          </p>
-          <a className="button" href="#/decouvrir">
-            Commencer en 5 minutes, sans code →
-          </a>
-          <p className="hero-note">Aucune connaissance préalable · sans compte</p>
-        </div>
-        <StarterPreview />
-      </section>
-      <section className="space-entrances" aria-label="Les trois espaces">
-        <a className="editorial-row" href="#/atelier">
-          <span className="row-number">01</span>
-          <div>
-            <h2>Atelier Terminale NSI</h2>
-            <p>Dix activités guidées. À chaque fois : une question, un essai, une explication.</p>
-          </div>
-          <span>Entrer dans l’atelier ↗</span>
-        </a>
-        <a className="editorial-row" href="#/studio">
-          <span className="row-number">02</span>
-          <div>
-            <h2>Studio formateur</h2>
-            <p>Des séances de 1, 2, 3 et 6 heures, pensées pour être animées.</p>
-          </div>
-          <span>Préparer une séance ↗</span>
-        </a>
-        <a className="editorial-row" href="#/laboratoire">
-          <span className="row-number">03</span>
-          <div>
-            <h2>Laboratoire scientifique</h2>
-            <p>Pour aller plus loin : observer les calculs et comprendre leurs limites.</p>
-          </div>
-          <span>Explorer les instruments ↗</span>
-        </a>
-      </section>
-      <section className="editorial-callout">
-        <div className="eyebrow">POUR VOTRE PROCHAIN STAGE</div>
-        <h2>
-          Deux heures pour comprendre,
-          <br />
-          et apprendre à vérifier.
-        </h2>
-        <p>Un déroulement, des questions orales, des expériences et une console de projection.</p>
-        <a href="#/studio/120">Ouvrir la séance de deux heures →</a>
-      </section>
-      <p>
-        <a href="#/bibliotheque">Les neuf modules approfondis →</a> ·{' '}
-        <a href="#/module/01">Entrer dans le premier module →</a>
+    <article className="home-sheet">
+      <p className="folio">SIX EXPÉRIENCES / UN MÊME PARCOURS</p>
+      <h1>
+        Comment une IA
+        <br />
+        choisit ses mots<span className="question-mark">?</span>
+      </h1>
+      <p className="home-intro">
+        Une question. Un essai. Une idée qui devient plus claire.
+        <br />
+        Pour les élèves et les enseignants, avec les mêmes expériences.
       </p>
-    </>
-  );
-}
-function Library() {
-  const { progress, update } = useProgress();
-  return (
-    <article>
-      <div className="eyebrow">BIBLIOTHÈQUE / APPROFONDIR</div>
-      <h1>Des fondations à l’entraînement.</h1>
-      <p>
-        Neuf modules approfondis et leurs calculs. Les investigations et le studio sont accessibles
-        depuis les trois espaces.
-      </p>
-      <fieldset className="track-options">
-        <legend>Choisir mon parcours de lecture</legend>
-        <label>
-          <input
-            type="radio"
-            checked={progress.track === 'discovery'}
-            onChange={() => update((p) => ({ ...p, track: 'discovery' }))}
-          />
-          Découverte guidée
-        </label>
-        <label>
-          <input
-            type="radio"
-            checked={progress.track === 'developer'}
-            onChange={() => update((p) => ({ ...p, track: 'developer' }))}
-          />
-          Parcours développeur
-        </label>
-      </fieldset>
-      <div className="editorial-list">
-        {modules.map((m) => (
-          <a className="editorial-row" key={m.id} href={'#/module/' + m.id}>
-            <span className="row-number">{m.id}</span>
+      <ol className="experience-index">
+        {experiences.map(([title, description], i) => (
+          <li key={title}>
+            <span className="index-number">{String(i + 1).padStart(2, '0')}</span>
             <div>
-              <h2>{m.title}</h2>
-              <p>{m.subtitle}</p>
+              <h2>{title}</h2>
+              <p>{description}</p>
+              {i === 0 && (
+                <a className="primary-link" href="#/experience/01">
+                  Essayer la première expérience <span aria-hidden="true">→</span>
+                </a>
+              )}
             </div>
-            <span>
-              {moduleScore(progress, m.id).correct}/{moduleScore(progress, m.id).total} calculs
-              vérifiés ↗
-            </span>
-          </a>
+          </li>
         ))}
-      </div>
-      <p>
-        {upcoming.length} modules de la collection initiale restent à construire ; le mini-RAG et le
-        prompting sont déjà accessibles comme expériences V2.
+      </ol>
+      <p className="scope-note">
+        Ce démonstrateur ouvre uniquement la première expérience. Les cinq suivantes attendront une
+        validation humaine.
       </p>
+      <a className="design-link" href="#/maquettes">
+        Voir les trois propositions graphiques
+      </a>
     </article>
   );
 }
-function References() {
-  const refs = Array.from(
-    new Map(modules.flatMap((m) => m.references).map((r) => [r.url, r])).values(),
-  );
+function Mockups() {
   return (
-    <article>
-      <header className="page-heading">
-        <span className="eyebrow">Méthode & références</span>
-        <h1>Des mécanismes vérifiables</h1>
-        <p className="lead">
-          Des explications originales, des sources scientifiques et des limites explicites.
-        </p>
-      </header>
-      <section>
-        <h2>Programmes et usage en classe</h2>
-        <p>
-          Sources officielles consultées le 10 octobre 2026. Les mécanismes des LLM sont des
-          prolongements hors programme NSI ; aucun compte ni donnée personnelle n’est nécessaire
-          dans ces activités.
-        </p>
-        <ul>
-          <li>
-            <a href="https://eduscol.education.gouv.fr/5823/programmes-et-ressources-en-numerique-et-sciences-informatiques-voie-g">
-              Éduscol : programmes NSI en vigueur
-            </a>
+    <article className="mockup-index">
+      <p className="folio">CHOIX GRAPHIQUE / TROIS PROPOSITIONS</p>
+      <h1>
+        Trois façons
+        <br />
+        de mettre l’essai au centre.
+      </h1>
+      <p>
+        Des maquettes statiques de l’accueil et de la manipulation. Seul le démonstrateur calcule
+        réellement les tirages.
+      </p>
+      <ol>
+        {[
+          [
+            '01-paillasse',
+            'La Paillasse',
+            'Une feuille d’expérience, une règle de hasard, des marges utiles. Direction retenue provisoirement pour le démonstrateur.',
+          ],
+          [
+            '02-revue',
+            'La Revue',
+            'Une double page de revue scientifique, composée en colonnes avec des annotations.',
+          ],
+          [
+            '03-scene',
+            'La Scène',
+            'Une phrase immense, des mots en lumière, une conduite collective de séance.',
+          ],
+        ].map(([id, title, detail]) => (
+          <li key={id}>
+            <h2>
+              <a href={import.meta.env.BASE_URL + 'maquettes/' + id + '.html'}>{title} →</a>
+            </h2>
+            <p>{detail}</p>
           </li>
-          <li>
-            <a href="https://www.education.gouv.fr/cadre-d-usage-de-l-ia-en-education-450647">
-              Cadre d’usage de l’IA en éducation
-            </a>
-          </li>
-          <li>
-            <a href="https://www.cnil.fr/fr/enseignant-usage-systeme-ia">
-              CNIL : enseignants et systèmes d’IA
-            </a>
-          </li>
-          <li>
-            <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2 : exigences d’accessibilité</a>
-          </li>
-        </ul>
-        <h2>Références scientifiques des modules</h2>
-        <ul className="references">
-          {refs.map((r) => (
-            <li key={r.url}>
-              <a href={r.url}>{r.title}</a>
-              <span>{r.reason}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <section>
-        <h2>Une formation qui se construit</h2>
-        <p>
-          Les ouvrages de Sebastian Raschka (Build a Large Language Model From Scratch), Jay Alammar
-          et Maarten Grootendorst (Hands-On Large Language Models) et Chip Huyen (AI Engineering)
-          sont des références de progression. Les textes, exercices, corpus et figures de cette
-          plateforme sont originaux ; aucun chapitre n’est reproduit.
-        </p>
-        <p>
-          Les expériences actuelles sont des modèles pédagogiques réduits. Le laboratoire de
-          probabilités ne contient aucun réseau entraîné. Le laboratoire BPE emploie des caractères,
-          pas des octets. Ces limites sont affichées au lieu de présenter une animation comme un
-          calcul scientifique.
-        </p>
-        <a href="https://github.com/darksathili-jpg/llm-academy/tree/refonte/atelier-v2/docs">
-          Documentation, roadmap et protocoles de test →
-        </a>
-      </section>
+        ))}
+      </ol>
+      <a href="#/">Revenir aux expériences</a>
     </article>
   );
 }
-
 export default function App() {
-  const [route, setRoute] = useState(readRoute),
-    main = useRef<HTMLElement>(null),
-    navigated = useRef(false);
-  const { progress, warning, update } = useProgress();
-  const [offlineMessage, setOfflineMessage] = useState(''),
-    [online, setOnline] = useState(navigator.onLine);
-  const [kind, id] = route.split('/'),
-    projected = kind === 'projection' || kind === 'animation';
+  const [route, setRoute] = useState(routeFromHash),
+    [projection, setProjection] = useState(false);
+  const { progress, update, warning } = useProgress();
   useEffect(() => {
-    document.documentElement.dataset.theme = projected ? 'projector' : progress.theme;
-  }, [progress.theme, projected]);
-  useEffect(() => {
-    const changed = () => {
-      if (location.hash.startsWith('#/')) {
-        setRoute(readRoute());
-        requestAnimationFrame(() => {
-          const section = new URLSearchParams(location.hash.split('?')[1] ?? '').get('section');
-          if (section) document.getElementById(section)?.scrollIntoView();
-        });
-      }
+    const change = () => {
+      if (!location.hash.startsWith('#/')) return;
+      setRoute(routeFromHash());
+      setProjection(false);
+      requestAnimationFrame(() => document.getElementById('content')?.focus());
+      scrollTo(0, 0);
     };
-    addEventListener('hashchange', changed);
-    return () => removeEventListener('hashchange', changed);
+    addEventListener('hashchange', change);
+    return () => removeEventListener('hashchange', change);
   }, []);
   useEffect(() => {
-    document.title = 'LLM / ' + (kind === 'home' ? 'Atelier des machines à langage' : kind);
-    if (navigated.current) main.current?.focus();
-    navigated.current = true;
-    const section = new URLSearchParams(location.hash.split('?')[1] ?? '').get('section');
-    if (section) document.getElementById(section)?.scrollIntoView();
-    else scrollTo(0, 0);
-  }, [route, kind]);
+    document.documentElement.dataset.theme = projection ? 'projector' : progress.theme;
+  }, [projection, progress.theme]);
   useEffect(() => {
-    const refresh = () => setOnline(navigator.onLine);
-    addEventListener('online', refresh);
-    addEventListener('offline', refresh);
-    return () => {
-      removeEventListener('online', refresh);
-      removeEventListener('offline', refresh);
-    };
-  }, []);
+    document.title =
+      'LLM Academy — ' +
+      (route === 'experience/01' ? 'Le mot d’après' : 'Expérimenter pour comprendre');
+  }, [route]);
   useEffect(() => {
-    if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return;
-    let disposed = false;
-    navigator.serviceWorker
-      .register(import.meta.env.BASE_URL + 'sw.js', { scope: import.meta.env.BASE_URL })
-      .then((reg) => {
-        if (disposed) return;
-        setOfflineMessage(
-          navigator.serviceWorker.controller
-            ? 'Ressources locales disponibles hors ligne.'
-            : 'Préparation du cache hors ligne…',
-        );
-        function observe(worker: ServiceWorker | null) {
-          worker?.addEventListener('statechange', () => {
-            if (disposed) return;
-            if (worker.state === 'activated')
-              setOfflineMessage('Ressources locales disponibles hors ligne.');
-            if (worker.state === 'installed')
-              setOfflineMessage(
-                reg.waiting
-                  ? 'Une mise à jour sera appliquée après fermeture des onglets.'
-                  : 'Cache installé. Prochaine visite disponible hors ligne.',
-              );
-            if (worker.state === 'redundant' && !navigator.serviceWorker.controller)
-              setOfflineMessage(
-                'Cache indisponible : rechargez avec une connexion pour réessayer.',
-              );
-          });
-        }
-        observe(reg.installing);
-        reg.addEventListener('updatefound', () => observe(reg.installing));
-      })
-      .catch(() => {
-        if (!disposed) setOfflineMessage('Cache indisponible : le site nécessite une connexion.');
-      });
-    return () => {
-      disposed = true;
-    };
+    if (import.meta.env.PROD && 'serviceWorker' in navigator)
+      void navigator.serviceWorker
+        .register(import.meta.env.BASE_URL + 'sw.js', { scope: import.meta.env.BASE_URL })
+        .catch(() => {});
   }, []);
-
-  if (kind === 'coulisses') return <Backstage />;
-  if (projected && ['60', '120', '180', '360'].includes(id))
-    return (
-      <div className="academy-v2 console-shell">
-        <a className="skip-link" href="#main">
-          Aller au contenu
-        </a>
-        <Animation key={route} duration={Number(id)} projection={kind === 'projection'} />
-        <p className="network-status" role="status">
-          {online ? 'Réseau connecté' : 'Hors ligne'} · {offlineMessage}
-        </p>
-      </div>
-    );
-  let content;
-  if (kind === 'home') content = <Home />;
-  else if (kind === 'decouvrir') content = <FirstSteps />;
-  else if (kind === 'atelier') content = <Workshop />;
-  else if (kind === 'activite') content = <Activity key={id} id={id} />;
-  else if (kind === 'studio' && (!id || ['60', '120', '180', '360'].includes(id)))
-    content = <Studio duration={id ? Number(id) : undefined} />;
-  else if (kind === 'laboratoire' || kind === 'experience')
-    content = <Laboratory key={id ?? kind} id={id} />;
-  else if (kind === 'bibliotheque') content = <Library />;
-  else if (kind === 'carnet') content = <Notebook />;
-  else if (kind === 'references') content = <References />;
-  else if (kind === 'module' && isModuleId(id))
-    content = <ModulePage key={id} module={modules.find((m) => m.id === id)!} />;
-  else
-    content = (
+  const main =
+    route === 'experience/01' ? (
+      <Experience01 projection={projection} onProjection={setProjection} />
+    ) : route === 'maquettes' ? (
+      <Mockups />
+    ) : !route ? (
+      <Home />
+    ) : (
       <article>
-        <h1>Cette page n’existe pas</h1>
-        <a href="#/">Revenir à l’atelier</a>
+        <h1>Cette expérience n’est pas ouverte.</h1>
+        <p>Seule la première est construite pour ce démonstrateur.</p>
+        <a href="#/">Revenir aux expériences</a>
       </article>
     );
   return (
-    <div className="academy-v2">
-      <a className="skip-link" href="#main">
+    <div className={'academy-simple' + (projection ? ' is-projecting' : '')}>
+      <a className="skip-link" href="#content">
         Aller au contenu
       </a>
-      <header className="academy-header">
-        <a className="editorial-brand" href="#/" aria-label="LLM / Accueil">
-          LLM /
-        </a>
-        <span className="brand-caption">ATELIER DES MACHINES À LANGAGE</span>
-        <a href="#/carnet">Carnet d’apprentissage</a>
-      </header>
-      <div className="academy-navigation">
-        <nav aria-label="Navigation principale">
-          {[
-            ['decouvrir', 'Commencer'],
-            ['atelier', '01 Atelier NSI'],
-            ['studio', '02 Studio formateur'],
-            ['laboratoire', '03 Laboratoire'],
-            ['bibliotheque', 'Modules approfondis'],
-          ].map(([r, label]) => (
-            <a key={r} href={'#/' + r} aria-current={kind === r ? 'page' : undefined}>
-              {label}
-            </a>
-          ))}
-        </nav>
-        <fieldset className="theme-switch">
-          <legend className="sr-only">Mode d’affichage</legend>
-          {(
-            [
-              ['light', 'Clair'],
-              ['dark', 'Sombre'],
-              ['projector', 'Projection'],
-            ] as [Theme, string][]
-          ).map(([theme, label]) => (
-            <label key={theme} className={progress.theme === theme ? 'active' : ''}>
-              <input
-                type="radio"
-                name="theme"
-                checked={progress.theme === theme}
-                onChange={() => update((p) => ({ ...p, theme }))}
-              />
-              {label}
-            </label>
-          ))}
-        </fieldset>
-      </div>
-      {warning && (
-        <div className="storage-warning" role="alert">
-          {warning}
-        </div>
+      {!projection && (
+        <header className="simple-header">
+          <a className="wordmark" href="#/" aria-label="LLM Academy — Accueil">
+            LLM<span>ACADEMY</span>
+          </a>
+          <p>Expérimenter pour comprendre.</p>
+          <fieldset className="view-options">
+            <legend className="sr-only">Affichage</legend>
+            {(
+              [
+                ['light', 'Clair'],
+                ['dark', 'Sombre'],
+                ['projector', 'Projection'],
+              ] as [Theme, string][]
+            ).map(([value, label]) => (
+              <label key={value}>
+                <input
+                  type="radio"
+                  name="theme"
+                  checked={progress.theme === value}
+                  onChange={() => update((p) => ({ ...p, theme: value }))}
+                />
+                {label}
+              </label>
+            ))}
+          </fieldset>
+        </header>
       )}
-      <main id="main" ref={main} tabIndex={-1} className="academy-content">
-        {content}
+      {warning && (
+        <p role="alert" className="notice">
+          {warning}
+        </p>
+      )}
+      <main id="content" tabIndex={-1}>
+        {main}
       </main>
-      <footer className="academy-footer">
-        <span>LLM / comprendre en expérimentant</span>
-        <span role="status">
-          {online ? 'Réseau connecté' : 'Hors ligne'} · {offlineMessage}
-        </span>
-        <span className="mini-progress">
-          Calculs vérifiés{' '}
-          <strong>
-            {modules.reduce((s, m) => s + moduleScore(progress, m.id).correct, 0)} /{' '}
-            {exercises.length}
-          </strong>
-        </span>
-        <a href="#/references">Sources & limites</a>
-      </footer>
+      {!projection && (
+        <footer className="simple-footer">
+          <a href="#/">Les six expériences</a>
+          <span>Un seul parcours · aucun compte</span>
+        </footer>
+      )}
     </div>
   );
 }

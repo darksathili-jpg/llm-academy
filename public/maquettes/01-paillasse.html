@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>LLM Academy — Maquette La Paillasse</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 0.2em;
+      }
+      p {
+        line-height: 1.7;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.05;
+        overflow-wrap: anywhere;
+      }
+      .review-nav {
+        font:
+          14px/1.6 Arial,
+          sans-serif;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+        padding: 1rem 3vw;
+        border-bottom: 1px solid currentColor;
+      }
+      .review-nav span {
+        margin-right: auto;
+      }
+      .contents {
+        list-style: none;
+        padding: 0;
+      }
+      .contents li {
+        display: flex;
+        gap: 1rem;
+        padding: 0.75rem 0;
+      }
+      .contents span {
+        font: 1rem monospace;
+      }
+      .label {
+        font: 13px/1.6 monospace;
+        letter-spacing: 0.1em;
+      }
+      .maquette-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .maquette-actions button {
+        font:
+          700 1rem Arial,
+          sans-serif;
+        border: 1px solid currentColor;
+        color: inherit;
+        background: transparent;
+        padding: 1rem;
+        min-height: 48px;
+      }
+      button:disabled {
+        opacity: 0.65;
+      }
+      .theme-controls {
+        margin: 1rem 0;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        font:
+          14px Arial,
+          sans-serif;
+      }
+      .theme-controls label {
+        display: flex;
+        gap: 0.3rem;
+      }
+      figure {
+        margin: 2rem 0;
+      }
+      figcaption {
+        font:
+          14px/1.7 Arial,
+          sans-serif;
+      }
+      svg {
+        display: block;
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+      }
+      footer {
+        padding: 2rem 5vw;
+        border-top: 1px solid currentColor;
+        font:
+          14px/1.7 Arial,
+          sans-serif;
+      }
+      footer p {
+        max-width: 55rem;
+      }
+      :focus-visible {
+        outline: 3px solid currentColor;
+        outline-offset: 5px;
+      }
+      section {
+        scroll-margin-top: 1rem;
+      }
+      .theme-controls input {
+        accent-color: currentColor;
+      }
+      :root {
+        color: #182127;
+        background: #f9faf7;
+        font-family: Georgia, serif;
+        --accent: #164fc9;
+      }
+      html[data-theme='dark'] {
+        color: #edf2f5;
+        background: #171e25;
+        --accent: #8db7ff;
+      }
+      html[data-theme='projector'] {
+        color: #000;
+        background: #fff;
+        --accent: #003da6;
+        font-size: 22px;
+      }
+      main {
+        max-width: 1100px;
+        margin: 4rem auto;
+        padding: 0 5vw;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: Bahnschrift, 'Arial Narrow', Arial, sans-serif;
+        letter-spacing: -0.06em;
+      }
+      h1 {
+        font-size: clamp(3rem, 8vw, 6.5rem);
+        max-width: 14ch;
+      }
+      h2 {
+        font-size: 3rem;
+      }
+      .contents {
+        margin: 3rem 0 4rem 15%;
+        border-left: 1px solid currentColor;
+      }
+      .contents li {
+        padding: 1rem 1.5rem;
+        align-items: baseline;
+      }
+      .contents li:first-child {
+        border-left: 6px solid var(--accent);
+        margin-left: -3px;
+        color: var(--accent);
+        font-size: 1.7rem;
+      }
+      .specimen {
+        display: grid;
+        grid-template-columns: 7rem 1fr;
+        gap: 2rem;
+        border-top: 4px solid currentColor;
+        padding-top: 2rem;
+      }
+      .specimen .big-id {
+        font: 5rem monospace;
+        color: var(--accent);
+      }
+      .phrase {
+        font:
+          clamp(1.8rem, 4vw, 3.5rem) Bahnschrift,
+          Arial,
+          sans-serif;
+        border-block: 2px solid currentColor;
+        padding: 1.5rem 0;
+      }
+      .phrase em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      figure {
+        color: var(--accent);
+      }
+      @media (max-width: 700px) {
+        main {
+          margin-top: 2rem;
+        }
+        .contents {
+          margin-left: 0;
+        }
+        .specimen {
+          display: block;
+        }
+        .big-id {
+          display: none;
+        }
+        .review-nav span {
+          width: 100%;
+        }
+        h2 {
+          font-size: 2.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="review-nav">
+      <a href="../#/maquettes">← Les trois maquettes</a
+      ><span>Maquette statique · aucun tirage exécuté</span><a href="#accueil">Accueil</a
+      ><a href="#essai">Manipulation</a>
+    </div>
+    <main>
+      <fieldset class="theme-controls">
+        <legend>Affichage de la maquette</legend>
+        <label><input type="radio" name="mode" value="light" checked />Clair</label
+        ><label><input type="radio" name="mode" value="dark" />Sombre</label
+        ><label><input type="radio" name="mode" value="projector" />Projection</label>
+      </fieldset>
+      <section id="accueil">
+        <p class="label">01 / LA PAILLASSE — FEUILLE D’EXPÉRIENCE</p>
+        <h1>Comment une IA choisit ses mots ?</h1>
+        <p>Une question. Un essai. Une idée qui devient plus claire.</p>
+        <ol class="contents">
+          <li><span>01</span><strong>Choisir le mot suivant</strong></li>
+          <li><span>02</span><strong>Découper une phrase</strong></li>
+          <li><span>03</span><strong>Faire varier les choix</strong></li>
+          <li><span>04</span><strong>Changer le début de la phrase</strong></li>
+          <li><span>05</span><strong>Faire apprendre une machine</strong></li>
+          <li><span>06</span><strong>Vérifier une réponse</strong></li>
+        </ol>
+      </section>
+      <section id="essai" class="specimen">
+        <span class="big-id">01</span>
+        <div>
+          <p class="label">3 / 5 — UNE MANIPULATION</p>
+          <h2>Le mot d’après.</h2>
+          <p class="phrase">Le chat dort sur le <em>tapis</em></p>
+          <p>Une règle partagée en trois zones permet de voir comment le hasard choisit un mot.</p>
+          <figure>
+            <figcaption>Chances préparées : canapé 60 % · tapis 30 % · bureau 10 %</figcaption>
+            <svg
+              viewBox="0 0 600 90"
+              role="img"
+              aria-label="Trois zones représentant 60, 30 et 10 pour cent"
+            >
+              <rect x="0" y="25" width="360" height="34" fill="currentColor" />
+              <rect x="360" y="25" width="180" height="34" fill="currentColor" opacity=".45" />
+              <rect x="540" y="25" width="59" height="34" fill="none" stroke="currentColor" />
+              <path d="M420 5v75" stroke="currentColor" stroke-width="3" />
+            </svg>
+          </figure>
+          <div class="maquette-actions">
+            <button disabled>Tirer un mot — maquette</button
+            ><button disabled>Faire 20 essais — maquette</button>
+          </div>
+          <p>La largeur des zones porte l’information ; le repère illustre un résultat possible.</p>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>
+        Les nombres représentés sont ceux du jeu de démonstration préparé. Cette page propose une
+        composition graphique, pas un second parcours.
+      </p>
+      <a href="../#/experience/01">Ouvrir le démonstrateur qui fonctionne →</a>
+    </footer>
+    <script>
+      document.querySelectorAll('input[name=mode]').forEach((input) =>
+        input.addEventListener('change', () => {
+          document.documentElement.dataset.theme = input.value;
+        }),
+      );
+    </script>
+  </body>
+</html>

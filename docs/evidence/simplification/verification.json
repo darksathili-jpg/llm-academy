@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-10T15:22:33.078Z",
+  "kind": "inspection automatisée, pas preuve de compréhension",
+  "screens": [
+    "accueil.png",
+    "01-question.png",
+    "02-hypothese.png",
+    "03-manipulation.png",
+    "04-observation.png",
+    "05-explication.png",
+    "manipulation-390-clair.png",
+    "manipulation-1280-sombre.png",
+    "manipulation-1920-projection.png",
+    "maquette-01-paillasse.png",
+    "maquette-02-revue.png",
+    "maquette-03-scene.png"
+  ],
+  "errors": [],
+  "pythonLocal": {
+    "assertions": "passed",
+    "output": "Chances : [0.6, 0.3, 0.1]\r\nSur 20 essais : {'canapé': 16, 'tapis': 3, 'bureau': 1}"
+  },
+  "pythonBrowser": {
+    "assertions": "passed",
+    "output": "Chances : [0.6, 0.3, 0.1]\nSur 20 essais : {'canapé': 16, 'tapis': 3, 'bureau': 1}\n"
+  }
+}
