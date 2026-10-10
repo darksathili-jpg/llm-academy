@@ -55,7 +55,7 @@ Cette grille apprécie la conformité observée au mandat ; elle ne certifie pas
 | Formation                |  23/25 | Quatre scénarios minutés, 120/180 parcourus, reprise/export/notes protégées ; matériel réel et déroulement humain à vérifier       |
 | Identité visuelle        |  14/15 | Trois directions évaluées, prototype inspecté, nouvelles entrées éditoriales et instruments ; validation graphique externe absente |
 | Science                  |  14/15 | Calculs, gradients, convergence, causalité, LoRA et notebooks exécutés ; revue indépendante encore souhaitable                     |
-| Technique                |   9/10 | Build strict, tests, cache, migration et repli ; CI/Linux V2 non encore exécutée                                                   |
+| Technique                |   9/10 | Build strict, tests, cache, migration et repli ; CI/Linux réussie ; essais multi-navigateurs et terrain encore nécessaires         |
 | Accessibilité/projection |   9/10 | Contrastes axe, cinq largeurs, clavier, plein écran avec repli et PDF ; lecteurs d'écran et salle réelle non testés                |
 | Total indicatif          | 91/100 | Objectif interne atteint, sans substituer ce jugement aux réserves documentées                                                     |
 
@@ -63,4 +63,4 @@ Aucun défaut critique de perte de données, de fausse génération ou de projec
 
 ## Clôture
 
-Contrôles locaux finaux réussis : formatage, TypeScript strict/build, 119 tests unitaires, 38 scénarios Chromium, audit npm (0 vulnérabilité), deux notebooks PyTorch et dix snippets Python. Python navigateur et quatre profils mesurés vérifiés séparément. La CI de branche valide sans déployer ; publication réservée à main après autorisation. Branche distante et résultat CI à ajouter après transfert.
+Contrôles locaux finaux réussis : formatage, TypeScript strict/build, 119 tests unitaires, 38 scénarios Chromium, audit npm (0 vulnérabilité), deux notebooks PyTorch et dix snippets Python. Python navigateur et quatre profils mesurés vérifiés séparément. La CI de branche valide sans déployer ; publication réservée à main après autorisation. Branche transférée et [PR #1 ouverte en brouillon](https://github.com/darksathili-jpg/llm-academy/pull/1). [GitHub Actions/Linux #7](https://github.com/darksathili-jpg/llm-academy/actions/runs/38059760957) a validé le commit 2809153b88d16eec1adf5c41bddf7a24973c361e : formatage, TypeScript, 119 tests unitaires, build, 38 scénarios Chromium et artefact Pages réussis. L’étape publish est skipped : aucune publication V2. Preuve structurée : evidence/ci-v2.json.

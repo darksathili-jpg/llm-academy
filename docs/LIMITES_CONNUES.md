@@ -28,4 +28,4 @@
 
 ## Avant publication
 
-La branche dédiée n'est pas fusionnée dans main et aucune publication V2 n'est revendiquée. Faire relire le rapport, tester sur le matériel cible puis autoriser la fusion. Le workflow doit ensuite réussir sur GitHub Actions/Linux, suivi du contrôle public scripts/verify-live.mjs. Les preuves locales ne remplacent pas ce contrôle du domaine publié.
+La branche dédiée n'est pas fusionnée dans main et aucune publication V2 n'est revendiquée. Faire relire le rapport, tester sur le matériel cible puis autoriser la fusion. La CI Linux de la branche a réussi (run 38059760957, commit 2809153), avec publication ignorée. Après fusion autorisée, le workflow sur main et le contrôle public scripts/verify-live.mjs doivent aussi réussir. Les preuves locales ne remplacent pas ce contrôle du domaine publié.
