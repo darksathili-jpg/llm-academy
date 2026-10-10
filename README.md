@@ -14,7 +14,7 @@ npm run test:e2e
 npm run preview
 ```
 ## Publier
-Le workflow .github/workflows/pages.yml valide et construit l'application puis publie dist sur gh-pages. Dans Settings > Pages, sélectionner Deploy from a branch, gh-pages, / (root). Si la branche n'existe pas encore, attendre le premier workflow puis la sélectionner.
+Le workflow .github/workflows/pages.yml valide et construit l'application puis publie l’artefact dist avec les actions officielles GitHub Pages. Dans Settings > Pages > Build and deployment > Source, sélectionner GitHub Actions. Avec des droits d’administration et des identifiants Git locaux déjà configurés, le script optionnel node scripts/configure-pages.mjs --enable-actions effectue cette configuration ; --inspect lit son état. Les identifiants restent en mémoire et ne sont jamais écrits dans le dépôt.
 URL prévue : https://darksathili-jpg.github.io/llm-academy/
 Le routage hash et la base /llm-academy/ sont compatibles avec GitHub Pages.
 ## Données
