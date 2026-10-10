@@ -1,14 +1,26 @@
-# LLM Academy
+# LLM / Atelier des machines à langage
 
-Plateforme francophone pour comprendre les LLM en expérimentant leurs mécanismes.
-Livraison 2 : modules 01 à 06, six laboratoires, 24 exercices et carnet local migré sans perte depuis la première livraison. Modules 07 à 12 explicitement à venir.
+Plateforme française pour voir, manipuler, programmer et expliquer les mécanismes des modèles de langage.
 
-## Développer
+Refonte V2 sur la branche `refonte/atelier-v2` ; le domaine public n'est pas déclaré mis à jour tant que cette branche n'est pas fusionnée et vérifiée.
 
-Prérequis : Node 22.13+ et npm.
+## Première visite
 
-```sh
-npm ci
+Commencer par `#/decouvrir` : quatre écrans en langage courant, sans code, pour choisir un mot puis vérifier une réponse. Les dix activités guidées expliquent les termes au voisinage des commandes ; les détails scientifiques restent accessibles. Voir [la reprise après retour enseignant](docs/PRISE_EN_MAIN_SIMPLE.md). L’ancienne appréciation de 91/100 ne représente plus une note actuelle d’utilisabilité.
+
+## Trois espaces
+
+- Atelier Terminale NSI : dix investigations, huit étapes, hypothèses et observations locales, Python facultatif et grille de relecture.
+- Studio formateur : séances de 1/2/3/6 heures, questions orales, corrections progressives, deux chronomètres, reprise, projection, notes privées séparées et fiches imprimables.
+- Laboratoire : dix instruments intuitifs/scientifiques ; neuf modules approfondis conservés.
+
+Huit expériences prioritaires : prédiction, BPE, génération, attention, apprentissage neural, détective des hallucinations, prompting et mini-RAG. Les probabilités/gradients/recherches sont calculés ; les scores inventés, textes préparés et approximations sont signalés. Pas de LLM de production local, pas d'API obligatoire.
+
+## Développement
+
+Node 22 et npm. Installation : `npm ci`.
+
+```
 npm run dev
 npm run format:check
 npm run typecheck
@@ -16,24 +28,24 @@ npm test
 npm run build
 npx playwright install chromium
 npm run test:e2e
-npm run preview
 ```
 
-## Publier
+Preview : `npm run preview`, http://127.0.0.1:4173/llm-academy/. Si PowerShell interprète les arguments npm, utiliser `node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 4173 --strictPort`.
 
-Le workflow .github/workflows/pages.yml valide et construit l'application puis publie l’artefact dist avec les actions officielles GitHub Pages. Dans Settings > Pages > Build and deployment > Source, sélectionner GitHub Actions. Avec des droits d’administration et des identifiants Git locaux déjà configurés, le script optionnel node scripts/configure-pages.mjs --enable-actions effectue cette configuration ; --inspect lit son état. Les identifiants restent en mémoire et ne sont jamais écrits dans le dépôt.
-Site publié et vérifié : https://darksathili-jpg.github.io/llm-academy/
-Vérifier le site public avec Chromium : node scripts/verify-live.mjs (connexion requise au début). Voir docs/ROADMAP.md pour la preuve du workflow et les limites de la livraison.
-Le routage hash et la base /llm-academy/ sont compatibles avec GitHub Pages.
+Avec preview actif : `node scripts/verify-profiles-v2.mjs`. Vérification Python réelle facultative avec réseau : `node scripts/verify-python-browser.mjs`. Notebooks CPU/PyTorch : `python scripts/verify-notebooks.py`.
 
-## Laboratoires scientifiques
+## Données et réseau
 
-Vecteurs et projections ; calcul matriciel et gradient ; attention Q/K/V et masque causal ; passage avant d’un Transformer miniature. Les résultats sont calculés, les vecteurs/poids de démonstration sont inventés et non entraînés. Voir [phase C](docs/PHASE_C.md).
+Sans compte, télémétrie ni clé API. Carnet local schéma 4 ; anciennes versions migrées ; import/export JSON contrôlé, limite 2 Mo. Les écrits libres ne reçoivent pas de note automatique. Exporter avant d'effacer le navigateur.
 
-## Données
+Calculs TypeScript et documents locaux hors ligne après mise en cache complète. Pyodide 0.28.3 se télécharge depuis jsDelivr au lancement et reste facultatif. Arrêt/reset, input, sorties bornées et délai de 60 s ; fichier .py en repli. Ce Worker n'est pas présenté comme un environnement certifié pour code hostile.
 
-Aucun compte ni clé API. Carnet stocké dans ce navigateur, exportable en JSON. L'import est contrôlé ; les réponses sont recalculées pour déterminer les compétences. Effacer les données du navigateur efface le carnet. Mode hors ligne après une première visite réussie en production.
+Coulisses privées dans une fenêtre séparée : jamais affichées dans Projection, jamais incluses dans les fiches. Éviter le partage du bureau complet.
 
 ## Documentation
 
-[Cahier des charges](docs/CAHIER_DES_CHARGES.md) · [Architecture](docs/ARCHITECTURE.md) · [Pédagogie](docs/PROGRESSION_PEDAGOGIQUE.md) · [Références](docs/REFERENCES.md) · [Tests](docs/QUALITE_ET_TESTS.md) · [Roadmap](docs/ROADMAP.md).
+[Rapport de validation V2](docs/RAPPORT_VALIDATION_V2.md), [guide formateur](docs/SCENARIOS_FORMATEUR.md), [périmètre scientifique](docs/EXPERIENCES_SCIENTIFIQUES.md), [correspondances NSI](docs/PROGRAMME_NSI_CORRESPONDANCES.md), [limites](docs/LIMITES_CONNUES.md), [audit initial](docs/REFONTE_AUDIT_INITIAL.md).
+
+Les durées sont proposées ; les profils testés sont hypothétiques. Aucun essai terrain ni certification WCAG n'est revendiqué. Textes, corpus et figures originaux, références primaires citées ; aucun livre reproduit.
+
+GitHub Pages conservé. Après autorisation de fusion : workflow de validation, publication, puis contrôle du domaine public `node scripts/verify-live.mjs`. Une URL de preview peut être contrôlée avec la variable `LLM_ACADEMY_URL`.

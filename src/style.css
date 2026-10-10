@@ -1568,19 +1568,94 @@ input[type='checkbox'] {
 }
 
 /* Construction, training, and code workbench */
-.corpus-editors { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; margin:1.4rem 0; }
-.training-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin:1.5rem 0; }
-.training-metrics p { padding:1rem; background:var(--surface); border:1px solid var(--line); border-radius:6px; margin:0; }
-.training-metrics span,.training-metrics strong { display:block; }
-.training-metrics strong { font:700 1.5rem var(--mono); margin-top:.5rem; color:var(--ink); }
-.loss-plot .training-line { stroke:var(--accent); stroke-width:3; }
-.loss-plot .validation-line { stroke:var(--ink); stroke-width:2; stroke-dasharray:5 4; }
-.curve-legend { display:flex; gap:2rem; flex-wrap:wrap; }
-.curve-legend span:first-child { color:var(--accent); font-weight:bold; }
-.code-editor,.code-output { font-family:var(--mono); font-size:.83rem; line-height:1.6; }
-.code-editor { tab-size:4; white-space:pre; overflow:auto; }
-.code-output { padding:1.2rem; border:1px solid var(--line); border-radius:6px; background:var(--surface); color:var(--ink); white-space:pre-wrap; overflow-wrap:anywhere; }
-.generated-text { font-family:var(--mono); line-height:1.9; padding:1rem; background:var(--tint); overflow-wrap:anywhere; }
-.python-workbench { border-top:1px solid var(--line); margin-top:2.5rem; padding-top:1.5rem; }
-.python-workbench a { display:inline-block; margin:.5rem 0; }
-@media(max-width:700px) { .corpus-editors,.training-metrics { grid-template-columns:1fr; } .training-metrics strong { font-size:1.3rem; } }
+.corpus-editors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  margin: 1.4rem 0;
+}
+.training-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.training-metrics p {
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin: 0;
+}
+.training-metrics span,
+.training-metrics strong {
+  display: block;
+}
+.training-metrics strong {
+  font: 700 1.5rem var(--mono);
+  margin-top: 0.5rem;
+  color: var(--ink);
+}
+.loss-plot .training-line {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+.loss-plot .validation-line {
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+.curve-legend {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.curve-legend span:first-child {
+  color: var(--accent);
+  font-weight: bold;
+}
+.code-editor,
+.code-output {
+  font-family: var(--mono);
+  font-size: 0.83rem;
+  line-height: 1.6;
+}
+.code-editor {
+  tab-size: 4;
+  white-space: pre;
+  overflow: auto;
+}
+.code-output {
+  padding: 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.generated-text {
+  font-family: var(--mono);
+  line-height: 1.9;
+  padding: 1rem;
+  background: var(--tint);
+  overflow-wrap: anywhere;
+}
+.python-workbench {
+  border-top: 1px solid var(--line);
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+}
+.python-workbench a {
+  display: inline-block;
+  margin: 0.5rem 0;
+}
+@media (max-width: 700px) {
+  .corpus-editors,
+  .training-metrics {
+    grid-template-columns: 1fr;
+  }
+  .training-metrics strong {
+    font-size: 1.3rem;
+  }
+}

@@ -1,4 +1,4 @@
-import {constructionModules} from './constructionModules';
+import { constructionModules } from './constructionModules';
 import { representationModules } from './representationModules';
 import { transformerModules } from './transformerModules';
 import type { ModuleId } from '../core/exercises';

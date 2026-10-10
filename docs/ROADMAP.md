@@ -1,47 +1,25 @@
-# Roadmap et état — 10 octobre 2026
+# Roadmap — 10 octobre 2026
 
-## Livraisons disponibles
+## État V2 — branche de revue
 
-- Phases A/B : socle React/TypeScript/Vite, modules 01/02, probabilités et BPE Unicode, carnet local, thèmes, navigation clavier et cache hors ligne.
-- Phase C : modules 03 à 06, vecteurs/projections, algèbre/gradient, attention Q/K/V et Transformer miniature. Chaque module comporte diagnostic, cours original, hypothèse, expérience calculée, exercices, transfert, synthèse et sources.
-- Six modules, six laboratoires et 24 exercices corrigés. Carnet de schéma 2 avec migration des notes, réponses et préférences de schéma 1. Aucune compétence attribuée automatiquement.
-- Moteurs purs testables et poids de démonstration inspectables ; voir [périmètre scientifique](PHASE_C.md).
+Branche refonte/atelier-v2. Audit et prototype validés (8091589). Parcours NSI, studio et laboratoire opérationnels (0da807f). Consolidation, sources, profils et rapport validés (2809153). Branche transférée ; [PR #1](https://github.com/darksathili-jpg/llm-academy/pull/1) en brouillon. 119 tests unitaires et 38 scénarios Chromium réussis ; Python navigateur, dix snippets et deux notebooks vérifiés.
 
-## Validation locale observée — phase C
+Disponible dans la branche : dix investigations NSI, quatre séances prêtes à animer, console/projecteur, notes privées séparées, Python Worker à la demande, dix instruments, neuf modules approfondis, deux notebooks originaux PyTorch, carnet de schéma 4 migré sans abandon de sa clé historique.
 
-Formatage, TypeScript strict et build réussis. 97 tests unitaires et 25 scénarios Chromium réussis.
-Axe : zéro violation relevée sur accueil, modules 01–06, carnet et références, dans les trois thèmes. Débordement contrôlé à 390, 768 et 1440 px ; captures bureau/mobile relues.
-Calculs de référence, masques causaux, variantes du Transformer, migration/import/export, correction des 24 exercices et rechargement hors ligne vérifiés.
-Audit npm : zéro vulnérabilité signalée.
+Les huit expériences prioritaires sont utilisables. Le mini-RAG est lexical TF-IDF/cosinus avec réponse extractive ; les réponses du prompting sont préparées. Aucun LLM distant obligatoire et aucun LLM de production local.
 
-## Publication
+## Public actuel et publication
 
-Site : https://darksathili-jpg.github.io/llm-academy/
+L'audit du domaine public au début de ce mandat a constaté la livraison phase C, six modules. Les modifications V2 ne sont pas déclarées publiées. Aucun changement de main ni déploiement n'est nécessaire à la revue de la branche.
 
-Le workflow valide formatage, types, tests, build et scénarios Chromium/Linux avant de publier avec les actions officielles Pages.
-Phase C publiée pour le commit applicatif 089ffbf : [workflow réussi](https://github.com/darksathili-jpg/llm-academy/actions/runs/38040968069). Les validations ont réussi aussi sous GitHub Actions/Linux.
-Contrôle Chromium du domaine public : HTTP 200, modules 01–06, BPE 10 → 7 tokens, cosinus 3D -0,6 versus projection 1, produit matriciel 4, influence du futur bloquée avec masque causal, étapes du Transformer, sauvegarde/rechargement et fonctionnement hors ligne vérifiés ; zéro erreur JavaScript.
-Livraison A/B précédemment vérifiée : [workflow](https://github.com/darksathili-jpg/llm-academy/actions/runs/38033954722).
-Commande reproductible : `node scripts/verify-live.mjs`. Le test utilise un navigateur neuf et ne touche pas au carnet personnel de l'utilisateur.
+La [CI Linux #7](https://github.com/darksathili-jpg/llm-academy/actions/runs/38059760957) a réussi pour le commit 2809153 ; publication ignorée. Après autorisation : fusion de la branche, nouvelle validation sur main, publication Pages, puis node scripts/verify-live.mjs avec un navigateur neuf. Le rapport local ne suffit pas à certifier une publication.
 
-## Limites connues
+## Retour enseignant et reprise de la compréhension
 
-- Audit automatisé d'accessibilité ; relecture humaine, lecteurs d'écran et autres navigateurs encore nécessaires.
-- Activités libres accompagnées d'une grille, sans correction sémantique par IA.
-- BPE Unicode miniature, sans byte-level ; compteur inadapté aux factures ou contextes d'API.
-- Vecteurs/poids inventés, modèle non entraîné ; aucune capacité linguistique démontrée.
-- Bloc illustratif pré-normalisé, sans biais/dropout, FFN ReLU de largeur 2 d_model, positions sin/cos ; simplifications explicites.
-- Expériences réinitialisées lors d'un changement de page ; carnet et réponses conservés.
-- Pyodide différé : les calculs des phases B/C s'effectuent nativement en TypeScript.
+Un enseignant signale que les termes et explications sont trop difficiles. L’appréciation initiale de 91/100 est retirée comme note actuelle. Reprise par une découverte guidée sans code, dix activités en langage courant et un découpage simplifié. Voir PRISE_EN_MAIN_SIMPLE.md ; un nouvel essai humain reste nécessaire avant de juger la compréhension.
 
-## D — Construction et entraînement, à venir
+## Reste à faire
 
-Modules 07–09 : architecture GPT, entraînement, adaptation. Mini-modèle, gradients, sampling, notebooks Python/PyTorch et Pyodide à la demande lorsque pertinent.
+Essais avec élèves et enseignants, matériel de projection, lecteurs d'écran, Firefox/Safari ; revue scientifique indépendante. Trois modules de la collection initiale restent à rédiger, notamment agents et évaluation approfondie. Les fonctionnalités d'expérimentation V2 ne sont pas assimilées à ces cours complets.
 
-## E — Ingénierie IA, à venir
-
-Modules 10–12 : RAG, agents et évaluation ; jeux de données originaux et applications pratiques.
-
-## F — Audit final, à venir
-
-Relecture scientifique et pédagogique, navigateurs et technologies d'assistance, performance mesurée et robustesse.
+Voir RAPPORT_VALIDATION_V2.md, SCENARIOS_FORMATEUR.md et LIMITES_CONNUES.md pour le périmètre réel.

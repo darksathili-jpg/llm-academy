@@ -100,7 +100,7 @@ test('migration locale des données historiques et import du format 1', async ({
   await page.getByLabel('Projection', { exact: true }).check();
   expect(
     await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!).version, STORAGE_KEY),
-  ).toBe(3);
+  ).toBe(4);
   await page.getByLabel('Choisir un carnet JSON').setInputFiles({
     name: 'ancien.json',
     mimeType: 'application/json',

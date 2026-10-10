@@ -1,4 +1,4 @@
-import {constructionExercises} from './construction-exercises';
+import { constructionExercises } from './construction-exercises';
 import { foundationExercises } from './foundation-exercises';
 export const MODULE_IDS = ['01', '02', '03', '04', '05', '06', '07', '08', '09'] as const;
 export type ModuleId = (typeof MODULE_IDS)[number];

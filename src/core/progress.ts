@@ -1,33 +1,37 @@
+import { parseInvestigations, type Investigations } from './investigation';
 import { exercises, isCorrect, MODULE_IDS, isModuleId, type ModuleId } from './exercises';
 /** Preserve the legacy storage key: migration updates its content, never abandons a learner's data. */
 export const STORAGE_KEY = 'llm-academy.progress.v1';
-export const MAX_CARNET_BYTES = 500_000;
+export const MAX_CARNET_BYTES = 2_000_000;
 export type Theme = 'light' | 'dark' | 'projector';
 export type Track = 'discovery' | 'developer';
 export interface Progress {
-  version: 3;
+  version: 4;
   theme: Theme;
   track: Track;
   answers: Record<string, string>;
+  investigations: Investigations;
   notes: Record<ModuleId, string>;
 }
 export function emptyProgress(): Progress {
   return {
-    version: 3,
+    version: 4,
     theme: 'light',
     track: 'discovery',
     answers: {},
+    investigations: {},
     notes: Object.fromEntries(MODULE_IDS.map((id) => [id, ''])) as Record<ModuleId, string>,
   };
 }
 export function parseProgress(raw: string): Progress {
   if (new TextEncoder().encode(raw).length > MAX_CARNET_BYTES)
-    throw new Error('Fichier trop volumineux (500 Ko maximum).');
+    throw new Error('Fichier trop volumineux (2 Mo maximum).');
   const value: unknown = JSON.parse(raw);
   if (!value || typeof value !== 'object' || Array.isArray(value))
     throw new Error('Format de carnet invalide.');
   const v = value as Record<string, unknown>;
-  if (v.version !== 1 && v.version !== 2 && v.version !== 3) throw new Error('Version de carnet non prise en charge.');
+  if (v.version !== 1 && v.version !== 2 && v.version !== 3 && v.version !== 4)
+    throw new Error('Version de carnet non prise en charge.');
   if (
     typeof v.theme !== 'string' ||
     !['light', 'dark', 'projector'].includes(v.theme) ||
@@ -44,13 +48,12 @@ export function parseProgress(raw: string): Progress {
     Array.isArray(v.notes)
   )
     throw new Error('Réponses ou notes invalides.');
-  const required: readonly string[] = v.version === 1 ? ['01', '02'] : v.version === 2 ? MODULE_IDS.slice(0, 6) : MODULE_IDS;
+  const required: readonly string[] =
+    v.version === 1 ? ['01', '02'] : v.version === 2 ? MODULE_IDS.slice(0, 6) : MODULE_IDS;
   const answers: Record<string, string> = {};
   for (const [id, answer] of Object.entries(v.answers)) {
     if (
-      !exercises.some(
-        (e) => e.id === id && required.includes(e.module),
-      ) ||
+      !exercises.some((e) => e.id === id && required.includes(e.module)) ||
       typeof answer !== 'string' ||
       answer.length > 300
     )
@@ -66,7 +69,14 @@ export function parseProgress(raw: string): Progress {
     if (typeof note !== 'string' || note.length > 10000) throw new Error('Notes invalides.');
     notes[id as ModuleId] = note;
   }
-  return { version: 3, theme: v.theme as Theme, track: v.track as Track, answers, notes };
+  return {
+    version: 4,
+    theme: v.theme as Theme,
+    track: v.track as Track,
+    answers,
+    notes,
+    investigations: v.version === 4 ? parseInvestigations(v.investigations) : {},
+  };
 }
 export function moduleScore(
   progress: Progress,
