@@ -1,7 +1,8 @@
+import { activities, stages } from '../content/activities';
 import { useState, type ChangeEvent } from 'react';
 import { exercises, isCorrect } from '../core/exercises';
 import { modules } from '../content/modules';
-import { moduleScore, parseProgress } from '../core/progress';
+import { MAX_CARNET_BYTES, moduleScore, parseProgress } from '../core/progress';
 import { useProgress } from './ProgressProvider';
 export function Notebook() {
   const { progress, update } = useProgress();
@@ -23,7 +24,7 @@ export function Notebook() {
     const file = event.target.files?.[0];
     if (!file) return;
     try {
-      if (file.size > 500000) throw new Error('Fichier trop volumineux (500 Ko maximum).');
+      if (file.size > MAX_CARNET_BYTES) throw new Error('Fichier trop volumineux (2 Mo maximum).');
       const p = parseProgress(await file.text());
       setCandidate(p);
       setMessage('Fichier valide. Les compétences seront recalculées depuis les réponses.');
@@ -81,6 +82,34 @@ export function Notebook() {
           </button>
         </div>
       )}
+      <section>
+        <h2>Mes investigations NSI</h2>
+        <p>
+          Les écrits ne sont pas notés automatiquement. Les étapes indiquent la navigation, pas une
+          compétence certifiée.
+        </p>
+        {activities.map((a) => {
+          const trace = progress.investigations[a.id];
+          return (
+            <details key={a.id}>
+              <summary>
+                {a.title} — {trace ? stages[trace.stage] : 'à explorer'}
+              </summary>
+              {trace ? (
+                <>
+                  <p>Hypothèse : {trace.hypothesis}</p>
+                  <p>Observation : {trace.observation}</p>
+                  <p>Explication : {trace.explanation}</p>
+                  <p>Transfert : {trace.transfer}</p>
+                </>
+              ) : (
+                <p>Aucune trace enregistrée.</p>
+              )}
+              <a href={'#/activite/' + a.id}>Reprendre cette investigation →</a>
+            </details>
+          );
+        })}
+      </section>
       {modules.map((module) => {
         const score = moduleScore(progress, module.id);
         return (
@@ -89,7 +118,9 @@ export function Notebook() {
             <h2>{module.title}</h2>
             <p>
               {score.correct}/{score.total} exercices validés ·{' '}
-              {score.correct === score.total ? 'Compétences évaluées acquises' : 'À approfondir'}
+              {score.correct === score.total
+                ? 'Calculs vérifiés ; justification à relire'
+                : 'À approfondir'}
             </p>
             <progress
               aria-label={'Progression module ' + module.id}

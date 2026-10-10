@@ -6,7 +6,7 @@ test('navigation, liens de section et routes sous GitHub Pages', async ({ page }
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('./');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Comprendre.');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Une machine');
   await page.getByRole('link', { name: 'Entrer dans le premier module' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Comprendre les LLM');
   await page.getByRole('link', { name: 'Expérimenter', exact: true }).click();
@@ -116,9 +116,9 @@ test('export et import avec prévisualisation, sans confiance dans un score exte
   await expect(page.locator('.mini-progress strong')).toHaveText('1 / 36');
 });
 test('parcours développeur, stockage et préférences', async ({ page }) => {
-  await page.goto('./');
+  await page.goto('./#/bibliotheque');
   await page.getByLabel('Parcours développeur', { exact: false }).check();
-  await page.getByRole('link', { name: 'Entrer dans le premier module' }).click();
+  await page.getByRole('link', { name: /01 Comprendre les LLM/ }).click();
   await expect(page.getByText('Lecture développeur : moteur et invariants')).toBeVisible();
   await page.getByLabel('Sombre', { exact: true }).check();
   await page.reload();
@@ -150,10 +150,8 @@ test('navigation clavier et lien d’évitement', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Aller au contenu' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.locator('main')).toBeFocused();
-  await page
-    .locator('nav[aria-label="Navigation principale"]')
-    .getByRole('link', { name: '02 Tokenisation' })
-    .click();
+  await page.getByRole('link', { name: 'Modules approfondis', exact: true }).click();
+  await page.getByRole('link', { name: /02 Tokenisation/ }).click();
   await expect(page.locator('main')).toBeFocused();
 });
 test('cache de production utilisable hors ligne', async ({ page, context }) => {
@@ -164,7 +162,7 @@ test('cache de production utilisable hors ligne', async ({ page, context }) => {
   await context.setOffline(true);
   try {
     await page.reload();
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('Comprendre.');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Une machine');
     await page.getByRole('link', { name: 'Entrer dans le premier module' }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Comprendre les LLM');
   } finally {

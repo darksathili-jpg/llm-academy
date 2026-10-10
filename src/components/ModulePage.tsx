@@ -1,13 +1,23 @@
-import { ModelLab } from './science/ModelLab';
-import { TrainingLab } from './science/TrainingLab';
-import { GenerationLab } from './science/GenerationLab';
+const ModelLab = lazy(() => import('./science/ModelLab').then((m) => ({ default: m.ModelLab })));
+const TrainingLab = lazy(() =>
+  import('./science/TrainingLab').then((m) => ({ default: m.TrainingLab })),
+);
+const GenerationLab = lazy(() =>
+  import('./science/GenerationLab').then((m) => ({ default: m.GenerationLab })),
+);
 import type { ComponentType } from 'react';
 import type { ModuleId } from '../core/exercises';
-import { EmbeddingLab } from './science/EmbeddingLab';
-import { MathLab } from './science/MathLab';
-import { AttentionLab } from './science/AttentionLab';
-import { TransformerLab } from './science/TransformerLab';
-import { useState } from 'react';
+const EmbeddingLab = lazy(() =>
+  import('./science/EmbeddingLab').then((m) => ({ default: m.EmbeddingLab })),
+);
+const MathLab = lazy(() => import('./science/MathLab').then((m) => ({ default: m.MathLab })));
+const AttentionLab = lazy(() =>
+  import('./science/AttentionLab').then((m) => ({ default: m.AttentionLab })),
+);
+const TransformerLab = lazy(() =>
+  import('./science/TransformerLab').then((m) => ({ default: m.TransformerLab })),
+);
+import { useState, lazy, Suspense } from 'react';
 import { modules, type Module } from '../content/modules';
 import { moduleScore } from '../core/progress';
 import { useProgress } from './ProgressProvider';
@@ -113,7 +123,9 @@ export function ModulePage({ module }: { module: Module }) {
       <section id="experience">
         <h2>Prédire, puis expérimenter</h2>
         <p className="hypothesis">{module.hypothesis}</p>
-        <Lab />
+        <Suspense fallback={<p role="status">Ouverture du laboratoire…</p>}>
+          <Lab />
+        </Suspense>
         {progress.track === 'developer' && (
           <details className="technical">
             <summary>Lecture développeur : moteur et invariants</summary>

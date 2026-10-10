@@ -17,7 +17,7 @@ describe('Migration du carnet phases A/B vers C', () => {
   };
   it('conserve toutes les données et ajoute sept notes vides', () => {
     const p = parseProgress(JSON.stringify(legacy));
-    expect(p.version).toBe(3);
+    expect(p.version).toBe(4);
     expect(p.answers).toEqual(legacy.answers);
     expect(p.theme).toBe('dark');
     expect(p.track).toBe('developer');
@@ -44,7 +44,7 @@ describe('Migration du carnet phases A/B vers C', () => {
     const p = loadProgress(storage);
     expect(p.warning).toBe('');
     saveProgress(storage, p.progress);
-    expect(JSON.parse(raw).version).toBe(3);
+    expect(JSON.parse(raw).version).toBe(4);
     expect(used).toEqual([STORAGE_KEY, STORAGE_KEY]);
   });
   it('réimporte un carnet de phase C avec réponses et notes des nouveaux modules', () => {
