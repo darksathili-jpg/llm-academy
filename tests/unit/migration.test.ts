@@ -15,15 +15,15 @@ describe('Migration du carnet phases A/B vers C', () => {
     answers: { 'm01-proba': '0,5', 'm02-frequency': '3' },
     notes: { '01': 'Preuve originale', '02': 'Deux corpus observés' },
   };
-  it('conserve toutes les données et ajoute quatre notes vides', () => {
+  it('conserve toutes les données et ajoute sept notes vides', () => {
     const p = parseProgress(JSON.stringify(legacy));
-    expect(p.version).toBe(2);
+    expect(p.version).toBe(3);
     expect(p.answers).toEqual(legacy.answers);
     expect(p.theme).toBe('dark');
     expect(p.track).toBe('developer');
     expect(p.notes['01']).toBe(legacy.notes['01']);
     expect(p.notes['02']).toBe(legacy.notes['02']);
-    for (const id of ['03', '04', '05', '06'] as const) {
+    for (const id of ['03', '04', '05', '06', '07', '08', '09'] as const) {
       expect(p.notes[id]).toBe('');
       expect(moduleScore(p, id).correct).toBe(0);
     }
@@ -44,7 +44,7 @@ describe('Migration du carnet phases A/B vers C', () => {
     const p = loadProgress(storage);
     expect(p.warning).toBe('');
     saveProgress(storage, p.progress);
-    expect(JSON.parse(raw).version).toBe(2);
+    expect(JSON.parse(raw).version).toBe(3);
     expect(used).toEqual([STORAGE_KEY, STORAGE_KEY]);
   });
   it('réimporte un carnet de phase C avec réponses et notes des nouveaux modules', () => {
@@ -65,7 +65,7 @@ describe('Migration du carnet phases A/B vers C', () => {
         JSON.stringify({ ...legacy, answers: { ...legacy.answers, 'm05-average': '3' } }),
       ),
     ).toThrow());
-  it('rejette une version 2 sans toutes les notes', () =>
+  it('rejette une version courante sans toutes les notes', () =>
     expect(() =>
       parseProgress(JSON.stringify({ ...emptyProgress(), notes: legacy.notes })),
     ).toThrow());

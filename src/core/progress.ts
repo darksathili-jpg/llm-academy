@@ -5,7 +5,7 @@ export const MAX_CARNET_BYTES = 500_000;
 export type Theme = 'light' | 'dark' | 'projector';
 export type Track = 'discovery' | 'developer';
 export interface Progress {
-  version: 2;
+  version: 3;
   theme: Theme;
   track: Track;
   answers: Record<string, string>;
@@ -13,7 +13,7 @@ export interface Progress {
 }
 export function emptyProgress(): Progress {
   return {
-    version: 2,
+    version: 3,
     theme: 'light',
     track: 'discovery',
     answers: {},
@@ -27,7 +27,7 @@ export function parseProgress(raw: string): Progress {
   if (!value || typeof value !== 'object' || Array.isArray(value))
     throw new Error('Format de carnet invalide.');
   const v = value as Record<string, unknown>;
-  if (v.version !== 1 && v.version !== 2) throw new Error('Version de carnet non prise en charge.');
+  if (v.version !== 1 && v.version !== 2 && v.version !== 3) throw new Error('Version de carnet non prise en charge.');
   if (
     typeof v.theme !== 'string' ||
     !['light', 'dark', 'projector'].includes(v.theme) ||
@@ -44,11 +44,12 @@ export function parseProgress(raw: string): Progress {
     Array.isArray(v.notes)
   )
     throw new Error('Réponses ou notes invalides.');
+  const required: readonly string[] = v.version === 1 ? ['01', '02'] : v.version === 2 ? MODULE_IDS.slice(0, 6) : MODULE_IDS;
   const answers: Record<string, string> = {};
   for (const [id, answer] of Object.entries(v.answers)) {
     if (
       !exercises.some(
-        (e) => e.id === id && (v.version !== 1 || e.module === '01' || e.module === '02'),
+        (e) => e.id === id && required.includes(e.module),
       ) ||
       typeof answer !== 'string' ||
       answer.length > 300
@@ -58,7 +59,6 @@ export function parseProgress(raw: string): Progress {
   }
   const importedNotes = v.notes as Record<string, unknown>,
     notes = emptyProgress().notes;
-  const required: readonly string[] = v.version === 1 ? ['01', '02'] : MODULE_IDS;
   if (Object.keys(importedNotes).some((key) => !isModuleId(key) || !required.includes(key)))
     throw new Error('Notes inconnues.');
   for (const id of required) {
@@ -66,7 +66,7 @@ export function parseProgress(raw: string): Progress {
     if (typeof note !== 'string' || note.length > 10000) throw new Error('Notes invalides.');
     notes[id as ModuleId] = note;
   }
-  return { version: 2, theme: v.theme as Theme, track: v.track as Track, answers, notes };
+  return { version: 3, theme: v.theme as Theme, track: v.track as Track, answers, notes };
 }
 export function moduleScore(
   progress: Progress,

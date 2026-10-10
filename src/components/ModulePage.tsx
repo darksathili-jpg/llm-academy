@@ -1,3 +1,6 @@
+import {ModelLab} from './science/ModelLab';
+import {TrainingLab} from './science/TrainingLab';
+import {GenerationLab} from './science/GenerationLab';
 import type { ComponentType } from 'react';
 import type { ModuleId } from '../core/exercises';
 import { EmbeddingLab } from './science/EmbeddingLab';
@@ -18,6 +21,9 @@ const laboratories: Record<ModuleId, ComponentType> = {
   '04': MathLab,
   '05': AttentionLab,
   '06': TransformerLab,
+  '07': ModelLab,
+  '08': TrainingLab,
+  '09': GenerationLab,
 };
 function Diagnostic({ module }: { module: Module }) {
   const [answer, setAnswer] = useState<number | null>(null);
@@ -61,7 +67,7 @@ export function ModulePage({ module }: { module: Module }) {
     <article className="module-page">
       <header className="page-heading">
         <span className="eyebrow">
-          Module {module.id} / Fondations · {module.duration}
+          Module {module.id} / {Number(module.id) >= 7 ? "Construction et entraînement" : "Fondations"} · {module.duration}
         </span>
         <h1>{module.title}</h1>
         <p className="lead">{module.subtitle}</p>

@@ -1,3 +1,4 @@
+import {constructionModules} from './constructionModules';
 import { representationModules } from './representationModules';
 import { transformerModules } from './transformerModules';
 import type { ModuleId } from '../core/exercises';
@@ -220,11 +221,9 @@ export const modules: Module[] = [
   },
   ...representationModules,
   ...transformerModules,
+  ...constructionModules,
 ];
 export const upcoming = [
-  'Construire un mini-LLM',
-  'Entraînement',
-  'Génération et adaptation',
   'Prompting et contexte',
   'RAG et applications',
   'Agents, fiabilité et évaluation',

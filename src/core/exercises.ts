@@ -1,5 +1,6 @@
+import {constructionExercises} from './construction-exercises';
 import { foundationExercises } from './foundation-exercises';
-export const MODULE_IDS = ['01', '02', '03', '04', '05', '06'] as const;
+export const MODULE_IDS = ['01', '02', '03', '04', '05', '06', '07', '08', '09'] as const;
 export type ModuleId = (typeof MODULE_IDS)[number];
 export function isModuleId(value: string): value is ModuleId {
   return (MODULE_IDS as readonly string[]).includes(value);
@@ -133,6 +134,7 @@ export const exercises: Exercise[] = [
       'L’encodage n’apprend pas de règle. Un caractère absent est inconnu (ID 0) ; [UNK] ne permet pas de le reconstruire. Le BPE sur octets répond différemment à ce problème.',
   },
   ...foundationExercises,
+  ...constructionExercises,
 ];
 export function isCorrect(exercise: Exercise, raw: string): boolean {
   if (exercise.kind === 'choice') return raw === exercise.expected;

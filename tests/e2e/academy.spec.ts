@@ -71,7 +71,7 @@ test('évaluation des huit compétences et persistance après rechargement', asy
   await expect(page.getByLabel('Votre réponse et vos observations')).toHaveValue(
     'Deux corpus, un texte fixe et des comptes observés.',
   );
-  await expect(page.locator('.mini-progress strong')).toHaveText('8 / 24');
+  await expect(page.locator('.mini-progress strong')).toHaveText('8 / 36');
 });
 test('correction d’une erreur et progrès sans succès fictif', async ({ page }) => {
   await page.goto('./#/module/01');
@@ -105,7 +105,7 @@ test('export et import avec prévisualisation, sans confiance dans un score exte
   });
   await expect(page.getByRole('status').filter({ hasText: 'Fichier valide' })).toBeVisible();
   await page.getByRole('button', { name: 'Remplacer par ce carnet' }).click();
-  await expect(page.locator('.mini-progress strong')).toHaveText('1 / 24');
+  await expect(page.locator('.mini-progress strong')).toHaveText('1 / 36');
   await expect(page.getByLabel('Observations / module 02')).toHaveValue('Import vérifié');
   await page.getByLabel('Choisir un carnet JSON').setInputFiles({
     name: 'bad.json',
@@ -113,7 +113,7 @@ test('export et import avec prévisualisation, sans confiance dans un score exte
     buffer: Buffer.from('{"version":999}'),
   });
   await expect(page.getByRole('status').filter({ hasText: 'Version de carnet' })).toBeVisible();
-  await expect(page.locator('.mini-progress strong')).toHaveText('1 / 24');
+  await expect(page.locator('.mini-progress strong')).toHaveText('1 / 36');
 });
 test('parcours développeur, stockage et préférences', async ({ page }) => {
   await page.goto('./');

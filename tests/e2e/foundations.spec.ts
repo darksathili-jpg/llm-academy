@@ -96,11 +96,11 @@ test('migration locale des données historiques et import du format 1', async ({
   await page.goto('./#/carnet');
   await expect(page.getByLabel('Observations / module 01')).toHaveValue('Ma preuve historique');
   await expect(page.getByLabel('Observations / module 03')).toHaveValue('');
-  await expect(page.locator('.mini-progress strong')).toHaveText('2 / 24');
+  await expect(page.locator('.mini-progress strong')).toHaveText('2 / 36');
   await page.getByLabel('Projection', { exact: true }).check();
   expect(
     await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!).version, STORAGE_KEY),
-  ).toBe(2);
+  ).toBe(3);
   await page.getByLabel('Choisir un carnet JSON').setInputFiles({
     name: 'ancien.json',
     mimeType: 'application/json',
@@ -129,7 +129,7 @@ test('validation des 24 exercices et notes des six modules persistantes', async 
   await expect(page.getByLabel('Votre réponse et vos observations')).toHaveValue(
     'Les logits antérieurs restent fixes avec le masque causal.',
   );
-  await expect(page.locator('.mini-progress strong')).toHaveText('24 / 24');
+  await expect(page.locator('.mini-progress strong')).toHaveText('24 / 36');
 });
 for (const theme of ['Clair', 'Sombre', 'Projection']) {
   test('phase C : accessibilité et responsive en mode ' + theme, async ({ page }) => {

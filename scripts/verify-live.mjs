@@ -44,7 +44,20 @@ try {
   await expect(transformer.getByTestId('transformer-stage')).toHaveText('Embeddings');
   await transformer.getByRole('button', { name: 'Étape suivante', exact: true }).click();
   await expect(transformer.getByTestId('transformer-stage')).toHaveText('Positions');
-  await expect(page.locator('.mini-progress strong')).toHaveText('1 / 24');
+  await expect(page.locator('.mini-progress strong')).toHaveText('1 / 36');
+  await page.goto(url+'#/module/07?section=experience');
+  await page.getByRole('button',{name:"Générer jusqu'à 5 tokens"}).click();
+  await expect(page.getByTestId('autoregressive-output')).not.toBeEmpty();
+  await page.goto(url+'#/module/08?section=experience');
+  const beforeTraining=Number(await page.getByTestId('train-loss').textContent());
+  await page.getByRole('button',{name:'20 mises à jour',exact:true}).click();
+  if(Number(await page.getByTestId('train-loss').textContent())>=beforeTraining)throw new Error('Perte non améliorée.');
+  await page.goto(url+'#/module/09?section=experience');
+  const beforeAdaptation=Number(await page.getByTestId('adapt-loss').textContent());
+  await page.getByRole('button',{name:'Adapter pendant 50 pas'}).click();
+  if(Number(await page.getByTestId('adapt-loss').textContent())>=beforeAdaptation)throw new Error('Adaptation non améliorée.');
+  await expect(page.getByTestId('base-weight-delta')).toContainText('0.000000');
+  await page.goto(url+'#/module/06?section=experience');
   await page.evaluate(() => navigator.serviceWorker.ready);
   await page.reload();
   await page.waitForFunction(() => !!navigator.serviceWorker.controller);
@@ -65,14 +78,14 @@ try {
       {
         url,
         http: 200,
-        modules: ['01', '02', '03', '04', '05', '06'],
+        modules: ['01', '02', '03', '04', '05', '06', '07', '08', '09'],
         bpe: '10 → 7 tokens',
         projection: { cosine3D: -0.6, cosine2D: 1 },
         matrixProduct: '4.0000',
         attention: 'futur bloqué ; influence vérifiée sans masque',
         transformer: 'étapes calculées et fonctionnement hors ligne',
         progression: 'sauvegarde et rechargement vérifiés',
-        javascriptErrors: 0,
+        training:'perte améliorée après 20 pas',adaptation:'perte améliorée ; base gelée',javascriptErrors: 0,
       },
       null,
       2,
