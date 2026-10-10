@@ -39,6 +39,7 @@ function References() {
 export default function App() {
  const [route,setRoute]=useState<Route>(readRoute);
  const main=useRef<HTMLElement>(null);
+ const hasNavigated=useRef(false);
  const {progress,warning,update}=useProgress();
  const [offlineMessage,setOfflineMessage]=useState('');
  useEffect(()=>{
@@ -50,7 +51,7 @@ export default function App() {
   document.documentElement.dataset.theme=progress.theme;
   const meta=document.querySelector('meta[name="theme-color"]');meta?.setAttribute('content',progress.theme==='dark'?'#152021':'#f5f3ec');
  },[progress.theme]);
- useEffect(()=>{document.title=(route==='01'||route==='02'?modules.find(m=>m.id===route)!.title:route==='carnet'?'Carnet':route==='references'?'Références':'Comprendre en expérimentant')+' — LLM Academy';main.current?.focus();const id=new URLSearchParams(location.hash.split('?')[1]??'').get('section');if(id)document.getElementById(id)?.scrollIntoView();else window.scrollTo(0,0);},[route]);
+ useEffect(()=>{document.title=(route==='01'||route==='02'?modules.find(m=>m.id===route)!.title:route==='carnet'?'Carnet':route==='references'?'Références':'Comprendre en expérimentant')+' — LLM Academy';if(hasNavigated.current)main.current?.focus();hasNavigated.current=true;const id=new URLSearchParams(location.hash.split('?')[1]??'').get('section');if(id)document.getElementById(id)?.scrollIntoView();else window.scrollTo(0,0);},[route]);
  useEffect(()=>{
   if (!import.meta.env.PROD || !('serviceWorker' in navigator))return;
   let disposed=false;

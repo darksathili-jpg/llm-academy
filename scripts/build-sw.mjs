@@ -5,6 +5,7 @@ const root = 'dist';
 async function list(dir) { const entries=await readdir(dir,{withFileTypes:true});const files=[];for(const e of entries){const p=join(dir,e.name);if(e.isDirectory())files.push(...await list(p));else files.push(p.replaceAll('\\','/'));}return files; }
 const files=await list(root);
 const hash=createHash('sha256');
+hash.update(await readFile(new URL(import.meta.url)));
 for(const path of files.sort()){hash.update(path);hash.update(await readFile(path));}
 const version=hash.digest('hex').slice(0,16);
 const resources=files.map(p=>'./'+p.slice(root.length+1));
@@ -26,9 +27,9 @@ self.addEventListener('fetch', event => {
  const scope = new URL(self.registration.scope);
  if(event.request.method !== 'GET' || url.origin !== scope.origin || !url.pathname.startsWith(scope.pathname)) return;
  if(event.request.mode === 'navigate') {
-  event.respondWith(caches.open(CACHE).then(async cache => (await cache.match(new URL('./index.html',scope))) || fetch(event.request)));
+  event.respondWith(caches.open(CACHE).then(async cache => (await cache.match(new URL('./index.html',scope), { ignoreVary: true })) || fetch(event.request)));
  } else {
-  event.respondWith(caches.open(CACHE).then(async cache => (await cache.match(event.request)) || fetch(event.request)));
+  event.respondWith(caches.open(CACHE).then(async cache => (await cache.match(event.request, { ignoreVary: true })) || fetch(event.request)));
  }
 });
 `;

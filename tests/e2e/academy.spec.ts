@@ -20,7 +20,7 @@ test('BPE : vraie fusion, changement de corpus, inconnus et historique',async({p
  await expect(lab.getByText('10',{exact:true})).toBeVisible();
  await lab.getByRole('button',{name:'Fusion suivante'}).click();
  await expect(lab.getByText('7',{exact:true})).toBeVisible();await expect(lab.getByText('Étape 1 /')).toBeVisible();
- await lab.getByLabel('Texte de test').fill('laz');
+ await lab.getByRole('textbox',{name:'Texte de test',exact:true}).fill('laz');
  await expect(lab.getByLabel('Tokens du texte de test').getByText('[UNK]')).toBeVisible();
  await lab.getByRole('button',{name:'Étape précédente'}).click();await expect(lab.getByText('10',{exact:true})).toBeVisible();
  await lab.getByLabel('Corpus d’apprentissage').fill('aaa');await lab.getByRole('button',{name:'Appliquer le corpus'}).click();
@@ -84,7 +84,7 @@ for(const theme of ['Clair','Sombre','Projection']){
 test('navigation clavier et lien d’évitement',async({page})=>{
  await page.goto('./');await page.keyboard.press('Tab');await expect(page.getByRole('link',{name:'Aller au contenu'})).toBeFocused();
  await page.keyboard.press('Enter');await expect(page.locator('main')).toBeFocused();
- await page.goto('./#/module/02');await expect(page.locator('main')).toBeFocused();
+ await page.locator('nav[aria-label="Navigation principale"]').getByRole('link',{name:'02 Tokenisation'}).click();await expect(page.locator('main')).toBeFocused();
 });
 test('cache de production utilisable hors ligne',async({page,context})=>{
  await page.goto('./');await page.evaluate(()=>navigator.serviceWorker.ready);
@@ -98,7 +98,8 @@ test('stockage refusé : usage en mémoire avec alerte',async({page})=>{
  await page.getByLabel('Sombre',{exact:true}).check();await expect(page.locator('html')).toHaveAttribute('data-theme','dark');await expect(page.getByRole('alert')).toContainText('Stockage inaccessible');
 });
 test('captures de contrôle bureau et mobile',async({page},testInfo)=>{
- await page.goto('./');await page.screenshot({path:testInfo.outputPath('home-desktop.png'),fullPage:true});
- await page.setViewportSize({width:390,height:844});await page.goto('./#/module/02');await page.getByRole('link',{name:'Expérimenter',exact:true}).click();await page.screenshot({path:testInfo.outputPath('bpe-mobile.png'),fullPage:false});
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('./');await expect(page.getByRole('heading',{level:1})).toBeVisible();await page.screenshot({path:testInfo.outputPath('home-desktop.png'),fullPage:true});
+ await page.setViewportSize({width:390,height:844});await page.goto('./#/module/02');await page.getByRole('link',{name:'Expérimenter',exact:true}).click();await expect(page.locator('#bpe-lab h3')).toBeInViewport();await page.screenshot({path:testInfo.outputPath('bpe-mobile.png'),fullPage:false});
 });
 
