@@ -7,6 +7,7 @@ export interface Session {
   duration: 60 | 120 | 180 | 360;
   step: number;
   revealed: boolean;
+  revealLevel: number;
   zoom: number;
   sessionClock: Clock;
   activityClock: Clock;
@@ -28,6 +29,7 @@ export function freshSession(duration: Session['duration']): Session {
     duration,
     step: 0,
     revealed: false,
+    revealLevel: 0,
     zoom: 100,
     sessionClock: emptyClock(),
     activityClock: emptyClock(),
@@ -56,12 +58,16 @@ export function parseSession(raw: string): Session {
     !clock(x.activityClock)
   )
     throw Error('Séance enregistrée invalide.');
+  const revealLevel = x.revealLevel ?? (x.revealed ? 2 : 0);
+  if (![0, 1, 2].includes(revealLevel) || revealLevel > 0 !== x.revealed)
+    throw Error('Révélation invalide.');
   // Whitelist explicitly excludes private notes and imported object properties.
   return {
     version: 1,
     duration: x.duration,
     step: x.step,
     revealed: x.revealed,
+    revealLevel,
     zoom: x.zoom,
     sessionClock: { elapsed: x.sessionClock.elapsed, started: x.sessionClock.started },
     activityClock: { elapsed: x.activityClock.elapsed, started: x.activityClock.started },

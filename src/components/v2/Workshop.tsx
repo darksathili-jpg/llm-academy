@@ -135,7 +135,7 @@ export function Activity({ id }: { id: string }) {
             {field('explanation', 'Mon explication du résultat')}
           </>
         ) : stage === 5 ? (
-          <PythonWorkbench initialCode={a.python} initialInput={a.input} hints={a.hints} />
+          <PythonWorkbench initialCode={a.python} initialInput={a.input} />
         ) : stage === 6 ? (
           <>
             <p className="lead">{a.transfer}</p>

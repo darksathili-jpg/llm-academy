@@ -101,6 +101,28 @@ function exportSheet(scenario: Scenario, trainer: boolean) {
 }
 export function Studio({ duration }: { duration?: number }) {
   const scenario = scenarios.find((s) => s.duration === duration);
+  useEffect(() => {
+    const initial = new Map<HTMLDetailsElement, boolean>();
+    const before = () => {
+      document
+        .querySelectorAll<HTMLDetailsElement>('.session-plan details, .studio-preparation')
+        .forEach((d) => {
+          if (!initial.has(d)) initial.set(d, d.open);
+          d.open = true;
+        });
+    };
+    const after = () => {
+      for (const [d, open] of initial) d.open = open;
+      initial.clear();
+    };
+    addEventListener('beforeprint', before);
+    addEventListener('afterprint', after);
+    return () => {
+      removeEventListener('beforeprint', before);
+      removeEventListener('afterprint', after);
+      after();
+    };
+  }, [scenario]);
   return (
     <article>
       <div className="eyebrow">ESPACE 02 / STUDIO FORMATEUR</div>
@@ -133,7 +155,7 @@ export function Studio({ duration }: { duration?: number }) {
             ))}
           </ul>
           <p>{scenario.prerequisites}</p>
-          <details>
+          <details className="studio-preparation">
             <summary>Matériel et vérifications avant le stage</summary>
             <ul>
               {[...scenario.materials, ...scenario.preparation].map((g) => (
@@ -231,6 +253,7 @@ export function Animation({
       ...s,
       step: index,
       revealed: false,
+      revealLevel: 0,
       activityClock: { elapsed: 0, started: s.activityClock.started === null ? null : Date.now() },
     }));
     setShowDemo(false);
@@ -253,7 +276,10 @@ export function Animation({
     });
   }
   function reveal() {
-    setSession((s) => ({ ...s, revealed: !s.revealed }));
+    setSession((s) => {
+      const revealLevel = s.revealLevel < 2 ? s.revealLevel + 1 : 0;
+      return { ...s, revealed: revealLevel > 0, revealLevel };
+    });
   }
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
@@ -388,7 +414,9 @@ export function Animation({
         {session.revealed && (
           <div className="projected-answer">
             <h2>Piste de correction</h2>
-            <p>{step.expected}</p>
+            <p>
+              {session.revealLevel === 1 ? step.expected.split(/(?<=[.!?])\s+/u)[0] : step.expected}
+            </p>
           </div>
         )}
         {step.experiment && (
@@ -411,7 +439,11 @@ export function Animation({
           Précédent
         </button>
         <button className="secondary" onClick={reveal}>
-          {session.revealed ? 'Masquer la réponse' : 'Révéler la réponse'}
+          {session.revealLevel === 0
+            ? 'Révéler la réponse'
+            : session.revealLevel === 1
+              ? 'Compléter la réponse'
+              : 'Masquer la réponse'}
         </button>
         <button
           disabled={session.step === scenario.steps.length - 1}

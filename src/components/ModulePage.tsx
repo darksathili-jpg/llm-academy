@@ -1,3 +1,4 @@
+import { LabBoundary } from './LabBoundary';
 const ModelLab = lazy(() => import('./science/ModelLab').then((m) => ({ default: m.ModelLab })));
 const TrainingLab = lazy(() =>
   import('./science/TrainingLab').then((m) => ({ default: m.TrainingLab })),
@@ -123,9 +124,11 @@ export function ModulePage({ module }: { module: Module }) {
       <section id="experience">
         <h2>Prédire, puis expérimenter</h2>
         <p className="hypothesis">{module.hypothesis}</p>
-        <Suspense fallback={<p role="status">Ouverture du laboratoire…</p>}>
-          <Lab />
-        </Suspense>
+        <LabBoundary>
+          <Suspense fallback={<p role="status">Ouverture du laboratoire…</p>}>
+            <Lab />
+          </Suspense>
+        </LabBoundary>
         {progress.track === 'developer' && (
           <details className="technical">
             <summary>Lecture développeur : moteur et invariants</summary>

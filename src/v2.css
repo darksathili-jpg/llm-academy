@@ -646,3 +646,7 @@ blockquote {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.skip-link:not(:focus) {
+  clip-path: inset(100%);
+}

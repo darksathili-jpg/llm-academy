@@ -143,7 +143,33 @@ function References() {
         </p>
       </header>
       <section>
-        <h2>Références des premiers modules</h2>
+        <h2>Programmes et usage en classe</h2>
+        <p>
+          Sources officielles consultées le 10 octobre 2026. Les mécanismes des LLM sont des
+          prolongements hors programme NSI ; aucun compte ni donnée personnelle n’est nécessaire
+          dans ces activités.
+        </p>
+        <ul>
+          <li>
+            <a href="https://eduscol.education.gouv.fr/5823/programmes-et-ressources-en-numerique-et-sciences-informatiques-voie-g">
+              Éduscol : programmes NSI en vigueur
+            </a>
+          </li>
+          <li>
+            <a href="https://www.education.gouv.fr/cadre-d-usage-de-l-ia-en-education-450647">
+              Cadre d’usage de l’IA en éducation
+            </a>
+          </li>
+          <li>
+            <a href="https://www.cnil.fr/fr/enseignant-usage-systeme-ia">
+              CNIL : enseignants et systèmes d’IA
+            </a>
+          </li>
+          <li>
+            <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2 : exigences d’accessibilité</a>
+          </li>
+        </ul>
+        <h2>Références scientifiques des modules</h2>
         <ul className="references">
           {refs.map((r) => (
             <li key={r.url}>
@@ -167,7 +193,7 @@ function References() {
           pas des octets. Ces limites sont affichées au lieu de présenter une animation comme un
           calcul scientifique.
         </p>
-        <a href="https://github.com/darksathili-jpg/llm-academy/tree/main/docs">
+        <a href="https://github.com/darksathili-jpg/llm-academy/tree/refonte/atelier-v2/docs">
           Documentation, roadmap et protocoles de test →
         </a>
       </section>

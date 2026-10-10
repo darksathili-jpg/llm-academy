@@ -7,6 +7,6 @@
 5. Pyodide Worker : entrée standard, erreurs, boucle interrompue, reset, chargement refusé et repli.
 6. Chromium 390/768/1280/1440/1920, clair/sombre/projection ; captures relues, axe, erreurs JS, débordement, impression.
 7. Hors ligne après cache, nouveau navigateur, réseau contraint et absence de requête LLM.
-8. Quatre profils simulés : élève NSI, enseignant de lettres, formateur pressé, utilisateur clavier. Ce ne sont pas des tests avec de vrais participants.
+8. Quatre profils simulés : élève NSI, enseignant de lettres, formateur académique, enseignant NSI. Ce ne sont pas des tests avec de vrais participants.
 
-Séance simulée : ouvrir studio → sélectionner 120 → préparer → lancer → hypothèse → démonstration → pause → reprendre → changer étape → révéler → revenir → recharger → exporter. Mesurer les actions réellement effectuées et le temps de test, sans transformer ce temps automatisé en durée d'apprentissage.
+Séance simulée en onze étapes : ouvrir studio → sélectionner 120 → première consigne → chrono → démonstration → paramètres → résultat → correction → activité suivante → rechargement/reprise → export. Le clavier et la pause indépendante sont testés séparément. Mesurer les actions réellement effectuées et le temps de test, sans transformer ce temps automatisé en durée d'apprentissage.

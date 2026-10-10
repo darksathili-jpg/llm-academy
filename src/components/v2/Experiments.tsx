@@ -1,3 +1,4 @@
+import { LabBoundary } from '../LabBoundary';
 import { IntuitiveTraining, IntuitiveTransformer } from './IntuitiveModels';
 import { useState, lazy, Suspense } from 'react';
 import { filteredDistribution, seededRandom, sample } from '../../core/generation';
@@ -640,46 +641,48 @@ export function RagLab() {
 }
 export function Experiment({ id, scientific = false }: { id: ExperimentId; scientific?: boolean }) {
   return (
-    <Suspense fallback={<p role="status">Ouverture de l’instrument…</p>}>
-      {id === 'prediction' ? (
-        <PredictionLab />
-      ) : id === 'tokenizer' ? (
-        <BpeLab />
-      ) : id === 'generation' ? (
-        scientific ? (
-          <GenerationLab />
+    <LabBoundary>
+      <Suspense fallback={<p role="status">Ouverture de l’instrument…</p>}>
+        {id === 'prediction' ? (
+          <PredictionLab />
+        ) : id === 'tokenizer' ? (
+          <BpeLab />
+        ) : id === 'generation' ? (
+          scientific ? (
+            <GenerationLab />
+          ) : (
+            <PredictionLab generation />
+          )
+        ) : id === 'attention' ? (
+          scientific ? (
+            <AttentionLab />
+          ) : (
+            <IntuitiveAttention />
+          )
+        ) : id === 'training' ? (
+          scientific ? (
+            <TrainingLab />
+          ) : (
+            <IntuitiveTraining />
+          )
+        ) : id === 'detective' ? (
+          <DetectiveLab />
+        ) : id === 'prompting' ? (
+          <PromptLab />
+        ) : id === 'rag' ? (
+          <RagLab />
+        ) : id === 'embeddings' ? (
+          scientific ? (
+            <EmbeddingLab />
+          ) : (
+            <IntuitiveVectors />
+          )
+        ) : scientific ? (
+          <TransformerLab />
         ) : (
-          <PredictionLab generation />
-        )
-      ) : id === 'attention' ? (
-        scientific ? (
-          <AttentionLab />
-        ) : (
-          <IntuitiveAttention />
-        )
-      ) : id === 'training' ? (
-        scientific ? (
-          <TrainingLab />
-        ) : (
-          <IntuitiveTraining />
-        )
-      ) : id === 'detective' ? (
-        <DetectiveLab />
-      ) : id === 'prompting' ? (
-        <PromptLab />
-      ) : id === 'rag' ? (
-        <RagLab />
-      ) : id === 'embeddings' ? (
-        scientific ? (
-          <EmbeddingLab />
-        ) : (
-          <IntuitiveVectors />
-        )
-      ) : scientific ? (
-        <TransformerLab />
-      ) : (
-        <IntuitiveTransformer />
-      )}
-    </Suspense>
+          <IntuitiveTransformer />
+        )}
+      </Suspense>
+    </LabBoundary>
   );
 }

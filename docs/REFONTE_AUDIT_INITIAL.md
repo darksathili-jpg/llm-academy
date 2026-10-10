@@ -38,4 +38,4 @@ Pour tous : objectifs de calcul vérifiables, écrits libres avec grille, exempl
 
 ## Socle vérifié
 
-97 tests unitaires exécutés et réussis. Deux notebooks PyTorch exécutés intégralement avec assertions ; gradients analytiques/numériques concordants et apprentissage réel. Build et TypeScript strict réussis. Résultat des tests navigateur du commit local à ajouter après exécution. Les tests antérieurs de phase C ne prouvent pas les nouvelles fonctionnalités.
+97 tests unitaires exécutés et réussis. Deux notebooks PyTorch exécutés intégralement avec assertions ; gradients analytiques/numériques concordants et apprentissage réel. Build et TypeScript strict réussis. 25 tests navigateur du socle local exécutés et réussis avant modification. Les tests antérieurs de phase C ne prouvent pas les nouvelles fonctionnalités.
