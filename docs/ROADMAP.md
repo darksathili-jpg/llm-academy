@@ -1,33 +1,46 @@
-﻿# Roadmap et état — 10 octobre 2026
-## Livraison 1 — phases A et B implémentées
-- Socle React/TypeScript strict/Vite, navigation hash, trois thèmes, responsive et clavier.
-- Modules 01 et 02 : diagnostic, cours original, hypothèse, visualisation calculée, exercices, aides, transfert, synthèse et sources.
-- Laboratoire de probabilités : softmax stable et perte ; BPE : comptes, fusions, historique, vocabulaire/IDs et encodage sur corpus modifiable.
-- Huit exercices corrigés, progression dérivée des réponses, carnet local et export/import contrôlé.
-- Cache de production local et versionné, alertes de stockage.
-## Validation locale observée
-Typecheck et build réussis. 52 tests unitaires et 14 tests Chromium réussis.
-Axe : aucune violation relevée sur cinq pages × trois thèmes ; contrôle de débordement à 390, 768 et 1440 px.
-Test hors ligne avec réseau coupé réussi. Audit npm de production : aucune vulnérabilité signalée.
-Vulnérabilités initiales de Vitest 3 corrigées par Vitest 5.
-## Déploiement
-Workflow de validation avant publication avec les actions officielles Pages.
-Publication réussie pour le commit applicatif 7e971bb : [workflow vérifié](https://github.com/darksathili-jpg/llm-academy/actions/runs/38033954722).
-Site : https://darksathili-jpg.github.io/llm-academy/
-Vérification Chromium sur le domaine public le 10 octobre 2026 : HTTP 200, modules 01/02, BPE 10 → 7 tokens, progression conservée après rechargement, rechargement hors ligne réussi, aucune erreur JavaScript.
-Commande reproductible : node scripts/verify-live.mjs. Ce test utilise un navigateur neuf, sans accès au carnet personnel de l’utilisateur.
-## Limites connues
-Aucune certification WCAG : audit manuel multi-navigateurs/lecteurs d’écran encore nécessaire.
-Activités libres à relire ; aucune correction sémantique par IA.
-BPE Unicode miniature, pas byte-level ; compteur inadapté aux factures ou contextes d’API réels.
-Les expériences se réinitialisent en changeant de page ; réponses et carnet sont conservés.
-Pas de Pyodide en phase B, car aucun de ces calculs ne nécessite Python.
-## C — Fondements scientifiques, à venir
-Embeddings, algèbre, Q/K/V, masques causaux, Transformer. Moteurs vérifiés et visualisations calculées.
-## D — Construction et entraînement, à venir
-Mini-modèle, gradient, sampling, adaptation ; notebooks Python/PyTorch et Pyodide à la demande lorsque pertinent.
-## E — Ingénierie IA, à venir
-Prompting, index local/RAG, outils et protocoles d’évaluation. Jeux de données originaux.
-## F — Audit final, à venir
-Relecture scientifique et pédagogique, navigateurs et technologies d’assistance, performance mesurée, robustesse.
+# Roadmap et état — 10 octobre 2026
 
+## Livraisons disponibles
+
+- Phases A/B : socle React/TypeScript/Vite, modules 01/02, probabilités et BPE Unicode, carnet local, thèmes, navigation clavier et cache hors ligne.
+- Phase C : modules 03 à 06, vecteurs/projections, algèbre/gradient, attention Q/K/V et Transformer miniature. Chaque module comporte diagnostic, cours original, hypothèse, expérience calculée, exercices, transfert, synthèse et sources.
+- Six modules, six laboratoires et 24 exercices corrigés. Carnet de schéma 2 avec migration des notes, réponses et préférences de schéma 1. Aucune compétence attribuée automatiquement.
+- Moteurs purs testables et poids de démonstration inspectables ; voir [périmètre scientifique](PHASE_C.md).
+
+## Validation locale observée — phase C
+
+Formatage, TypeScript strict et build réussis. 97 tests unitaires et 25 scénarios Chromium réussis.
+Axe : zéro violation relevée sur accueil, modules 01–06, carnet et références, dans les trois thèmes. Débordement contrôlé à 390, 768 et 1440 px ; captures bureau/mobile relues.
+Calculs de référence, masques causaux, variantes du Transformer, migration/import/export, correction des 24 exercices et rechargement hors ligne vérifiés.
+Audit npm : zéro vulnérabilité signalée.
+
+## Publication
+
+Site : https://darksathili-jpg.github.io/llm-academy/
+
+Le workflow valide formatage, types, tests, build et scénarios Chromium/Linux avant de publier avec les actions officielles Pages.
+La nouvelle phase C est prête localement ; sa publication et le contrôle du domaine public sont en cours.
+Livraison A/B précédemment vérifiée : [workflow](https://github.com/darksathili-jpg/llm-academy/actions/runs/38033954722).
+Commande reproductible : `node scripts/verify-live.mjs`. Le test utilise un navigateur neuf et ne touche pas au carnet personnel de l'utilisateur.
+
+## Limites connues
+
+- Audit automatisé d'accessibilité ; relecture humaine, lecteurs d'écran et autres navigateurs encore nécessaires.
+- Activités libres accompagnées d'une grille, sans correction sémantique par IA.
+- BPE Unicode miniature, sans byte-level ; compteur inadapté aux factures ou contextes d'API.
+- Vecteurs/poids inventés, modèle non entraîné ; aucune capacité linguistique démontrée.
+- Bloc illustratif pré-normalisé, sans biais/dropout, FFN ReLU de largeur 2 d_model, positions sin/cos ; simplifications explicites.
+- Expériences réinitialisées lors d'un changement de page ; carnet et réponses conservés.
+- Pyodide différé : les calculs des phases B/C s'effectuent nativement en TypeScript.
+
+## D — Construction et entraînement, à venir
+
+Modules 07–09 : architecture GPT, entraînement, adaptation. Mini-modèle, gradients, sampling, notebooks Python/PyTorch et Pyodide à la demande lorsque pertinent.
+
+## E — Ingénierie IA, à venir
+
+Modules 10–12 : RAG, agents et évaluation ; jeux de données originaux et applications pratiques.
+
+## F — Audit final, à venir
+
+Relecture scientifique et pédagogique, navigateurs et technologies d'assistance, performance mesurée et robustesse.
