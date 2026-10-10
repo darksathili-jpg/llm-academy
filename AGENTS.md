@@ -2,6 +2,10 @@
 
 Le dernier mandat utilisateur remplace l’architecture V2 à trois espaces. Dépôt dédié llm-academy ; ne pas toucher formation-ia ni la configuration globale Codex.
 
+## Choix graphique validé — 10 octobre 2026
+
+L’utilisateur a retenu l’étude B « Cabinet des possibles », public/etudes-accueil/b-musee.html : scène muséographique sombre, phrase centrale, branches de probabilités, titres contenus. Maquettes conservées sur graphisme/accueils-a-comparer. Ce choix est consigné ; le développement de l’application reste suspendu.
+
 ## Contrat actuel
 
 Une seule application pour Terminale NSI et enseignants, un seul parcours. Accueil à six expériences, sans jargon. Construire seulement la première : question, hypothèse, manipulation, observation, explication. Python et commandes formateur sont des prolongements de cette même expérience.

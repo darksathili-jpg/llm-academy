@@ -4,7 +4,7 @@
 
 État de départ propre : commit 0fdc58c, branche simplification/demonstrateur-01. Les maquettes sont isolées sur graphisme/accueils-a-comparer. Aucun fichier existant de l’application n’a été modifié ; aucune nouvelle architecture, aucun module, aucune publication ou fusion.
 
-Les pages sont des études HTML/CSS autonomes. Leur seule interaction permet de proposer un mot et d’observer un tirage. Aucun compte, carnet, stockage ni appel à une IA. Aucune proposition n’est sélectionnée pour l’application.
+Les pages sont des études HTML/CSS autonomes. Leur seule interaction permet de proposer un mot et d’observer un tirage. Aucun compte, carnet, stockage ni appel à une IA. L’utilisateur a retenu l’étude B « Cabinet des possibles » le 10 octobre 2026. Les trois maquettes restent conservées pour comparaison.
 
 ## Les trois directions
 
@@ -50,8 +50,8 @@ Même jeu préparé dans les trois pages : préférences 6/3/1 normalisées par 
 
 Ces chances ne sont pas apprises par un modèle. Les trois mots entiers représentent des tokens pédagogiques. Rien ne garantit que la phrase décrit un fait réel.
 
-Vérification sur Chromium aux deux résolutions demandées. Les captures et les tests ne prouvent pas la compréhension humaine et ne constituent pas une certification d’accessibilité. Les rendus peuvent varier avec les polices du poste ; aucun choix définitif n’a été fait.
+Vérification sur Chromium aux deux résolutions demandées. Les captures et les tests ne prouvent pas la compréhension humaine et ne constituent pas une certification d’accessibilité. Les rendus peuvent varier avec les polices du poste ; la direction B a été choisie par l’utilisateur.
 
 ## Arrêt
 
-Les trois maquettes et leurs captures sont livrées pour décision humaine. Développement des fonctionnalités et modules suspendu. Aucune intégration d’une proposition à l’application avant validation explicite.
+Décision humaine reçue : « etude b ». L’étude B fixe la direction graphique retenue. Le choix est consigné sans modification de l’application ; le développement des fonctionnalités et modules reste suspendu.
