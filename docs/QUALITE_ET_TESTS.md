@@ -42,3 +42,7 @@ Voir ROADMAP pour les résultats effectivement obtenus.
 - TypeScript strict, formatage reproductible, compilation et audit npm réussis ; zéro vulnérabilité signalée.
 - Axe : zéro violation relevée sur les quatre nouveaux modules dans les trois thèmes. Largeurs 390, 768 et 1440 px ; captures du studio d'attention sur bureau et du Transformer sur mobile relues.
 - Le workflow applique aussi le contrôle du formatage. Le statut de publication et la preuve du contrôle public sont consignés dans [ROADMAP](ROADMAP.md).
+
+## Phase C — publication vérifiée
+
+[Workflow 38040968069](https://github.com/darksathili-jpg/llm-academy/actions/runs/38040968069) réussi : validations Linux et déploiement Pages du commit 089ffbf. Contrôle public via `node scripts/verify-live.mjs` réussi : HTTP 200, six modules, résultats numériques des laboratoires, causalité, sauvegarde/rechargement, Transformer hors ligne ; zéro erreur JavaScript.

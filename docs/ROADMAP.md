@@ -19,7 +19,8 @@ Audit npm : zéro vulnérabilité signalée.
 Site : https://darksathili-jpg.github.io/llm-academy/
 
 Le workflow valide formatage, types, tests, build et scénarios Chromium/Linux avant de publier avec les actions officielles Pages.
-La nouvelle phase C est prête localement ; sa publication et le contrôle du domaine public sont en cours.
+Phase C publiée pour le commit applicatif 089ffbf : [workflow réussi](https://github.com/darksathili-jpg/llm-academy/actions/runs/38040968069). Les validations ont réussi aussi sous GitHub Actions/Linux.
+Contrôle Chromium du domaine public : HTTP 200, modules 01–06, BPE 10 → 7 tokens, cosinus 3D -0,6 versus projection 1, produit matriciel 4, influence du futur bloquée avec masque causal, étapes du Transformer, sauvegarde/rechargement et fonctionnement hors ligne vérifiés ; zéro erreur JavaScript.
 Livraison A/B précédemment vérifiée : [workflow](https://github.com/darksathili-jpg/llm-academy/actions/runs/38033954722).
 Commande reproductible : `node scripts/verify-live.mjs`. Le test utilise un navigateur neuf et ne touche pas au carnet personnel de l'utilisateur.
 
