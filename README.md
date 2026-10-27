@@ -2,7 +2,7 @@
 
 Plateforme française pour voir, manipuler, programmer et expliquer les mécanismes des modèles de langage.
 
-Qualification pédagogique V4 en cours sur `refonte/qualification-pedagogique-v4`, construite sur la V3. Cette branche n'est ni fusionnée dans `main` ni publiée.
+Qualification pédagogique V4 sur `refonte/qualification-pedagogique-v4`, construite sur la V3. La branche n'est pas fusionnée dans `main`. Sa publication de démonstration se fait directement par GitHub Actions, sous réserve de la configuration de GitHub Pages.
 
 ## Première visite
 
@@ -52,3 +52,19 @@ Coulisses privées dans une fenêtre séparée : jamais affichées dans Projecti
 Les durées sont proposées ; les profils testés sont hypothétiques. Aucun essai terrain ni certification WCAG n'est revendiqué. Textes, corpus et figures originaux, références primaires citées ; aucun livre reproduit.
 
 GitHub Pages conservé. Après autorisation de fusion : workflow de validation, publication, puis contrôle du domaine public `node scripts/verify-live.mjs`. Une URL de preview peut être contrôlée avec la variable `LLM_ACADEMY_URL`.
+
+## Publication de démonstration V4 (sans fusion)
+
+Dans [Settings > Pages](https://github.com/darksathili-jpg/llm-academy/settings/pages), choisir **Build and deployment > Source : GitHub Actions**. Ne pas choisir « Deploy from a branch » : la racine de la branche contient le point d'entrée TypeScript de Vite, qui n'est pas directement publiable.
+
+Le workflow `.github/workflows/pages.yml` :
+
+1. vérifie le format, TypeScript, les tests unitaires, les dix corrigés Python et les tests navigateur ;
+2. construit `dist/` avec `base: '/llm-academy/'` et refuse une entrée TypeScript non compilée ;
+3. autorise la publication uniquement pour un `push` sur `main` ou `refonte/qualification-pedagogique-v4`, jamais pour une Pull Request ;
+4. publie l'artefact `dist/` avec `actions/deploy-pages` ;
+5. lance `node scripts/verify-live-pages.mjs` dans Chromium contre l'URL réellement publiée, puis contrôle le parcours V4, le dossier enseignant, la fiche participant et l'absence de débordement mobile.
+
+Consulter l'onglet **Actions > Validate and publish LLM Academy**. Si l'étape `publish` refuse la branche, examiner **Settings > Environments > github-pages** : autoriser la branche V4 dans les règles de déploiement. Le site public https://darksathili-jpg.github.io/llm-academy/ est unique : publier V4 remplace temporairement la version actuellement servie, sans fusion Git.
+
+La validation automatique du site en Chromium ne remplace pas une inspection humaine sur vidéoprojecteur, au clavier, avec lecteur d'écran et sur les navigateurs requis.
