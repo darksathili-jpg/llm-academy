@@ -82,7 +82,7 @@ test('dossier enseignant : remédiation, transfert, référence Python', async (
   await page.goto('./#/enseignant');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Enseigner sans présupposer');
   const first = page.locator('details.lesson-section').first();
-  await first.locator('summary').click();
+  await first.locator('summary').first().click();
   await expect(first).toContainText('Conception erronée probable');
   await expect(first).toContainText('Ce que l’enseignant doit observer');
   await first.getByText('Code de référence et assertions', { exact: true }).click();
