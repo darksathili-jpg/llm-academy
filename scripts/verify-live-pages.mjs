@@ -43,7 +43,9 @@ try {
         page.getByRole('region', { name: 'Pour approfondir : trois mécanismes facultatifs' }),
       ).toBeVisible();
       await expect(
-        page.locator('section[aria-label="Pour commencer : sept activités accessibles"] a.editorial-row'),
+        page.locator(
+          'section[aria-label="Pour commencer : sept activités accessibles"] a.editorial-row',
+        ),
       ).toHaveCount(7);
 
       await page.goto(new URL('#/enseignant', base).toString(), {
