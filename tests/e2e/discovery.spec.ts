@@ -109,7 +109,6 @@ test('Terminale NSI : mission Python au choix et bilan sans fausse certification
   await expect(page.locator('.investigation-stage pre.code-output').last()).toContainText(
     'effectifs.get(paire, 0)',
   );
-  await page.getByText('Aller à une autre étape', { exact: true }).click();
   await page.getByRole('button', { name: /Vérifier ta compréhension/ }).click();
   await expect(page.getByRole('heading', { name: 'Bilan de mes traces' })).toBeVisible();
   await expect(page.getByLabel('Bilan de mes traces')).toContainText(
