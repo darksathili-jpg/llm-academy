@@ -9,6 +9,7 @@ import { Workshop, Activity, Laboratory } from './components/v2/Workshop';
 import { Studio, Animation, Backstage } from './components/v2/Studio';
 import { FirstSteps, StarterPreview } from './components/v2/FirstSteps';
 import { TeacherGuide } from './components/v2/TeacherGuide';
+import { TeacherSequencePage } from './components/v2/TeacherSequencePage';
 function readRoute() {
   return location.hash.startsWith('#/') ? location.hash.slice(2).split('?')[0] || 'home' : 'home';
 }
@@ -305,6 +306,8 @@ export default function App() {
   else if (kind === 'decouvrir') content = <FirstSteps />;
   else if (kind === 'atelier') content = <Workshop />;
   else if (kind === 'enseignant') content = <TeacherGuide />;
+  else if (kind === 'seance' || kind === 'fiche')
+    content = <TeacherSequencePage key={route} id={id} audience={kind === 'fiche' ? 'student' : 'teacher'} />;
   else if (kind === 'activite') content = <Activity key={id} id={id} />;
   else if (kind === 'studio' && (!id || ['60', '120', '180', '360'].includes(id)))
     content = <Studio duration={id ? Number(id) : undefined} />;
