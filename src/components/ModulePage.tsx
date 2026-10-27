@@ -86,7 +86,7 @@ export function ModulePage({ module }: { module: Module }) {
         <p className="lead">{module.subtitle}</p>
         <p className="progress-label">
           {score.correct} / {score.total} exercices validés ·{' '}
-          {score.correct === score.total ? 'Compétences évaluées acquises' : 'Parcours en cours'}
+          {score.correct === score.total ? 'Exercices vérifiés ; raisonnement à relire' : 'Parcours en cours'}
         </p>
       </header>
       <nav className="section-nav" aria-label="Étapes du module">
