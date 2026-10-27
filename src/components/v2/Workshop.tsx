@@ -203,13 +203,19 @@ export function Activity({ id }: { id: string }) {
             {pythonMode === 'mission' && (
               <section className="notice">
                 <h3>{challenge.title}</h3>
-                <p><strong>Objectif :</strong> {challenge.goal}</p>
-                <p><strong>Consigne :</strong> {challenge.instruction}</p>
                 <p>
-                  Compléter la fonction à la place de TODO, puis exécuter le programme.
-                  Les assertions vérifient des résultats ; elles ne certifient pas la compréhension.
+                  <strong>Objectif :</strong> {challenge.goal}
                 </p>
-                <p><strong>Transfert :</strong> {challenge.transfer}</p>
+                <p>
+                  <strong>Consigne :</strong> {challenge.instruction}
+                </p>
+                <p>
+                  Compléter la fonction à la place de TODO, puis exécuter le programme. Les
+                  assertions vérifient des résultats ; elles ne certifient pas la compréhension.
+                </p>
+                <p>
+                  <strong>Transfert :</strong> {challenge.transfer}
+                </p>
               </section>
             )}
             <details>
@@ -218,11 +224,15 @@ export function Activity({ id }: { id: string }) {
                 key={pythonMode}
                 initialCode={pythonMode === 'demo' ? a.python : challenge.starter}
                 initialInput={pythonMode === 'demo' ? a.input : ''}
-                hints={pythonMode === 'demo' ? undefined : [
-                  challenge.hint,
-                  'Exécute les assertions après avoir modifié la fonction.',
-                  'Si un test échoue, compare les données du test avec la valeur renvoyée.',
-                ]}
+                hints={
+                  pythonMode === 'demo'
+                    ? undefined
+                    : [
+                        challenge.hint,
+                        'Exécute les assertions après avoir modifié la fonction.',
+                        'Si un test échoue, compare les données du test avec la valeur renvoyée.',
+                      ]
+                }
               />
               {pythonMode === 'mission' && (
                 <details>
@@ -295,16 +305,20 @@ export function Activity({ id }: { id: string }) {
               {review.missing.length > 0 && (
                 <>
                   <p>Il manque encore des traces de ton raisonnement :</p>
-                  <ul>{review.missing.map((item) => <li key={item}>{item}</li>)}</ul>
+                  <ul>
+                    {review.missing.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
                 </>
               )}
               {!review.conclusionCorrect && (
                 <p>Reviens à la question finale et justifie ton choix avec une observation.</p>
               )}
               <p>
-                Une réponse correcte et des champs remplis ne suffisent pas pour prouver
-                la compréhension. Le transfert et la justification doivent être examinés
-                par l’enseignant ou un pair.
+                Une réponse correcte et des champs remplis ne suffisent pas pour prouver la
+                compréhension. Le transfert et la justification doivent être examinés par
+                l’enseignant ou un pair.
               </p>
             </section>
             <h3>Grille de relecture de mes écrits</h3>

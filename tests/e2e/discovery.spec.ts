@@ -80,9 +80,7 @@ test('découverte accessible dans les trois modes, clavier et cinq largeurs', as
 
 test('dossier enseignant : remédiation, transfert, référence Python', async ({ page }) => {
   await page.goto('./#/enseignant');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    'Enseigner sans présupposer',
-  );
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Enseigner sans présupposer');
   const first = page.locator('details.lesson-section').first();
   await first.locator('summary').click();
   await expect(first).toContainText('Conception erronée probable');
@@ -98,20 +96,14 @@ test('Terminale NSI : mission Python au choix et bilan sans fausse certification
   await page.getByText('Aller à une autre étape', { exact: true }).click();
   await page.getByRole('button', { name: /Coder \(facultatif\)/ }).click();
   await page.getByRole('button', { name: /Mission Python NSI : Compter des paires/ }).click();
-  await expect(page.locator('.investigation-stage')).toContainText(
-    'deux caractères',
-  );
+  await expect(page.locator('.investigation-stage')).toContainText('deux caractères');
   await page.getByText('Afficher le code Python', { exact: true }).click();
-  await expect(page.getByLabel('Code Python modifiable')).toHaveValue(
-    /def compter_paires\(mots\)/,
-  );
+  await expect(page.getByLabel('Code Python modifiable')).toHaveValue(/def compter_paires\(mots\)/);
   await page.getByText('Consulter le corrigé Python après mes essais').click();
   await expect(page.locator('.investigation-stage pre.code-output').last()).toContainText(
     'effectifs.get(paire, 0)',
   );
   await page.getByRole('button', { name: /Vérifier ta compréhension/ }).click();
   await expect(page.getByRole('heading', { name: 'Bilan de mes traces' })).toBeVisible();
-  await expect(page.getByLabel('Bilan de mes traces')).toContainText(
-    'Il manque encore des traces',
-  );
+  await expect(page.getByLabel('Bilan de mes traces')).toContainText('Il manque encore des traces');
 });

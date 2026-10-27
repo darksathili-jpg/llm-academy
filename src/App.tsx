@@ -71,7 +71,9 @@ function Home() {
         </h2>
         <p>Un déroulement, des questions orales, des expériences et une console de projection.</p>
         <a href="#/studio/120">Ouvrir la séance de deux heures →</a>
-        <p><a href="#/enseignant">Préparer mes activités de NSI avec le dossier enseignant →</a></p>
+        <p>
+          <a href="#/enseignant">Préparer mes activités de NSI avec le dossier enseignant →</a>
+        </p>
       </section>
       <p>
         <a href="#/bibliotheque">Les neuf modules approfondis →</a> ·{' '}
