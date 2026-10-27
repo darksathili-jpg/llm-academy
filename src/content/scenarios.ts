@@ -70,6 +70,19 @@ const layouts = {
     ['synthese', 10],
   ],
 } as Record<string, [string, number][]>;
+// Le mode de travail est choisi selon l'objectif, pas selon le rang de l'étape.
+const pedagogicalModes: Record<string, SessionStep['mode']> = {
+  credibilite: 'binômes',
+  tokens: 'binômes',
+  probabilites: 'individuel',
+  contexte: 'binômes',
+  representations: 'individuel',
+  attention: 'collectif',
+  apprentissage: 'binômes',
+  generation: 'individuel',
+  erreurs: 'binômes',
+  fiabilite: 'binômes',
+};
 function step(id: string, minutes: number, index: number): SessionStep {
   const a = activities.find((x) => x.id === id);
   if (a)
@@ -78,7 +91,7 @@ function step(id: string, minutes: number, index: number): SessionStep {
       title: a.title,
       minutes,
       instruction: a.instruction,
-      mode: index % 3 === 1 ? 'individuel' : index % 3 === 2 ? 'binômes' : 'collectif',
+      mode: pedagogicalModes[id],
       question: a.question,
       expected: a.correction,
       vigilance: a.errors,
