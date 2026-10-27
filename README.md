@@ -2,7 +2,7 @@
 
 Plateforme française pour voir, manipuler, programmer et expliquer les mécanismes des modèles de langage.
 
-Refonte V2 sur la branche `refonte/atelier-v2` ; le domaine public n'est pas déclaré mis à jour tant que cette branche n'est pas fusionnée et vérifiée.
+Refonte pédagogique NSI V3 proposée sur `refonte/nsi-pedagogie-v3`, construite sur la V2. Ces modifications ne sont ni fusionnées dans `main` ni publiées sur le domaine public.
 
 ## Première visite
 
@@ -10,8 +10,8 @@ Commencer par `#/decouvrir` : quatre écrans en langage courant, sans code, pour
 
 ## Trois espaces
 
-- Atelier Terminale NSI : dix investigations, huit étapes, hypothèses et observations locales, Python facultatif et grille de relecture.
-- Studio formateur : séances de 1/2/3/6 heures, questions orales, corrections progressives, deux chronomètres, reprise, projection, notes privées séparées et fiches imprimables.
+- Atelier Terminale NSI : dix investigations, huit étapes, hypothèses et observations locales ; dix missions Python avec assertions et corrigés distincts, accessibles au choix après l'exemple guidé.
+- Studio formateur : séances de 1/2/3/6 heures, questions orales, corrections progressives, deux chronomètres, reprise, projection, notes privées séparées et fiches imprimables. Dossier pour enseignants débutants : `#/enseignant`.
 - Laboratoire : dix instruments intuitifs/scientifiques ; neuf modules approfondis conservés.
 
 Huit expériences prioritaires : prédiction, BPE, génération, attention, apprentissage neural, détective des hallucinations, prompting et mini-RAG. Les probabilités/gradients/recherches sont calculés ; les scores inventés, textes préparés et approximations sont signalés. Pas de LLM de production local, pas d'API obligatoire.
@@ -25,6 +25,7 @@ npm run dev
 npm run format:check
 npm run typecheck
 npm test
+python3 scripts/verify-nsi-challenges.py
 npm run build
 npx playwright install chromium
 npm run test:e2e
@@ -43,6 +44,8 @@ Calculs TypeScript et documents locaux hors ligne après mise en cache complète
 Coulisses privées dans une fenêtre séparée : jamais affichées dans Projection, jamais incluses dans les fiches. Éviter le partage du bureau complet.
 
 ## Documentation
+
+[Refonte pédagogique NSI V3 : périmètre, critères et validations humaines](docs/REFONTE_NSI_V3.md). Les dix corrigés Python sont exécutés dans la CI ; cela ne remplace pas une validation en classe.
 
 [Rapport de validation V2](docs/RAPPORT_VALIDATION_V2.md), [guide formateur](docs/SCENARIOS_FORMATEUR.md), [périmètre scientifique](docs/EXPERIENCES_SCIENTIFIQUES.md), [correspondances NSI](docs/PROGRAMME_NSI_CORRESPONDANCES.md), [limites](docs/LIMITES_CONNUES.md), [audit initial](docs/REFONTE_AUDIT_INITIAL.md).
 
