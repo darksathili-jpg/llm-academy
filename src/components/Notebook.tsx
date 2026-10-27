@@ -28,7 +28,9 @@ export function Notebook() {
       if (file.size > MAX_CARNET_BYTES) throw new Error('Fichier trop volumineux (2 Mo maximum).');
       const p = parseProgress(await file.text());
       setCandidate(p);
-      setMessage('Fichier valide. Les compétences seront recalculées depuis les réponses.');
+      setMessage(
+        'Fichier valide. Les résultats des exercices autocorrigés seront recalculés depuis les réponses.',
+      );
     } catch (e) {
       setMessage(e instanceof Error ? e.message : 'Import impossible.');
     }

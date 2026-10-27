@@ -1,4 +1,6 @@
 import { learnerGuides, plainSteps } from '../../content/learnerGuides';
+import { nsiChallenges } from '../../content/nsiChallenges';
+import { reviewInvestigation } from '../../core/pedagogicalReview';
 import { laboratorySheets } from '../../content/laboratorySheets';
 import { useEffect, useRef, useState } from 'react';
 import { activities, type ExperimentId } from '../../content/activities';
@@ -56,7 +58,8 @@ export function Activity({ id }: { id: string }) {
     { progress, update } = useProgress();
   const [hints, setHints] = useState(0),
     [revealed, setRevealed] = useState(false),
-    [checked, setChecked] = useState(false);
+    [checked, setChecked] = useState(false),
+    [pythonMode, setPythonMode] = useState<'demo' | 'mission'>('demo');
   const stageHeading = useRef<HTMLHeadingElement>(null);
   const currentStage = progress.investigations[id]?.stage ?? 0;
   useEffect(() => {
@@ -72,6 +75,8 @@ export function Activity({ id }: { id: string }) {
   const guide = learnerGuides[id];
   const data = progress.investigations[id] ?? emptyInvestigation(),
     stage = data.stage;
+  const challenge = nsiChallenges[id];
+  const review = reviewInvestigation(data, String(a.quiz.expected));
   function change(patch: Partial<Investigation>) {
     update((p) => ({ ...p, investigations: { ...p.investigations, [id]: { ...data, ...patch } } }));
   }
@@ -175,16 +180,71 @@ export function Activity({ id }: { id: string }) {
         ) : stage === 5 ? (
           <>
             <p>
-              Cette partie permet de refaire un calcul avec Python, un langage de programmation. Tu
-              peux continuer sans l’utiliser.
+              Deux façons de programmer : essayer un exemple complet ou résoudre une mission de
+              Terminale NSI. La programmation est facultative dans la découverte, mais proposée
+              systématiquement aux élèves de NSI.
             </p>
-            <button className="secondary" onClick={() => change({ stage: 6 })}>
-              Passer sans Python →
-            </button>
+            <div className="lab-toolbar" role="group" aria-label="Choix du travail Python">
+              <button
+                className="secondary"
+                aria-pressed={pythonMode === 'demo'}
+                onClick={() => setPythonMode('demo')}
+              >
+                Démonstration guidée
+              </button>
+              <button
+                className="secondary"
+                aria-pressed={pythonMode === 'mission'}
+                onClick={() => setPythonMode('mission')}
+              >
+                Mission Python NSI : {challenge.title}
+              </button>
+            </div>
+            {pythonMode === 'mission' && (
+              <section className="notice">
+                <h3>{challenge.title}</h3>
+                <p>
+                  <strong>Objectif :</strong> {challenge.goal}
+                </p>
+                <p>
+                  <strong>Consigne :</strong> {challenge.instruction}
+                </p>
+                <p>
+                  Compléter la fonction à la place de TODO, puis exécuter le programme. Les
+                  assertions vérifient des résultats ; elles ne certifient pas la compréhension.
+                </p>
+                <p>
+                  <strong>Transfert :</strong> {challenge.transfer}
+                </p>
+              </section>
+            )}
             <details>
               <summary>Afficher le code Python</summary>
-              <PythonWorkbench initialCode={a.python} initialInput={a.input} />
+              <PythonWorkbench
+                key={pythonMode}
+                initialCode={pythonMode === 'demo' ? a.python : challenge.starter}
+                initialInput={pythonMode === 'demo' ? a.input : ''}
+                hints={
+                  pythonMode === 'demo'
+                    ? undefined
+                    : [
+                        challenge.hint,
+                        'Exécute les assertions après avoir modifié la fonction.',
+                        'Si un test échoue, compare les données du test avec la valeur renvoyée.',
+                      ]
+                }
+              />
+              {pythonMode === 'mission' && (
+                <details>
+                  <summary>Consulter le corrigé Python après mes essais</summary>
+                  <p>Comparer les instructions, les valeurs renvoyées et les cas de test.</p>
+                  <pre className="code-output">{challenge.solution}</pre>
+                </details>
+              )}
             </details>
+            <button className="secondary" onClick={() => change({ stage: 6 })}>
+              Continuer sans programmer →
+            </button>
           </>
         ) : stage === 6 ? (
           <>
@@ -235,6 +295,32 @@ export function Activity({ id }: { id: string }) {
                   : 'À reprendre : choisissez une conclusion appuyée par l’expérience.'}
               </p>
             )}
+            <section className="notice" aria-label="Bilan de mes traces">
+              <h3>Bilan de mes traces</h3>
+              <p role="status">
+                {review.readyForReview
+                  ? 'Les quatre traces sont présentes et la conclusion choisie est correcte. Ton raisonnement reste à faire relire.'
+                  : 'Ce bilan n’attribue ni note ni compétence acquise.'}
+              </p>
+              {review.missing.length > 0 && (
+                <>
+                  <p>Il manque encore des traces de ton raisonnement :</p>
+                  <ul>
+                    {review.missing.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {!review.conclusionCorrect && (
+                <p>Reviens à la question finale et justifie ton choix avec une observation.</p>
+              )}
+              <p>
+                Une réponse correcte et des champs remplis ne suffisent pas pour prouver la
+                compréhension. Le transfert et la justification doivent être examinés par
+                l’enseignant ou un pair.
+              </p>
+            </section>
             <h3>Grille de relecture de mes écrits</h3>
             <ul>
               {a.criteria.map((c) => (
