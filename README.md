@@ -2,7 +2,7 @@
 
 Plateforme française pour voir, manipuler, programmer et expliquer les mécanismes des modèles de langage.
 
-Refonte pédagogique NSI V3 proposée sur `refonte/nsi-pedagogie-v3`, construite sur la V2. Ces modifications ne sont ni fusionnées dans `main` ni publiées sur le domaine public.
+Qualification pédagogique V4 sur `refonte/qualification-pedagogique-v4`, construite sur la V3. La branche n'est pas fusionnée dans `main`. Sa publication de démonstration se fait directement par GitHub Actions, sous réserve de la configuration de GitHub Pages.
 
 ## Première visite
 
@@ -10,8 +10,8 @@ Commencer par `#/decouvrir` : quatre écrans en langage courant, sans code, pour
 
 ## Trois espaces
 
-- Atelier Terminale NSI : dix investigations, huit étapes, hypothèses et observations locales ; dix missions Python avec assertions et corrigés distincts, accessibles au choix après l'exemple guidé.
-- Studio formateur : séances de 1/2/3/6 heures, questions orales, corrections progressives, deux chronomètres, reprise, projection, notes privées séparées et fiches imprimables. Dossier pour enseignants débutants : `#/enseignant`.
+- Atelier Terminale NSI : sept activités conseillées pour débuter, trois approfondissements facultatifs ; prérequis différenciés, dix missions Python avec assertions et corrigés distincts.
+- Studio formateur : séances de 1/2/3/6 heures, questions orales, corrections progressives, deux chronomètres, reprise, projection, notes privées séparées et fiches imprimables. Dossier pour enseignants débutants : `#/enseignant`. Trois séances de 60 minutes et leurs fiches séparées : `#/seance/<id>` (enseignant avec corrigés) / `#/fiche/<id>` (participant sans corrigés).
 - Laboratoire : dix instruments intuitifs/scientifiques ; neuf modules approfondis conservés.
 
 Huit expériences prioritaires : prédiction, BPE, génération, attention, apprentissage neural, détective des hallucinations, prompting et mini-RAG. Les probabilités/gradients/recherches sont calculés ; les scores inventés, textes préparés et approximations sont signalés. Pas de LLM de production local, pas d'API obligatoire.
@@ -45,10 +45,26 @@ Coulisses privées dans une fenêtre séparée : jamais affichées dans Projecti
 
 ## Documentation
 
-[Refonte pédagogique NSI V3 : périmètre, critères et validations humaines](docs/REFONTE_NSI_V3.md). Les dix corrigés Python sont exécutés dans la CI ; cela ne remplace pas une validation en classe.
+[Audit V4 activité par activité](docs/AUDIT_PEDAGOGIQUE_V4.md) et [refonte pédagogique NSI V3](docs/REFONTE_NSI_V3.md). Les dix corrigés Python sont exécutés dans la CI ; cela ne remplace pas une validation en classe.
 
 [Rapport de validation V2](docs/RAPPORT_VALIDATION_V2.md), [guide formateur](docs/SCENARIOS_FORMATEUR.md), [périmètre scientifique](docs/EXPERIENCES_SCIENTIFIQUES.md), [correspondances NSI](docs/PROGRAMME_NSI_CORRESPONDANCES.md), [limites](docs/LIMITES_CONNUES.md), [audit initial](docs/REFONTE_AUDIT_INITIAL.md).
 
 Les durées sont proposées ; les profils testés sont hypothétiques. Aucun essai terrain ni certification WCAG n'est revendiqué. Textes, corpus et figures originaux, références primaires citées ; aucun livre reproduit.
 
 GitHub Pages conservé. Après autorisation de fusion : workflow de validation, publication, puis contrôle du domaine public `node scripts/verify-live.mjs`. Une URL de preview peut être contrôlée avec la variable `LLM_ACADEMY_URL`.
+
+## Publication de démonstration V4 (sans fusion)
+
+Dans [Settings > Pages](https://github.com/darksathili-jpg/llm-academy/settings/pages), choisir **Build and deployment > Source : GitHub Actions**. Ne pas choisir « Deploy from a branch » : la racine de la branche contient le point d'entrée TypeScript de Vite, qui n'est pas directement publiable.
+
+Le workflow `.github/workflows/pages.yml` :
+
+1. vérifie le format, TypeScript, les tests unitaires, les dix corrigés Python et les tests navigateur ;
+2. construit `dist/` avec `base: '/llm-academy/'` et refuse une entrée TypeScript non compilée ;
+3. autorise la publication uniquement pour un `push` sur `main` ou `refonte/qualification-pedagogique-v4`, jamais pour une Pull Request ;
+4. publie l'artefact `dist/` avec `actions/deploy-pages` ;
+5. lance `node scripts/verify-live-pages.mjs` dans Chromium contre l'URL réellement publiée, puis contrôle le parcours V4, le dossier enseignant, la fiche participant et l'absence de débordement mobile.
+
+Consulter l'onglet **Actions > Validate and publish LLM Academy**. Si l'étape `publish` refuse la branche, examiner **Settings > Environments > github-pages** : autoriser la branche V4 dans les règles de déploiement. Le site public https://darksathili-jpg.github.io/llm-academy/ est unique : publier V4 remplace temporairement la version actuellement servie, sans fusion Git.
+
+La validation automatique du site en Chromium ne remplace pas une inspection humaine sur vidéoprojecteur, au clavier, avec lecteur d'écran et sur les navigateurs requis.

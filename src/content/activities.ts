@@ -43,7 +43,7 @@ export const activities: ActivitySheet[] = [
       'Une réponse décrit une situation avec assurance. Les sources fournies confirment-elles chaque affirmation ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      'Découverte : savoir comparer des affirmations avec un texte court. Python (facultatif) : dictionnaires, expressions conditionnelles, fonctions et assertions.',
     goal: 'Distinguer fait étayé, contradiction et absence de preuve.',
     notions: 'Affirmations, sources, assertions',
     instruction:
@@ -87,7 +87,7 @@ export const activities: ActivitySheet[] = [
       'Le même texte peut être découpé en caractères, mots ou fragments. Quel découpage réutilise le mieux les répétitions ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      'Découverte : savoir compter des caractères et comparer des groupements. Python (facultatif) : chaînes de caractères, tuples, dictionnaires, boucles bornées et assertions.',
     goal: 'Prédire une fusion puis comparer le nombre de tokens avant/après.',
     notions: 'Listes, dictionnaires, boucles, fréquences ; BPE hors programme',
     instruction:
@@ -135,7 +135,7 @@ export const activities: ActivitySheet[] = [
       'Le chat observe… Trois continuations ont des scores différents. Que se passe-t-il lorsque la température diminue ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      'Découverte : pourcentages, comparaison de trois quantités et somme égale à 100 %. Python (facultatif) : listes, fonctions, calculs, expressions conditionnelles et assertions.',
     goal: "Prédire puis mesurer la variation d'une distribution.",
     notions: 'Pourcentages, listes ; softmax hors programme',
     instruction: 'Notez votre hypothèse. Comparez T=1 et T=0,5, sans changer le contexte.',
@@ -180,7 +180,7 @@ export const activities: ActivitySheet[] = [
       '« Le chat observe… » et « Le marin observe… » conduisent-ils aux mêmes continuations ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      "Découverte : comparer deux débuts de phrase en ne modifiant qu'un seul paramètre. Python (facultatif) : dictionnaires imbriqués, boucles bornées, fonctions et assertions.",
     goal: 'Comparer deux distributions en gardant T et graine fixes.',
     notions: 'Chaînes, paramètres, expérience contrôlée ; conditionnement hors programme',
     instruction:
@@ -228,7 +228,7 @@ export const activities: ActivitySheet[] = [
       'Deux objets peuvent sembler proches sur un dessin tout en différant dans une dimension cachée.',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      'Découverte : lire trois coordonnées et comparer deux listes de nombres. Python (facultatif) : tuples, indices, fonctions et assertions. Cosinus et plongements vectoriels : approfondissement hors programme.',
     goal: 'Comparer une similarité complète et une projection.',
     notions: 'Tableaux doubles et coordonnées ; cosinus hors programme',
     instruction: 'Comparez les vecteurs proposés en 3D puis dans le plan XY.',
@@ -274,7 +274,7 @@ export const activities: ActivitySheet[] = [
       'Pour prédire à la deuxième position, le programme peut-il consulter un token situé après elle ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      "Découverte : savoir lire un tableau à double entrée. Python (facultatif) : listes de listes, boucles bornées imbriquées et assertions. Mécanisme d'attention : approfondissement hors programme.",
     goal: 'Prédire quels poids deviennent nuls avec un masque causal.',
     notions: 'Tableaux doubles, indices ; attention hors programme',
     instruction:
@@ -320,7 +320,7 @@ export const activities: ActivitySheet[] = [
       'Un mini-réseau voit quelques phrases. Peut-on réduire son erreur sans écrire les continuations à la main ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      "Découverte : comparer deux mesures d'erreur sur des jeux d'exemples distincts. Python (facultatif) : listes, boucles bornées, expressions conditionnelles, fonctions et assertions. Gradients : approfondissement hors programme.",
     goal: 'Comparer les pertes avant/après optimisation et distinguer entraînement/validation.',
     notions: 'Fonctions et tests ; gradients hors programme',
     instruction:
@@ -369,7 +369,7 @@ export const activities: ActivitySheet[] = [
       'Les mêmes scores peuvent produire des suites différentes. Comment comparer les stratégies sans confondre leurs causes ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      "Découverte : comparer des tirages en ne changeant qu'un réglage. Python (facultatif) : listes, dictionnaires, boucles bornées, expressions conditionnelles et assertions.",
     goal: 'Répéter un tirage avec la même graine, puis comparer T et top-k.',
     notions: 'Listes, expériences contrôlées ; sampling hors programme',
     instruction: 'Effectuez 20 tirages avec graine 7, T=1. Recommencez puis activez top-k=1.',
@@ -414,7 +414,7 @@ export const activities: ActivitySheet[] = [
     question: 'Une réponse de discipline mélange des faits étayés, une invention et une erreur.',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      'Découverte : distinguer contradiction et information absente dans un document. Python (facultatif) : dictionnaires, expressions conditionnelles, fonctions et assertions.',
     goal: 'Justifier chaque classement avec une source et une limite.',
     notions: 'Spécification, comparaison, preuve ; évaluation LLM hors programme',
     instruction:
@@ -462,7 +462,7 @@ export const activities: ActivitySheet[] = [
       'Ajouter des documents suffit-il à rendre une réponse fiable ? Que faire quand la recherche ne trouve rien ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      'Python : variables, listes, dictionnaires, boucles, fonctions et assertions. Les notions propres aux LLM sont des prolongements.',
+      'Découverte : savoir lire et confronter une citation à une question. Python (facultatif) : chaînes de caractères, dictionnaires, boucles bornées, fonctions et assertions. RAG et TF-IDF : prolongements hors programme.',
     goal: 'Relier chaque extrait à sa source et observer une abstention.',
     notions: 'Dictionnaires, recherche, assertions ; TF-IDF/RAG hors programme',
     instruction:

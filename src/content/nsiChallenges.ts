@@ -26,7 +26,7 @@ export const nsiChallenges: Record<string, NsiChallenge> = {
     "id": "tokens",
     "title": "Compter des paires",
     "goal": "Utiliser un dictionnaire pour compter les paires de caractères adjacents d'un corpus.",
-    "instruction": "Parcourir chaque mot, puis ses indices de 0 à len(mot)-2. Une paire est un tuple de deux caractères.",
+    "instruction": "Parcourir chaque mot, puis ses indices de 0 à len(mot)-2. Une paire est un tuple de deux caractères. Ici, on compte des paires ; on ne construit pas à soi seul un tokenizer BPE complet.",
     "hint": "Une boucle bornée for i in range(len(mot) - 1) permet de lire mot[i] et mot[i+1].",
     "transfer": "Tester le corpus ['aaa'] : la paire ('a','a') est observée deux fois.",
     "starter": "def compter_paires(mots):\n    \"\"\"Renvoie un dictionnaire associant chaque paire à son effectif.\"\"\"\n    effectifs = {}\n    # TODO : parcourir les mots et compter les paires adjacentes.\n    return effectifs\n\nresultat = compter_paires([\"lac\", \"lac\", \"lama\"])\nassert resultat[(\"l\", \"a\")] == 3\nassert resultat[(\"a\", \"c\")] == 2\nassert compter_paires([\"aaa\"])[(\"a\", \"a\")] == 2\nprint(\"Trois tests réussis.\")",
@@ -35,12 +35,12 @@ export const nsiChallenges: Record<string, NsiChallenge> = {
   "probabilites": {
     "id": "probabilites",
     "title": "Normaliser des poids",
-    "goal": "Écrire une fonction qui renvoie une liste de probabilités de somme égale à 1.",
-    "instruction": "Le programme reçoit des poids positifs. Calculer leur somme, puis diviser chaque poids par cette somme. Ce ne sont pas des logits.",
-    "hint": "Affecter total = sum(poids), puis construire une liste de quotients.",
+    "goal": "Normaliser une liste de poids non négatifs pour obtenir des probabilités dont la somme vaut 1.",
+    "instruction": "La fonction reçoit une liste de poids non négatifs, dont la somme est strictement positive. Calculer la somme puis diviser chaque poids par cette somme. Refuser une liste vide, une valeur négative ou une somme nulle. Ce ne sont pas des logits : cette mission n'implémente pas softmax.",
+    "hint": "Contrôler les valeurs avec une boucle bornée, affecter la somme à une variable, puis construire la liste avec append().",
     "transfer": "Pourquoi faut-il refuser le cas où tous les poids sont nuls ?",
-    "starter": "def normaliser(poids):\n    \"\"\"Renvoie les probabilités associées à des poids positifs.\"\"\"\n    if not poids or sum(poids) <= 0:\n        raise ValueError(\"Somme strictement positive attendue\")\n    # TODO : calculer et renvoyer les probabilités.\n    pass\n\np = normaliser([2, 3, 5])\nassert len(p) == 3\nassert abs(p[2] - 0.5) < 1e-9\nassert abs(sum(p) - 1) < 1e-9\nprint(\"Trois tests réussis.\")",
-    "solution": "def normaliser(poids):\n    if not poids or sum(poids) <= 0:\n        raise ValueError(\"Somme strictement positive attendue\")\n    total = sum(poids)\n    return [poids[i] / total for i in range(len(poids))]\n\np = normaliser([2, 3, 5])\nassert len(p) == 3\nassert abs(p[2] - 0.5) < 1e-9\nassert abs(sum(p) - 1) < 1e-9\nprint(\"Trois tests réussis.\")"
+    "starter": "def normaliser(poids):\n    \"\"\"Renvoie les probabilités pour des poids non négatifs.\"\"\"\n    if not poids:\n        raise ValueError(\"La liste des poids ne doit pas être vide.\")\n    for valeur in poids:\n        if valeur < 0:\n            raise ValueError(\"Un poids négatif est interdit.\")\n    if sum(poids) <= 0:\n        raise ValueError(\"La somme doit être strictement positive.\")\n    # TODO : calculer et renvoyer les probabilités.\n    pass\n\np = normaliser([2, 3, 5])\nassert len(p) == 3\nassert abs(p[2] - 0.5) < 1e-9\nassert abs(sum(p) - 1) < 1e-9\nassert normaliser([0, 5]) == [0.0, 1.0]\ntry:\n    normaliser([2, -1])\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"Un poids négatif doit être refusé.\")\nprint(\"Cinq tests réussis.\")",
+    "solution": "def normaliser(poids):\n    if not poids:\n        raise ValueError(\"La liste des poids ne doit pas être vide.\")\n    for valeur in poids:\n        if valeur < 0:\n            raise ValueError(\"Un poids négatif est interdit.\")\n    if sum(poids) <= 0:\n        raise ValueError(\"La somme doit être strictement positive.\")\n    total = sum(poids)\n    probabilites = []\n    for valeur in poids:\n        probabilites.append(valeur / total)\n    return probabilites\n\np = normaliser([2, 3, 5])\nassert len(p) == 3\nassert abs(p[2] - 0.5) < 1e-9\nassert abs(sum(p) - 1) < 1e-9\nassert normaliser([0, 5]) == [0.0, 1.0]\ntry:\n    normaliser([2, -1])\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"Un poids négatif doit être refusé.\")\nprint(\"Cinq tests réussis.\")"
   },
   "contexte": {
     "id": "contexte",
@@ -76,7 +76,7 @@ export const nsiChallenges: Record<string, NsiChallenge> = {
     "id": "apprentissage",
     "title": "Mesurer une erreur",
     "goal": "Évaluer des prédictions sur des exemples distincts de ceux utilisés pour construire le modèle.",
-    "instruction": "À partir de deux listes de même taille, calculer la proportion de positions dont les valeurs diffèrent.",
+    "instruction": "À partir de deux listes de même taille, calculer la proportion de positions dont les valeurs diffèrent. Cette mesure simplifiée n'est pas la fonction de perte d'entraînement du réseau présenté dans le laboratoire.",
     "hint": "Compter les indices pour lesquels predictions[i] != cibles[i], puis diviser par len(cibles).",
     "transfer": "Comparer le taux d'erreur avant et après une modification des prédictions.",
     "starter": "def taux_erreur(predictions, cibles):\n    \"\"\"Renvoie une proportion d'erreurs entre 0 et 1.\"\"\"\n    if len(predictions) != len(cibles) or not cibles:\n        raise ValueError(\"Listes de même longueur non vide\")\n    # TODO : compter les désaccords.\n    pass\n\nassert taux_erreur([\"a\", \"b\", \"c\"], [\"a\", \"x\", \"c\"]) == 1 / 3\nassert taux_erreur([\"a\", \"b\"], [\"a\", \"b\"]) == 0\nprint(\"Deux tests réussis.\")",
@@ -86,11 +86,11 @@ export const nsiChallenges: Record<string, NsiChallenge> = {
     "id": "generation",
     "title": "Générer une suite déterministe",
     "goal": "Construire une boucle bornée de génération à partir d'une table de transitions.",
-    "instruction": "Commencer par le mot de départ, chercher sa continuation, l'ajouter puis recommencer. Arrêter si la transition manque ou vaut '<FIN>'.",
+    "instruction": "Commencer par le mot de départ, chercher sa continuation, l'ajouter puis recommencer. Arrêter si la transition manque ou vaut '<FIN>'. Le paramètre maximum est une variable de type entier positif ou nul qui borne le nombre de répétitions.",
     "hint": "Pour chaque répétition : mot = table.get(mot), puis break si mot is None ou vaut '<FIN>'.",
     "transfer": "Ajouter un cycle dans la table et vérifier que maximum borne la longueur.",
-    "starter": "def generer(depart, table, maximum):\n    \"\"\"Renvoie la suite sans ajouter la marque <FIN>.\"\"\"\n    suite = [depart]\n    # TODO : répéter la recherche et ajouter les mots autorisés.\n    return suite\n\ntransitions = {\"le\": \"chat\", \"chat\": \"dort\", \"dort\": \"<FIN>\"}\nassert generer(\"le\", transitions, 5) == [\"le\", \"chat\", \"dort\"]\nassert generer(\"inconnu\", transitions, 5) == [\"inconnu\"]\nprint(\"Deux tests réussis.\")",
-    "solution": "def generer(depart, table, maximum):\n    suite = [depart]\n    mot = depart\n    for _ in range(maximum):\n        mot = table.get(mot)\n        if mot is None or mot == \"<FIN>\":\n            break\n        suite.append(mot)\n    return suite\n\ntransitions = {\"le\": \"chat\", \"chat\": \"dort\", \"dort\": \"<FIN>\"}\nassert generer(\"le\", transitions, 5) == [\"le\", \"chat\", \"dort\"]\nassert generer(\"inconnu\", transitions, 5) == [\"inconnu\"]\nprint(\"Deux tests réussis.\")"
+    "starter": "def generer(depart, table, maximum):\n    \"\"\"Renvoie la suite sans ajouter la marque <FIN>.\"\"\"\n    if maximum < 0:\n        raise ValueError(\"maximum ne peut pas être négatif\")\n    suite = [depart]\n    # TODO : répéter la recherche et ajouter les mots autorisés.\n    return suite\n\ntransitions = {\"le\": \"chat\", \"chat\": \"dort\", \"dort\": \"<FIN>\"}\nassert generer(\"le\", transitions, 5) == [\"le\", \"chat\", \"dort\"]\nassert generer(\"inconnu\", transitions, 5) == [\"inconnu\"]\nassert generer(\"le\", transitions, 0) == [\"le\"]\ntry:\n    generer(\"le\", transitions, -1)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"Une borne négative doit être refusée.\")\nprint(\"Quatre tests réussis.\")",
+    "solution": "def generer(depart, table, maximum):\n    if maximum < 0:\n        raise ValueError(\"maximum ne peut pas être négatif\")\n    suite = [depart]\n    mot = depart\n    for _ in range(maximum):\n        mot = table.get(mot)\n        if mot is None or mot == \"<FIN>\":\n            break\n        suite.append(mot)\n    return suite\n\ntransitions = {\"le\": \"chat\", \"chat\": \"dort\", \"dort\": \"<FIN>\"}\nassert generer(\"le\", transitions, 5) == [\"le\", \"chat\", \"dort\"]\nassert generer(\"inconnu\", transitions, 5) == [\"inconnu\"]\nassert generer(\"le\", transitions, 0) == [\"le\"]\ntry:\n    generer(\"le\", transitions, -1)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"Une borne négative doit être refusée.\")\nprint(\"Quatre tests réussis.\")"
   },
   "erreurs": {
     "id": "erreurs",
@@ -106,10 +106,10 @@ export const nsiChallenges: Record<string, NsiChallenge> = {
     "id": "fiabilite",
     "title": "Retrouver un passage et s'abstenir",
     "goal": "Rechercher un mot dans un corpus et conserver les identifiants des documents trouvés.",
-    "instruction": "Renvoyer une liste d'identifiants dont le texte contient le mot recherché, en ignorant la casse. Une liste vide signifie aucune preuve trouvée par cette recherche.",
-    "hint": "Parcourir les clés du dictionnaire et tester mot.casefold() in texte.casefold().",
+    "instruction": "Renvoyer une liste d'identifiants dont le texte contient la sous-chaîne recherchée, sans tenir compte des majuscules. Une recherche vide renvoie une liste vide. Attention : ce simple critère peut retrouver une partie d'un autre mot et ne vérifie ni la pertinence ni la vérité.",
+    "hint": "Refuser une chaîne vide ; convertir le texte et la recherche en minuscules avec lower(), puis utiliser l'opérateur in.",
     "transfer": "Expliquer pourquoi la présence d'un mot dans un passage ne certifie pas une réponse.",
-    "starter": "def chercher(corpus, mot):\n    \"\"\"Renvoie la liste des identifiants correspondants.\"\"\"\n    documents = []\n    # TODO : rechercher une sous-chaîne sans tenir compte de la casse.\n    return documents\n\ncorpus = {\"S1\": \"Le lac est bleu.\", \"S2\": \"Le lama dort.\"}\nassert chercher(corpus, \"LAC\") == [\"S1\"]\nassert chercher(corpus, \"absent\") == []\nprint(\"Deux tests réussis.\")",
-    "solution": "def chercher(corpus, mot):\n    documents = []\n    for identifiant in corpus:\n        if mot.casefold() in corpus[identifiant].casefold():\n            documents.append(identifiant)\n    return documents\n\ncorpus = {\"S1\": \"Le lac est bleu.\", \"S2\": \"Le lama dort.\"}\nassert chercher(corpus, \"LAC\") == [\"S1\"]\nassert chercher(corpus, \"absent\") == []\nprint(\"Deux tests réussis.\")"
+    "starter": "def chercher(corpus, mot):\n    \"\"\"Renvoie la liste des identifiants correspondants.\"\"\"\n    if not mot.strip():\n        return []\n    documents = []\n    # TODO : rechercher une sous-chaîne sans tenir compte de la casse.\n    return documents\n\ncorpus = {\"S1\": \"Le lac est bleu.\", \"S2\": \"Le lama dort.\"}\nassert chercher(corpus, \"LAC\") == [\"S1\"]\nassert chercher(corpus, \"absent\") == []\nassert chercher(corpus, \"\") == []\nassert chercher(corpus, \"LAMA\") == [\"S2\"]\nprint(\"Quatre tests réussis.\")",
+    "solution": "def chercher(corpus, mot):\n    if not mot.strip():\n        return []\n    documents = []\n    for identifiant in corpus:\n        if mot.lower() in corpus[identifiant].lower():\n            documents.append(identifiant)\n    return documents\n\ncorpus = {\"S1\": \"Le lac est bleu.\", \"S2\": \"Le lama dort.\"}\nassert chercher(corpus, \"LAC\") == [\"S1\"]\nassert chercher(corpus, \"absent\") == []\nassert chercher(corpus, \"\") == []\nassert chercher(corpus, \"LAMA\") == [\"S2\"]\nprint(\"Quatre tests réussis.\")"
   }
 };
