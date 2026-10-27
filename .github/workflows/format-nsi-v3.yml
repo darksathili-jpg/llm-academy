@@ -1,0 +1,29 @@
+name: Temporary formatting for NSI V3
+on:
+  push:
+    branches: [refonte/nsi-pedagogie-v3]
+permissions:
+  contents: write
+jobs:
+  format:
+    if: github.event.head_commit.message != 'chore: format NSI V3'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx prettier --write src/App.tsx src/components/v2/TeacherGuide.tsx src/components/v2/Workshop.tsx tests/e2e/discovery.spec.ts
+      - name: Commit only formatted source files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/App.tsx src/components/v2/TeacherGuide.tsx src/components/v2/Workshop.tsx tests/e2e/discovery.spec.ts
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: format NSI V3"
+            git push origin HEAD:refonte/nsi-pedagogie-v3
+          fi
