@@ -60,7 +60,8 @@ test('V4 : fiches séparées sans corrigé divulgué au participant', async ({ p
   await expect(page.locator('.teacher-sequence-print')).not.toContainText('Réponse attendue :');
   await expect(page.locator('.teacher-sequence-print')).not.toContainText('Erreur à anticiper :');
   await expect(page.locator('.teacher-sequence-print .answer-space')).toHaveCount(6);
-  await page.getByRole('link', { name: 'Afficher la fiche formateur' }).click();
+  await expect(page.getByRole('link', { name: 'Afficher la fiche formateur' })).toHaveCount(0);
+  await page.goto('./#/seance/predire-verifier');
   await expect(page.getByText('FICHE FORMATEUR — CORRIGÉS INCLUS')).toBeVisible();
   await expect(page.locator('.teacher-sequence-print')).toContainText('Réponse attendue :');
   await expect(page.getByRole('button', { name: 'Imprimer cette fiche' })).toBeVisible();
