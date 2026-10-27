@@ -19,15 +19,15 @@ Les mécanismes des LLM ne sont pas des attendus obligatoires du programme offic
 
 ## Critères d'acceptation
 
-| Dimension | Critère vérifiable | Preuve attendue |
-| --- | --- | --- |
-| NSI | Les dix défis sont lisibles, exécutables et corrigés avec du Python standard | `python3 scripts/verify-nsi-challenges.py` |
-| Reproductibilité | Toutes les assertions des dix corrigés réussissent | Sortie du script et CI |
-| Progression | Le novice peut choisir un exemple complet ; l'élève NSI choisit une mission | Parcours Chromium de l'activité |
-| Remédiation | La validation finale montre les traces manquantes sans note automatique | Tests unitaires et E2E |
-| Formation | L'enseignant dispose des erreurs typiques et des critères de preuve | Route `#/enseignant` et test E2E |
-| Accessibilité | Clavier, contraste, focus, navigation, projection et impression | Tests automatisés **puis essais humains** |
-| Publication | La branche est validée et revue avant fusion | CI, comparaison du commit, test du domaine public |
+| Dimension        | Critère vérifiable                                                           | Preuve attendue                                   |
+| ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------- |
+| NSI              | Les dix défis sont lisibles, exécutables et corrigés avec du Python standard | `python3 scripts/verify-nsi-challenges.py`        |
+| Reproductibilité | Toutes les assertions des dix corrigés réussissent                           | Sortie du script et CI                            |
+| Progression      | Le novice peut choisir un exemple complet ; l'élève NSI choisit une mission  | Parcours Chromium de l'activité                   |
+| Remédiation      | La validation finale montre les traces manquantes sans note automatique      | Tests unitaires et E2E                            |
+| Formation        | L'enseignant dispose des erreurs typiques et des critères de preuve          | Route `#/enseignant` et test E2E                  |
+| Accessibilité    | Clavier, contraste, focus, navigation, projection et impression              | Tests automatisés **puis essais humains**         |
+| Publication      | La branche est validée et revue avant fusion                                 | CI, comparaison du commit, test du domaine public |
 
 ## Vérifications reproductibles
 
