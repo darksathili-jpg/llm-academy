@@ -27,8 +27,8 @@ export function TeacherSequencePage({
         {sequence.duration} minutes proposées · {sequence.audience}
       </p>
       <div className="lab-toolbar print-actions">
-        <a className="button secondary" href="#/enseignant">
-          ← Dossier enseignant
+        <a className="button secondary" href={student ? '#/atelier' : '#/enseignant'}>
+          {student ? '← Atelier NSI' : '← Dossier enseignant'}
         </a>
         {!student && (
           <a className="button secondary" href={'#/fiche/' + id}>
