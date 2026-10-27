@@ -1,5 +1,6 @@
 import { learnerGuides, plainSteps } from '../../content/learnerGuides';
 import { nsiChallenges } from '../../content/nsiChallenges';
+import { essentials, extensions, orderedActivities } from '../../content/learningPath';
 import { reviewInvestigation } from '../../core/pedagogicalReview';
 import { laboratorySheets } from '../../content/laboratorySheets';
 import { useEffect, useRef, useState } from 'react';
@@ -31,24 +32,50 @@ export function Workshop() {
         Durées proposées, non mesurées en classe. Vos écrits restent locaux et s’exportent dans le
         carnet. Un quiz ne certifie pas la compréhension.
       </p>
-      <div className="editorial-list">
-        {activities.map((a, i) => (
-          <a className="editorial-row" key={a.id} href={'#/activite/' + a.id}>
-            <span className="row-number">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <h2>{learnerGuides[a.id].title}</h2>
-              <p>{learnerGuides[a.id].goal}</p>
-            </div>
-            <span>
-              {a.duration} min ·{' '}
-              {progress.investigations[a.id]?.stage !== undefined
-                ? 'étape ' + (progress.investigations[a.id].stage + 1) + '/8'
-                : 'à explorer'}{' '}
-              ↗
-            </span>
-          </a>
-        ))}
-      </div>
+      {[
+        {
+          title: 'Pour commencer : sept activités accessibles',
+          description:
+            'Observer, expliquer, vérifier et programmer à partir de notions NSI connues. Les LLM sont un prolongement, non un attendu du programme.',
+          ids: essentials,
+          offset: 0,
+        },
+        {
+          title: 'Pour approfondir : trois mécanismes facultatifs',
+          description:
+            'Représentations vectorielles, attention et entraînement : leurs mécanismes scientifiques détaillés dépassent le programme.',
+          ids: extensions,
+          offset: essentials.length,
+        },
+      ].map((group) => (
+        <section key={group.title} aria-label={group.title}>
+          <h2>{group.title}</h2>
+          <p>{group.description}</p>
+          <div className="editorial-list">
+            {group.ids.map((id, i) => {
+              const a = activities.find((item) => item.id === id)!;
+              return (
+                <a className="editorial-row" key={a.id} href={'#/activite/' + a.id}>
+                  <span className="row-number">
+                    {String(group.offset + i + 1).padStart(2, '0')}
+                  </span>
+                  <div>
+                    <h3>{learnerGuides[a.id].title}</h3>
+                    <p>{learnerGuides[a.id].goal}</p>
+                  </div>
+                  <span>
+                    {a.duration} min ·{' '}
+                    {progress.investigations[a.id]?.stage !== undefined
+                      ? 'étape ' + (progress.investigations[a.id].stage + 1) + '/8'
+                      : 'à explorer'}{' '}
+                    ↗
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+      ))}
       <a href="#/references">Programmes, sources et limites →</a>
     </article>
   );
@@ -129,11 +156,20 @@ export function Activity({ id }: { id: string }) {
             <p>
               <strong>Ce que tu vas faire :</strong> {guide.goal}
             </p>
+            <p>
+              <strong>Prérequis :</strong> {a.prerequisites}
+            </p>
+            <p>
+              Le laboratoire illustre un mécanisme par un modèle réduit ; il ne remplace pas un
+              véritable LLM entraîné.
+            </p>
             <details>
               <summary>Informations pour l’enseignant</summary>
               <p>{a.audience}</p>
-              <p>{a.prerequisites}</p>
               <p>{a.notions}</p>
+              <p>
+                <a href="#/enseignant">Ouvrir le dossier pédagogique enseignant →</a>
+              </p>
             </details>
           </>
         ) : stage === 1 ? (
@@ -334,12 +370,12 @@ export function Activity({ id }: { id: string }) {
             <a
               className="button"
               href={
-                activities[activities.indexOf(a) + 1]
-                  ? '#/activite/' + activities[activities.indexOf(a) + 1].id
+                orderedActivities()[orderedActivities().indexOf(a) + 1]
+                  ? '#/activite/' + orderedActivities()[orderedActivities().indexOf(a) + 1].id
                   : '#/carnet'
               }
             >
-              {activities[activities.indexOf(a) + 1]
+              {orderedActivities()[orderedActivities().indexOf(a) + 1]
                 ? 'Activité suivante →'
                 : 'Ouvrir mon carnet →'}
             </a>
