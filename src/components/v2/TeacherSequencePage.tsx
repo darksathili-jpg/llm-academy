@@ -36,33 +36,55 @@ export function TeacherSequencePage({
         <button onClick={() => window.print()}>Imprimer cette fiche</button>
       </div>
       <h2>Objectifs</h2>
-      <ul>{sequence.objectives.map((objective) => <li key={objective}>{objective}</li>)}</ul>
+      <ul>
+        {sequence.objectives.map((objective) => (
+          <li key={objective}>{objective}</li>
+        ))}
+      </ul>
       {!student && (
         <section>
           <h2>Préparation</h2>
-          <p><strong>Prérequis :</strong> {sequence.prerequisites}</p>
-          <p><strong>Matériel :</strong> {sequence.equipment}</p>
+          <p>
+            <strong>Prérequis :</strong> {sequence.prerequisites}
+          </p>
+          <p>
+            <strong>Matériel :</strong> {sequence.equipment}
+          </p>
         </section>
       )}
       <h2>Déroulement</h2>
       <ol className="lesson-steps">
         {sequence.steps.map((step, index) => (
           <li className="lesson-step" key={index}>
-            <h3>{step.kind} — {step.minutes} minutes</h3>
+            <h3>
+              {step.kind} — {step.minutes} minutes
+            </h3>
             {!student && (
-              <p><strong>À dire ou à faire réaliser :</strong> {step.teacher}</p>
+              <p>
+                <strong>À dire ou à faire réaliser :</strong> {step.teacher}
+              </p>
             )}
-            <p><strong>Travail demandé :</strong> {step.learner}</p>
-            <p><strong>Question :</strong> {step.question}</p>
+            <p>
+              <strong>Travail demandé :</strong> {step.learner}
+            </p>
+            <p>
+              <strong>Question :</strong> {step.question}
+            </p>
             {student ? (
               <div className="answer-space" aria-label="Espace pour la réponse">
                 <p>Ma prédiction, mes observations et ma justification :</p>
               </div>
             ) : (
               <>
-                <p><strong>Réponse attendue :</strong> {step.expected}</p>
-                <p><strong>Erreur à anticiper :</strong> {step.vigilance}</p>
-                <p><a href={'#/activite/' + step.activity}>Manipulation dans l'application →</a></p>
+                <p>
+                  <strong>Réponse attendue :</strong> {step.expected}
+                </p>
+                <p>
+                  <strong>Erreur à anticiper :</strong> {step.vigilance}
+                </p>
+                <p>
+                  <a href={'#/activite/' + step.activity}>Manipulation dans l'application →</a>
+                </p>
               </>
             )}
           </li>
@@ -71,8 +93,12 @@ export function TeacherSequencePage({
       {!student && (
         <section>
           <h2>Bilan enseignant</h2>
-          <p><strong>Preuve finale recherchée :</strong> {sequence.teacherExit}</p>
-          <p><strong>Limite scientifique :</strong> {sequence.scientificLimit}</p>
+          <p>
+            <strong>Preuve finale recherchée :</strong> {sequence.teacherExit}
+          </p>
+          <p>
+            <strong>Limite scientifique :</strong> {sequence.scientificLimit}
+          </p>
         </section>
       )}
       {student && (
@@ -85,8 +111,8 @@ export function TeacherSequencePage({
         </section>
       )}
       <p>
-        Document pédagogique original. Aucun résultat automatique ne prouve la compréhension.
-        Ne pas inscrire de données personnelles sur les fiches partagées.
+        Document pédagogique original. Aucun résultat automatique ne prouve la compréhension. Ne pas
+        inscrire de données personnelles sur les fiches partagées.
       </p>
     </article>
   );

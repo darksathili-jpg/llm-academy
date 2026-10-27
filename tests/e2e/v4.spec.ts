@@ -39,9 +39,7 @@ test('V4 : trois séances de 60 minutes proposent consignes et preuves', async (
   await expect(sequences.first().locator('ol > li')).toHaveCount(5);
 });
 
-test('V4 : routes débutant et dossier formateur sans défaut WCAG automatique', async ({
-  page,
-}) => {
+test('V4 : routes débutant et dossier formateur sans défaut WCAG automatique', async ({ page }) => {
   for (const route of ['atelier', 'enseignant']) {
     await page.setViewportSize({ width: 390, height: 880 });
     await page.goto('./#/' + route);

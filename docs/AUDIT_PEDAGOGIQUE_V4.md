@@ -5,6 +5,7 @@
 ## Verdict intermédiaire
 
 La V3 disposait d'une architecture et de tests automatisés robustes, mais plusieurs dispositifs ont été améliorés au titre de la V4 :
+
 - **P0 pédagogique** : mêmes prérequis Python pour les dix investigations, y compris les tâches accessibles sans Python. Résolu avec des prérequis propres à chaque activité.
 - **P1 progression** : dix modules affichés sur un plan unique, sans repérer les mécanismes mathématiques avancés. Résolu en un parcours conseillé de sept investigations accessibles, suivi de trois approfondissements explicites, sans prétendre que les LLM soient exigibles en NSI.
 - **P1 qualité scientifique** : le défi de normalisation acceptait une masse négative si la somme restait positive ; la recherche par sous-chaîne acceptait une recherche vide, renvoyant tous les documents. Corrigé, nouveaux cas limites testables.
@@ -14,18 +15,18 @@ La V3 disposait d'une architecture et de tests automatisés robustes, mais plusi
 
 ## Audit activité par activité
 
-| Investigation | Ce qui doit être compris | Risque à combattre | Décision V4 |
-| --- | --- | --- | --- |
-| Crédibilité | Une affirmation se confronte à un passage de référence | Une formulation assurée serait une preuve | Prérequis documentaires puis dictionnaire Python ; classifieur explicitement limité à des faits fournis |
-| Tokens | Le découpage dépend des fusions et du vocabulaire | Un token serait toujours un mot ; le comptage des paires constituerait tout BPE | Découverte visuelle avant code ; consigne Python distingue comptage de paires et construction d'un tokenizer |
-| Probabilités | La répartition des choix n'est pas une confiance de vérité | Confondre probabilité de choix et véracité ; confondre normalisation et softmax | Prévision sur barres puis pourcentages ; rejet des poids négatifs, nuls ou non utilisables ; limite du modèle indiquée |
-| Contexte | Une suite prédite dépend du texte déjà présent | Deux listes préparées seraient la preuve d'un LLM comprenant les personnages | Changement d'un seul paramètre ; entraînement réel non revendiqué |
-| Représentations | Une projection peut masquer une différence | Le plan à deux coordonnées rendrait deux objets réellement identiques | Reportée dans l'approfondissement ; vecteurs inventés et cosinus hors programme |
-| Attention | La position calculée ne doit pas consulter les suivantes | Le « masque » serait une activité de pensée ou d'apprentissage | Reportée dans l'approfondissement ; masque causal, tableaux et indices avant Q/K/V |
-| Apprentissage | La mesure hors entraînement teste une généralisation limitée | Un score d'entraînement meilleur prouverait la vérité | Reportée dans l'approfondissement ; code Python de taux d'erreur distinct de la perte d'entraînement |
-| Génération | Même graine et mêmes réglages reproduisent un tirage | Température et top-k changeraient les paramètres du réseau | Distinguer les vingt choix indépendants d'une génération autorégressive ; borne négative refusée dans le défi |
-| Erreurs | « Contredit » diffère de « non documenté » | Une valeur absente serait fausse | Exercices centrés sur les extraits, puis transfert vers une autre source |
-| Fiabilité | Rechercher des passages n'est ni comprendre ni prouver | Premier résultat ou score TF-IDF serait une vérité | Recherche vide refusée ; sous-chaîne et faux positifs explicités ; RAG lexical sans génération |
+| Investigation   | Ce qui doit être compris                                     | Risque à combattre                                                              | Décision V4                                                                                                            |
+| --------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Crédibilité     | Une affirmation se confronte à un passage de référence       | Une formulation assurée serait une preuve                                       | Prérequis documentaires puis dictionnaire Python ; classifieur explicitement limité à des faits fournis                |
+| Tokens          | Le découpage dépend des fusions et du vocabulaire            | Un token serait toujours un mot ; le comptage des paires constituerait tout BPE | Découverte visuelle avant code ; consigne Python distingue comptage de paires et construction d'un tokenizer           |
+| Probabilités    | La répartition des choix n'est pas une confiance de vérité   | Confondre probabilité de choix et véracité ; confondre normalisation et softmax | Prévision sur barres puis pourcentages ; rejet des poids négatifs, nuls ou non utilisables ; limite du modèle indiquée |
+| Contexte        | Une suite prédite dépend du texte déjà présent               | Deux listes préparées seraient la preuve d'un LLM comprenant les personnages    | Changement d'un seul paramètre ; entraînement réel non revendiqué                                                      |
+| Représentations | Une projection peut masquer une différence                   | Le plan à deux coordonnées rendrait deux objets réellement identiques           | Reportée dans l'approfondissement ; vecteurs inventés et cosinus hors programme                                        |
+| Attention       | La position calculée ne doit pas consulter les suivantes     | Le « masque » serait une activité de pensée ou d'apprentissage                  | Reportée dans l'approfondissement ; masque causal, tableaux et indices avant Q/K/V                                     |
+| Apprentissage   | La mesure hors entraînement teste une généralisation limitée | Un score d'entraînement meilleur prouverait la vérité                           | Reportée dans l'approfondissement ; code Python de taux d'erreur distinct de la perte d'entraînement                   |
+| Génération      | Même graine et mêmes réglages reproduisent un tirage         | Température et top-k changeraient les paramètres du réseau                      | Distinguer les vingt choix indépendants d'une génération autorégressive ; borne négative refusée dans le défi          |
+| Erreurs         | « Contredit » diffère de « non documenté »                   | Une valeur absente serait fausse                                                | Exercices centrés sur les extraits, puis transfert vers une autre source                                               |
+| Fiabilité       | Rechercher des passages n'est ni comprendre ni prouver       | Premier résultat ou score TF-IDF serait une vérité                              | Recherche vide refusée ; sous-chaîne et faux positifs explicités ; RAG lexical sans génération                         |
 
 ## Architecture pédagogique retenue
 

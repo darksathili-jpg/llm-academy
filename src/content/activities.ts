@@ -43,7 +43,7 @@ export const activities: ActivitySheet[] = [
       'Une réponse décrit une situation avec assurance. Les sources fournies confirment-elles chaque affirmation ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      "Découverte : savoir comparer des affirmations avec un texte court. Python (facultatif) : dictionnaires, expressions conditionnelles, fonctions et assertions.",
+      'Découverte : savoir comparer des affirmations avec un texte court. Python (facultatif) : dictionnaires, expressions conditionnelles, fonctions et assertions.',
     goal: 'Distinguer fait étayé, contradiction et absence de preuve.',
     notions: 'Affirmations, sources, assertions',
     instruction:
@@ -87,7 +87,7 @@ export const activities: ActivitySheet[] = [
       'Le même texte peut être découpé en caractères, mots ou fragments. Quel découpage réutilise le mieux les répétitions ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      "Découverte : savoir compter des caractères et comparer des groupements. Python (facultatif) : chaînes de caractères, tuples, dictionnaires, boucles bornées et assertions.",
+      'Découverte : savoir compter des caractères et comparer des groupements. Python (facultatif) : chaînes de caractères, tuples, dictionnaires, boucles bornées et assertions.',
     goal: 'Prédire une fusion puis comparer le nombre de tokens avant/après.',
     notions: 'Listes, dictionnaires, boucles, fréquences ; BPE hors programme',
     instruction:
@@ -135,7 +135,7 @@ export const activities: ActivitySheet[] = [
       'Le chat observe… Trois continuations ont des scores différents. Que se passe-t-il lorsque la température diminue ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      "Découverte : pourcentages, comparaison de trois quantités et somme égale à 100 %. Python (facultatif) : listes, fonctions, calculs, expressions conditionnelles et assertions.",
+      'Découverte : pourcentages, comparaison de trois quantités et somme égale à 100 %. Python (facultatif) : listes, fonctions, calculs, expressions conditionnelles et assertions.',
     goal: "Prédire puis mesurer la variation d'une distribution.",
     notions: 'Pourcentages, listes ; softmax hors programme',
     instruction: 'Notez votre hypothèse. Comparez T=1 et T=0,5, sans changer le contexte.',
@@ -228,7 +228,7 @@ export const activities: ActivitySheet[] = [
       'Deux objets peuvent sembler proches sur un dessin tout en différant dans une dimension cachée.',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      "Découverte : lire trois coordonnées et comparer deux listes de nombres. Python (facultatif) : tuples, indices, fonctions et assertions. Cosinus et plongements vectoriels : approfondissement hors programme.",
+      'Découverte : lire trois coordonnées et comparer deux listes de nombres. Python (facultatif) : tuples, indices, fonctions et assertions. Cosinus et plongements vectoriels : approfondissement hors programme.',
     goal: 'Comparer une similarité complète et une projection.',
     notions: 'Tableaux doubles et coordonnées ; cosinus hors programme',
     instruction: 'Comparez les vecteurs proposés en 3D puis dans le plan XY.',
@@ -414,7 +414,7 @@ export const activities: ActivitySheet[] = [
     question: 'Une réponse de discipline mélange des faits étayés, une invention et une erreur.',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      "Découverte : distinguer contradiction et information absente dans un document. Python (facultatif) : dictionnaires, expressions conditionnelles, fonctions et assertions.",
+      'Découverte : distinguer contradiction et information absente dans un document. Python (facultatif) : dictionnaires, expressions conditionnelles, fonctions et assertions.',
     goal: 'Justifier chaque classement avec une source et une limite.',
     notions: 'Spécification, comparaison, preuve ; évaluation LLM hors programme',
     instruction:
@@ -462,7 +462,7 @@ export const activities: ActivitySheet[] = [
       'Ajouter des documents suffit-il à rendre une réponse fiable ? Que faire quand la recherche ne trouve rien ?',
     audience: 'Terminale NSI ; enseignant accompagné',
     prerequisites:
-      "Découverte : savoir lire et confronter une citation à une question. Python (facultatif) : chaînes de caractères, dictionnaires, boucles bornées, fonctions et assertions. RAG et TF-IDF : prolongements hors programme.",
+      'Découverte : savoir lire et confronter une citation à une question. Python (facultatif) : chaînes de caractères, dictionnaires, boucles bornées, fonctions et assertions. RAG et TF-IDF : prolongements hors programme.',
     goal: 'Relier chaque extrait à sa source et observer une abstention.',
     notions: 'Dictionnaires, recherche, assertions ; TF-IDF/RAG hors programme',
     instruction:

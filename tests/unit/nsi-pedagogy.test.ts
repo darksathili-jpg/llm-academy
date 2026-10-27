@@ -62,7 +62,9 @@ describe('qualification pédagogique des dix investigations', () => {
     expect(new Set([...essentials, ...extensions]).size).toBe(10);
     expect(orderedActivities().map((a) => a.id)).toEqual([...essentials, ...extensions]);
     expect(activities.map((a) => a.id).sort()).toEqual(
-      orderedActivities().map((a) => a.id).sort(),
+      orderedActivities()
+        .map((a) => a.id)
+        .sort(),
     );
   });
 

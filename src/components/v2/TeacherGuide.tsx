@@ -33,7 +33,9 @@ export function TeacherGuide() {
           sont pas validées en classe.
         </p>
         <a href="#/decouvrir">Découverte initiale sans code →</a>
-        <p><a href="#fiches-seances">Consulter les trois séances prêtes à animer ↓</a></p>
+        <p>
+          <a href="#fiches-seances">Consulter les trois séances prêtes à animer ↓</a>
+        </p>
       </section>
       <section aria-label="Dossiers pédagogiques par activité">
         <h2>Dix dossiers pour guider et vérifier les apprentissages</h2>
@@ -115,40 +117,74 @@ export function TeacherGuide() {
         <h2>Trois séances clés en main de 60 minutes</h2>
         <p>
           Chaque scénario fournit la consigne exacte, les réponses attendues, les confusions à
-          éviter et une production à observer. Les durées restent indicatives : aucun essai en classe
-          n’a encore permis de les valider.
+          éviter et une production à observer. Les durées restent indicatives : aucun essai en
+          classe n’a encore permis de les valider.
         </p>
         {teacherSequences.map((sequence) => (
           <details className="lesson-section" key={sequence.id}>
-            <summary>{sequence.title} — {sequence.duration} minutes</summary>
+            <summary>
+              {sequence.title} — {sequence.duration} minutes
+            </summary>
             <h3>Cadre de la séance</h3>
-            <p><strong>Public :</strong> {sequence.audience}</p>
-            <p><strong>Prérequis :</strong> {sequence.prerequisites}</p>
-            <p><strong>Matériel :</strong> {sequence.equipment}</p>
+            <p>
+              <strong>Public :</strong> {sequence.audience}
+            </p>
+            <p>
+              <strong>Prérequis :</strong> {sequence.prerequisites}
+            </p>
+            <p>
+              <strong>Matériel :</strong> {sequence.equipment}
+            </p>
             <h3>Objectifs observables</h3>
-            <ul>{sequence.objectives.map((o) => <li key={o}>{o}</li>)}</ul>
+            <ul>
+              {sequence.objectives.map((o) => (
+                <li key={o}>{o}</li>
+              ))}
+            </ul>
             <h3>Déroulement minuté</h3>
             <ol>
               {sequence.steps.map((step, index) => (
                 <li key={step.activity + '-' + index}>
-                  <h4>{step.kind} — {step.minutes} minutes</h4>
-                  <p><strong>Enseignant :</strong> {step.teacher}</p>
-                  <p><strong>Élève :</strong> {step.learner}</p>
-                  <p><strong>Question orale :</strong> {step.question}</p>
-                  <p><strong>Réponse attendue :</strong> {step.expected}</p>
-                  <p><strong>Point de vigilance :</strong> {step.vigilance}</p>
-                  <p><a href={'#/activite/' + step.activity}>Ouvrir l’activité correspondante →</a></p>
+                  <h4>
+                    {step.kind} — {step.minutes} minutes
+                  </h4>
+                  <p>
+                    <strong>Enseignant :</strong> {step.teacher}
+                  </p>
+                  <p>
+                    <strong>Élève :</strong> {step.learner}
+                  </p>
+                  <p>
+                    <strong>Question orale :</strong> {step.question}
+                  </p>
+                  <p>
+                    <strong>Réponse attendue :</strong> {step.expected}
+                  </p>
+                  <p>
+                    <strong>Point de vigilance :</strong> {step.vigilance}
+                  </p>
+                  <p>
+                    <a href={'#/activite/' + step.activity}>Ouvrir l’activité correspondante →</a>
+                  </p>
                 </li>
               ))}
             </ol>
             <h3>Bilan et conditions de validité</h3>
-            <p><strong>Production finale :</strong> {sequence.teacherExit}</p>
-            <p><strong>Limite scientifique :</strong> {sequence.scientificLimit}</p>
             <p>
-              <a href={'#/seance/' + sequence.id}>Ouvrir et imprimer la fiche enseignant avec corrigés →</a>
+              <strong>Production finale :</strong> {sequence.teacherExit}
             </p>
             <p>
-              <a href={'#/fiche/' + sequence.id}>Ouvrir et imprimer la fiche participant sans corrigés →</a>
+              <strong>Limite scientifique :</strong> {sequence.scientificLimit}
+            </p>
+            <p>
+              <a href={'#/seance/' + sequence.id}>
+                Ouvrir et imprimer la fiche enseignant avec corrigés →
+              </a>
+            </p>
+            <p>
+              <a href={'#/fiche/' + sequence.id}>
+                Ouvrir et imprimer la fiche participant sans corrigés →
+              </a>
             </p>
           </details>
         ))}

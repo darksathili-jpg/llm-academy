@@ -307,7 +307,13 @@ export default function App() {
   else if (kind === 'atelier') content = <Workshop />;
   else if (kind === 'enseignant') content = <TeacherGuide />;
   else if (kind === 'seance' || kind === 'fiche')
-    content = <TeacherSequencePage key={route} id={id} audience={kind === 'fiche' ? 'student' : 'teacher'} />;
+    content = (
+      <TeacherSequencePage
+        key={route}
+        id={id}
+        audience={kind === 'fiche' ? 'student' : 'teacher'}
+      />
+    );
   else if (kind === 'activite') content = <Activity key={id} id={id} />;
   else if (kind === 'studio' && (!id || ['60', '120', '180', '360'].includes(id)))
     content = <Studio duration={id ? Number(id) : undefined} />;
