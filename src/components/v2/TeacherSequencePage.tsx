@@ -30,9 +30,11 @@ export function TeacherSequencePage({
         <a className="button secondary" href="#/enseignant">
           ← Dossier enseignant
         </a>
-        <a className="button secondary" href={'#/' + (student ? 'seance' : 'fiche') + '/' + id}>
-          {student ? 'Afficher la fiche formateur' : 'Afficher la fiche participant'}
-        </a>
+        {!student && (
+          <a className="button secondary" href={'#/fiche/' + id}>
+            Afficher la fiche participant
+          </a>
+        )}
         <button onClick={() => window.print()}>Imprimer cette fiche</button>
       </div>
       <h2>Objectifs</h2>
