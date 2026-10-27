@@ -8,6 +8,7 @@ import { Notebook } from './components/Notebook';
 import { Workshop, Activity, Laboratory } from './components/v2/Workshop';
 import { Studio, Animation, Backstage } from './components/v2/Studio';
 import { FirstSteps, StarterPreview } from './components/v2/FirstSteps';
+import { TeacherGuide } from './components/v2/TeacherGuide';
 function readRoute() {
   return location.hash.startsWith('#/') ? location.hash.slice(2).split('?')[0] || 'home' : 'home';
 }
@@ -70,6 +71,7 @@ function Home() {
         </h2>
         <p>Un déroulement, des questions orales, des expériences et une console de projection.</p>
         <a href="#/studio/120">Ouvrir la séance de deux heures →</a>
+        <p><a href="#/enseignant">Préparer mes activités de NSI avec le dossier enseignant →</a></p>
       </section>
       <p>
         <a href="#/bibliotheque">Les neuf modules approfondis →</a> ·{' '}
@@ -300,6 +302,7 @@ export default function App() {
   if (kind === 'home') content = <Home />;
   else if (kind === 'decouvrir') content = <FirstSteps />;
   else if (kind === 'atelier') content = <Workshop />;
+  else if (kind === 'enseignant') content = <TeacherGuide />;
   else if (kind === 'activite') content = <Activity key={id} id={id} />;
   else if (kind === 'studio' && (!id || ['60', '120', '180', '360'].includes(id)))
     content = <Studio duration={id ? Number(id) : undefined} />;
@@ -335,6 +338,7 @@ export default function App() {
             ['decouvrir', 'Commencer'],
             ['atelier', '01 Atelier NSI'],
             ['studio', '02 Studio formateur'],
+            ['enseignant', 'Dossier enseignant'],
             ['laboratoire', '03 Laboratoire'],
             ['bibliotheque', 'Modules approfondis'],
           ].map(([r, label]) => (
