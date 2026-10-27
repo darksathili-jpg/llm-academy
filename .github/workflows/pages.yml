@@ -48,12 +48,14 @@ jobs:
     timeout-minutes: 18
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - name: Deploy validated Vite application from dist/
         id: deployment
