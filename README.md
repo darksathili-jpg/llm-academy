@@ -2,7 +2,7 @@
 
 Plateforme française pour voir, manipuler, programmer et expliquer les mécanismes des modèles de langage.
 
-Refonte pédagogique NSI V3 proposée sur `refonte/nsi-pedagogie-v3`, construite sur la V2. Ces modifications ne sont ni fusionnées dans `main` ni publiées sur le domaine public.
+Qualification pédagogique V4 en cours sur `refonte/qualification-pedagogique-v4`, construite sur la V3. Cette branche n'est ni fusionnée dans `main` ni publiée.
 
 ## Première visite
 
@@ -10,8 +10,8 @@ Commencer par `#/decouvrir` : quatre écrans en langage courant, sans code, pour
 
 ## Trois espaces
 
-- Atelier Terminale NSI : dix investigations, huit étapes, hypothèses et observations locales ; dix missions Python avec assertions et corrigés distincts, accessibles au choix après l'exemple guidé.
-- Studio formateur : séances de 1/2/3/6 heures, questions orales, corrections progressives, deux chronomètres, reprise, projection, notes privées séparées et fiches imprimables. Dossier pour enseignants débutants : `#/enseignant`.
+- Atelier Terminale NSI : sept activités conseillées pour débuter, trois approfondissements facultatifs ; prérequis différenciés, dix missions Python avec assertions et corrigés distincts.
+- Studio formateur : séances de 1/2/3/6 heures, questions orales, corrections progressives, deux chronomètres, reprise, projection, notes privées séparées et fiches imprimables. Dossier pour enseignants débutants : `#/enseignant`. Trois séances de 60 minutes et leurs fiches séparées : `#/seance/<id>` (enseignant avec corrigés) / `#/fiche/<id>` (participant sans corrigés).
 - Laboratoire : dix instruments intuitifs/scientifiques ; neuf modules approfondis conservés.
 
 Huit expériences prioritaires : prédiction, BPE, génération, attention, apprentissage neural, détective des hallucinations, prompting et mini-RAG. Les probabilités/gradients/recherches sont calculés ; les scores inventés, textes préparés et approximations sont signalés. Pas de LLM de production local, pas d'API obligatoire.
@@ -45,7 +45,7 @@ Coulisses privées dans une fenêtre séparée : jamais affichées dans Projecti
 
 ## Documentation
 
-[Refonte pédagogique NSI V3 : périmètre, critères et validations humaines](docs/REFONTE_NSI_V3.md). Les dix corrigés Python sont exécutés dans la CI ; cela ne remplace pas une validation en classe.
+[Audit V4 activité par activité](docs/AUDIT_PEDAGOGIQUE_V4.md) et [refonte pédagogique NSI V3](docs/REFONTE_NSI_V3.md). Les dix corrigés Python sont exécutés dans la CI ; cela ne remplace pas une validation en classe.
 
 [Rapport de validation V2](docs/RAPPORT_VALIDATION_V2.md), [guide formateur](docs/SCENARIOS_FORMATEUR.md), [périmètre scientifique](docs/EXPERIENCES_SCIENTIFIQUES.md), [correspondances NSI](docs/PROGRAMME_NSI_CORRESPONDANCES.md), [limites](docs/LIMITES_CONNUES.md), [audit initial](docs/REFONTE_AUDIT_INITIAL.md).
 
