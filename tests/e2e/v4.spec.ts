@@ -55,3 +55,15 @@ test('V4 : routes débutant et dossier formateur sans défaut WCAG automatique',
     expect(report.violations).toEqual([]);
   }
 });
+
+test('V4 : fiches séparées sans corrigé divulgué au participant', async ({ page }) => {
+  await page.goto('./#/fiche/predire-verifier');
+  await expect(page.getByText('FICHE PARTICIPANT', { exact: true })).toBeVisible();
+  await expect(page.locator('.teacher-sequence-print')).not.toContainText('Réponse attendue :');
+  await expect(page.locator('.teacher-sequence-print')).not.toContainText('Erreur à anticiper :');
+  await expect(page.locator('.teacher-sequence-print .answer-space')).toHaveCount(6);
+  await page.getByRole('link', { name: 'Afficher la fiche formateur' }).click();
+  await expect(page.getByText('FICHE FORMATEUR — CORRIGÉS INCLUS')).toBeVisible();
+  await expect(page.locator('.teacher-sequence-print')).toContainText('Réponse attendue :');
+  await expect(page.getByRole('button', { name: 'Imprimer cette fiche' })).toBeVisible();
+});
