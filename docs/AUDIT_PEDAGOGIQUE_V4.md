@@ -46,6 +46,8 @@ Cette structure n'affirme pas que les mécanismes d'attention, l'entraînement p
 
 Routes : `#/enseignant` (préparation), `#/seance/<id>` (fiche formateur avec réponses), `#/fiche/<id>` (fiche participant sans réponses). Les temps sont planifiés, non mesurés en classe.
 
+**Attention :** la séparation formateur/participant est **une séparation d'affichage et d'impression**, pas un contrôle d'accès. Le site n'a pas de connexion enseignant : les corrigés du dossier public restent consultables par tout utilisateur. Ne pas présenter la fiche participant comme sécurisée contre la consultation des solutions.
+
 ## Contrat de qualité technique
 
 ```sh
