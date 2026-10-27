@@ -145,8 +145,10 @@ export function TeacherGuide() {
             <p><strong>Production finale :</strong> {sequence.teacherExit}</p>
             <p><strong>Limite scientifique :</strong> {sequence.scientificLimit}</p>
             <p>
-              La fiche peut être imprimée depuis le navigateur. Pour éviter une diffusion des
-              corrections aux élèves, préparez une fiche participant distincte.
+              <a href={'#/seance/' + sequence.id}>Ouvrir et imprimer la fiche enseignant avec corrigés →</a>
+            </p>
+            <p>
+              <a href={'#/fiche/' + sequence.id}>Ouvrir et imprimer la fiche participant sans corrigés →</a>
             </p>
           </details>
         ))}
