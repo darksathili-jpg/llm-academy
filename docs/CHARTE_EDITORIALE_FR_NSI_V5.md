@@ -7,11 +7,12 @@
 Écrire un français **exact, naturel, explicite et adapté au public**, sans relâcher la rigueur scientifique. La formulation la plus courte n'est pas nécessairement la plus compréhensible. Chaque phrase doit permettre au lecteur de savoir **ce qu'il doit comprendre, faire ou vérifier**, sans interprétation hasardeuse.
 
 Trois lectures distinctes :
+
 - **Élève de Terminale NSI** : tutoiement cohérent dans les consignes ; une instruction concrète par étape ; exemple avant formalisation ; vocabulaire défini avant tout usage.
 - **Professeur de NSI débutant dans l'étude des LLM** : vouvoiement ou formulation impersonnelle cohérents ; explications complètes, limites scientifiques, erreurs fréquentes et réponses attendues ; aucune connaissance tacite des LLM.
 - **Documentation technique et consignes aux agents** : formulation prescriptive, conditions observables, nomenclature cohérente et fichiers explicitement désignés.
 
-**Ne pas mélanger ces registres à l'intérieur d'un même écran.** Le cours de formation adressé au professeur peut contenir une *citation* d'une consigne formulée pour l'élève ; la citation doit être identifiable.
+**Ne pas mélanger ces registres à l'intérieur d'un même écran.** Le cours de formation adressé au professeur peut contenir une _citation_ d'une consigne formulée pour l'élève ; la citation doit être identifiable.
 
 ## 2. Normes grammaticales et typographiques
 
@@ -26,16 +27,16 @@ Trois lectures distinctes :
 
 ## 3. Vocabulaire NSI obligatoire
 
-| Formulation attendue | À éviter | Motif |
-| --- | --- | --- |
-| « une variable de type entier » | « une variable entière » | Distinguer variable et type |
-| « affecter une valeur à une variable » | « donner un nombre à une variable » lorsque l'affectation est la notion étudiée | Nommer l'opération |
-| « une boucle bornée `for` » | « une boucle `for` qui tourne » | Nommer la structure enseignée |
-| « une instruction conditionnelle `if` » | « un `if` » dans une première explication | Définir avant d'abréger |
-| « une fonction renvoie une valeur » | « une fonction affiche une valeur » pour `return` | Distinguer `return` et `print` |
-| « un appel de fonction » | « une exécution de fonction » lorsqu'il s'agit de nommer la syntaxe d'appel | Identifier le mécanisme |
-| « une liste », « un dictionnaire », « un tuple » | « tableau », « objet » par substitution non expliquée | Respecter le type de données utilisé |
-| « tester une assertion » et « vérifier un cas de test » | « prouver que le programme est correct » après quelques `assert` | Ne pas surévaluer une vérification |
+| Formulation attendue                                    | À éviter                                                                        | Motif                                |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------ |
+| « une variable de type entier »                         | « une variable entière »                                                        | Distinguer variable et type          |
+| « affecter une valeur à une variable »                  | « donner un nombre à une variable » lorsque l'affectation est la notion étudiée | Nommer l'opération                   |
+| « une boucle bornée `for` »                             | « une boucle `for` qui tourne »                                                 | Nommer la structure enseignée        |
+| « une instruction conditionnelle `if` »                 | « un `if` » dans une première explication                                       | Définir avant d'abréger              |
+| « une fonction renvoie une valeur »                     | « une fonction affiche une valeur » pour `return`                               | Distinguer `return` et `print`       |
+| « un appel de fonction »                                | « une exécution de fonction » lorsqu'il s'agit de nommer la syntaxe d'appel     | Identifier le mécanisme              |
+| « une liste », « un dictionnaire », « un tuple »        | « tableau », « objet » par substitution non expliquée                           | Respecter le type de données utilisé |
+| « tester une assertion » et « vérifier un cas de test » | « prouver que le programme est correct » après quelques `assert`                | Ne pas surévaluer une vérification   |
 
 **Règle :** vérifier la terminologie dans les programmes et ressources officiels lorsque le doute existe ; la table ci-dessus est une règle éditoriale locale, non une citation littérale du Bulletin officiel. Ne jamais prétendre qu'un concept spécifique aux LLM est obligatoire au baccalauréat NSI sans texte normatif précis.
 
@@ -50,7 +51,7 @@ Trois lectures distinctes :
 - **Inférence** : utilisation du modèle avec ses paramètres pour produire une sortie ; l'inférence ordinaire ne réentraîne pas les paramètres.
 - **Probabilité de sélection** : quantité associée au choix d'un candidat ; **ne mesure pas automatiquement la vérité** de l'énoncé.
 - **Génération autorégressive** : ajout d'une sortie au contexte, puis nouvelle prédiction.
-- **Étayé / contredit / non documenté** : verdict *relatif à une source précise*. Une absence de mention n'établit pas la fausseté.
+- **Étayé / contredit / non documenté** : verdict _relatif à une source précise_. Une absence de mention n'établit pas la fausseté.
 
 Toujours distinguer **mécanisme réel**, **modèle réduit**, **données fictives**, **analogie** et **affirmation vérifiée par une source**. Ne pas qualifier une animation de « véritable apprentissage » si elle ne modifie aucun paramètre appris.
 
@@ -93,14 +94,14 @@ Les contrôles automatisés peuvent détecter des erreurs de format ou quelques 
 
 ## 8. Exemples avant / après
 
-| À corriger | Formulation retenue |
-| --- | --- |
-| « On voit que ça change. » | « Compare la probabilité du mot “mer” avant et après la modification de la température. » |
-| « Le LLM apprend en répondant. » | « Pendant la génération habituelle, le modèle utilise ses paramètres entraînés ; cette opération ne les modifie pas automatiquement. » |
-| « Les mots sont découpés par l'IA. » | « Le tokenizer transforme le texte en une séquence de tokens selon des règles établies. » |
-| « Le modèle a 90 % de certitude. » | « Dans cette simulation, ce token a une probabilité de sélection de 90 %. » |
-| « Le document ne dit rien, donc c'est faux. » | « Ce document ne permet pas de conclure : l'information n'y figure pas. » |
-| « Fais l'exercice et regarde. » | « Exécute le programme, relève la valeur renvoyée, puis explique pourquoi elle respecte ou non l'assertion. » |
+| À corriger                                    | Formulation retenue                                                                                                                    |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| « On voit que ça change. »                    | « Compare la probabilité du mot “mer” avant et après la modification de la température. »                                              |
+| « Le LLM apprend en répondant. »              | « Pendant la génération habituelle, le modèle utilise ses paramètres entraînés ; cette opération ne les modifie pas automatiquement. » |
+| « Les mots sont découpés par l'IA. »          | « Le tokenizer transforme le texte en une séquence de tokens selon des règles établies. »                                              |
+| « Le modèle a 90 % de certitude. »            | « Dans cette simulation, ce token a une probabilité de sélection de 90 %. »                                                            |
+| « Le document ne dit rien, donc c'est faux. » | « Ce document ne permet pas de conclure : l'information n'y figure pas. »                                                              |
+| « Fais l'exercice et regarde. »               | « Exécute le programme, relève la valeur renvoyée, puis explique pourquoi elle respecte ou non l'assertion. »                          |
 
 ## 9. Critère de livraison du 25 novembre 2026
 

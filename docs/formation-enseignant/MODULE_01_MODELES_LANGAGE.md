@@ -1,4 +1,5 @@
 # Parcours enseignant NSI — Module 1
+
 ## Comprendre ce que fait un modèle de langage : du texte à la génération d'une réponse
 
 **Version de travail V5 — 28 octobre 2026.** Document de formation autonome destiné aux professeurs de NSI qui découvrent les LLM. Il est conçu pour être lu **avant** de préparer la séance élève. Il ne suppose ni d’avoir suivi la spécialité mathématiques ni de posséder une expérience préalable en intelligence artificielle.
@@ -56,10 +57,10 @@ Le texte de l'assistant est grammatical, fluide et semble assuré.
 Introduisons maintenant une troisième affirmation : « La médiathèque ouvre à 9 heures ». Le document ne précise pas les horaires. Elle n'est donc **ni confirmée ni contredite** par ce document : les informations sont insuffisantes pour conclure.
 
 | Affirmation examinée | Ce que fournit la source | Verdict relatif à cette source |
-|---|---|---|
-| Ouverte le mardi | « ouvre le mardi » | Étayée |
-| Ouverte le lundi | « fermée le lundi » | Contredite |
-| Ouvre à 9 heures | Aucun horaire | Non documentée |
+| -------------------- | ------------------------ | ------------------------------ |
+| Ouverte le mardi     | « ouvre le mardi »       | Étayée                         |
+| Ouverte le lundi     | « fermée le lundi »      | Contredite                     |
+| Ouvre à 9 heures     | Aucun horaire            | Non documentée                 |
 
 **Point décisif :** « non documentée » ne signifie pas « fausse ». Même « étayée » signifie ici « conforme au document fourni » : cela ne prouve pas que ce document lui-même soit exact ou à jour.
 
@@ -67,9 +68,9 @@ Introduisons maintenant une troisième affirmation : « La médiathèque ouvre �
 
 ### Vérification de compréhension 1
 
-*Question.* Si un autre document affirme que la médiathèque ouvre le samedi, mais que le document de départ ne le mentionne pas, quel verdict porte-t-on **à partir du document de départ uniquement** ?
+_Question._ Si un autre document affirme que la médiathèque ouvre le samedi, mais que le document de départ ne le mentionne pas, quel verdict porte-t-on **à partir du document de départ uniquement** ?
 
-*Réponse attendue.* Non documentée ; il faut lire et évaluer l'autre source avant d'en tirer une conclusion générale.
+_Réponse attendue._ Non documentée ; il faut lire et évaluer l'autre source avant d'en tirer une conclusion générale.
 
 ---
 
@@ -101,12 +102,12 @@ Pour l'entraînement d'un modèle de langage causal, un objectif courant consist
 
 Lors d'une **inférence**, on exploite un modèle déjà entraîné. Sa sortie dépend de l'entrée, des paramètres appris et des réglages de génération. La procédure ordinaire de génération ne réentraîne pas ses paramètres à chaque token produit.
 
-| Situation | Qu'est-ce qui change ? | Le modèle apprend-il de cet acte ? |
-|---|---|---|
-| Entraînement | Les paramètres peuvent être modifiés | Oui, selon la procédure d'optimisation |
-| Génération d'une réponse | Le texte de contexte s'allonge et les calculs recommencent | Pas par ce seul acte de génération |
-| Changer la température | La règle de choix à partir des scores est modifiée | Non |
-| Ajouter un extrait dans la question | Le contexte disponible est modifié | Non, pas par cet ajout seul |
+| Situation                           | Qu'est-ce qui change ?                                     | Le modèle apprend-il de cet acte ?     |
+| ----------------------------------- | ---------------------------------------------------------- | -------------------------------------- |
+| Entraînement                        | Les paramètres peuvent être modifiés                       | Oui, selon la procédure d'optimisation |
+| Génération d'une réponse            | Le texte de contexte s'allonge et les calculs recommencent | Pas par ce seul acte de génération     |
+| Changer la température              | La règle de choix à partir des scores est modifiée         | Non                                    |
+| Ajouter un extrait dans la question | Le contexte disponible est modifié                         | Non, pas par cet ajout seul            |
 
 **Distinction à faire verbaliser :** « Je donne un nouveau document au modèle » ne signifie pas « je réentraîne le modèle sur ce document ».
 
@@ -149,9 +150,9 @@ On n'attend pas nécessairement la même continuation. Cela illustre qu'une pré
 
 ### Vérification de compréhension 2
 
-*Question.* Lorsque je colle un nouveau document dans une conversation, qu'est-ce qui change d'abord : le contexte exploité à l'inférence ou les paramètres entraînés du modèle ?
+_Question._ Lorsque je colle un nouveau document dans une conversation, qu'est-ce qui change d'abord : le contexte exploité à l'inférence ou les paramètres entraînés du modèle ?
 
-*Réponse attendue.* Le contexte exploité à l'inférence, pas automatiquement les paramètres du modèle.
+_Réponse attendue._ Le contexte exploité à l'inférence, pas automatiquement les paramètres du modèle.
 
 ---
 
@@ -164,11 +165,11 @@ Un modèle de génération produit des **scores** pour les tokens candidats. Sel
 Imaginons un **mini-système fabriqué**, ayant seulement trois suites possibles après « Le chat regarde la… » :
 
 | Token candidat | Poids fictif | Probabilité après normalisation |
-|---|---:|---:|
-| lune | 2 | 2 / 10 = 20 % |
-| porte | 3 | 3 / 10 = 30 % |
-| mer | 5 | 5 / 10 = 50 % |
-| **Total** | **10** | **100 %** |
+| -------------- | -----------: | ------------------------------: |
+| lune           |            2 |                   2 / 10 = 20 % |
+| porte          |            3 |                   3 / 10 = 30 % |
+| mer            |            5 |                   5 / 10 = 50 % |
+| **Total**      |       **10** |                       **100 %** |
 
 Nous avons choisi les poids 2, 3 et 5 pour pouvoir les vérifier. La **normalisation** consiste ici à diviser chaque poids par leur somme, soit 10.
 
@@ -185,9 +186,9 @@ Même dans ce mini-système, le mot favorisé n'est pas automatiquement le mot v
 
 ### Vérification de compréhension 3
 
-*Question.* Si l'on remplace les poids [2, 3, 5] par [4, 6, 10], les probabilités changent-elles ?
+_Question._ Si l'on remplace les poids [2, 3, 5] par [4, 6, 10], les probabilités changent-elles ?
 
-*Correction.* Non : la somme devient 20 et l'on obtient encore [20 %, 30 %, 50 %]. Multiplier tous les poids par une même valeur positive ne change pas les proportions.
+_Correction._ Non : la somme devient 20 et l'on obtient encore [20 %, 30 %, 50 %]. Multiplier tous les poids par une même valeur positive ne change pas les proportions.
 
 ---
 
@@ -232,9 +233,9 @@ Prenons une trace fictive :
 
 ### Vérification de compréhension 4
 
-*Question.* Pourquoi une seconde prédiction peut-elle différer de la première ?
+_Question._ Pourquoi une seconde prédiction peut-elle différer de la première ?
 
-*Réponse attendue.* Parce que le contexte a changé après l'ajout du premier token. Les scores recalculés peuvent donc être différents.
+_Réponse attendue._ Parce que le contexte a changé après l'ajout du premier token. Les scores recalculés peuvent donc être différents.
 
 ---
 
@@ -439,14 +440,14 @@ print("Quatre vérifications réussies")
 
 ### Grille de validation humaine
 
-| Critère | Acquis dans la réponse si… | À reprendre si… |
-|---|---|---|
-| Vocabulaire | Token, contexte et inférence sont correctement distingués | Le token est présenté comme un mot entier dans tous les cas |
-| Mécanisme | La génération est décrite comme une suite de prédictions dépendant du contexte | La réponse est présentée comme rédigée d'un seul coup par le modèle causal |
-| Mathématiques élémentaires | Les proportions et leur somme sont justifiées | Les pourcentages sont pris pour des niveaux de vérité |
-| Vérification | Contradiction et absence d'information sont distinguées | Une absence de mention est qualifiée automatiquement de fausseté |
-| Transfert enseignant | Une remédiation concrète, vérifiable et compréhensible est proposée | La réponse se limite à « l'IA hallucine parfois » |
-| Limites | La simulation et le modèle réel ne sont pas confondus | Les poids fictifs sont présentés comme des paramètres appris |
+| Critère                    | Acquis dans la réponse si…                                                     | À reprendre si…                                                            |
+| -------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| Vocabulaire                | Token, contexte et inférence sont correctement distingués                      | Le token est présenté comme un mot entier dans tous les cas                |
+| Mécanisme                  | La génération est décrite comme une suite de prédictions dépendant du contexte | La réponse est présentée comme rédigée d'un seul coup par le modèle causal |
+| Mathématiques élémentaires | Les proportions et leur somme sont justifiées                                  | Les pourcentages sont pris pour des niveaux de vérité                      |
+| Vérification               | Contradiction et absence d'information sont distinguées                        | Une absence de mention est qualifiée automatiquement de fausseté           |
+| Transfert enseignant       | Une remédiation concrète, vérifiable et compréhensible est proposée            | La réponse se limite à « l'IA hallucine parfois »                          |
+| Limites                    | La simulation et le modèle réel ne sont pas confondus                          | Les poids fictifs sont présentés comme des paramètres appris               |
 
 **Décision pédagogique :** l'enseignant peut animer une première séance lorsque les six critères sont effectivement démontrés dans ses réponses ou une simulation orale. Ce verdict relève d'une personne ; aucun score automatique de texte libre n'est autorisé.
 
@@ -456,14 +457,14 @@ print("Quatre vérifications réussies")
 
 La séance ne cherche pas à faire apprendre toute la théorie de ce module en une heure. Elle s'appuie sur trois idées seulement : **une continuation est choisie ; le contexte influence le choix ; une phrase plausible doit pouvoir être vérifiée**.
 
-| Temps proposé | Activité | Action visible de l'élève | Intervention attendue |
-|---|---|---|---|
-| 0–5 min | Réponse crédible, document contradictoire | S'engager sur vrai / faux / indécidable | Faire chercher un extrait plutôt qu'un ton |
-| 5–12 min | Définir token et contexte avec « Le chat… » | Expliquer le vocabulaire avec ses mots | Refuser les notions non définies |
-| 12–25 min | Expérience probabilités | Hypothèse, changement d'un paramètre, observation | Distinguer « choisi » et « vrai » |
-| 25–35 min | Expérience contexte | Comparer chat et marin à réglages constants | Rappeler les préférences préparées |
-| 35–47 min | Expérience crédibilité | Étayé, contredit, non documenté avec preuve | Remédier à la confusion absence / contradiction |
-| 47–55 min | Transfert écrit | Deux phrases : mécanisme + limite, puis un exemple inédit | Relire les justifications, pas seulement les réponses |
+| Temps proposé | Activité                                    | Action visible de l'élève                                 | Intervention attendue                                 |
+| ------------- | ------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------- |
+| 0–5 min       | Réponse crédible, document contradictoire   | S'engager sur vrai / faux / indécidable                   | Faire chercher un extrait plutôt qu'un ton            |
+| 5–12 min      | Définir token et contexte avec « Le chat… » | Expliquer le vocabulaire avec ses mots                    | Refuser les notions non définies                      |
+| 12–25 min     | Expérience probabilités                     | Hypothèse, changement d'un paramètre, observation         | Distinguer « choisi » et « vrai »                     |
+| 25–35 min     | Expérience contexte                         | Comparer chat et marin à réglages constants               | Rappeler les préférences préparées                    |
+| 35–47 min     | Expérience crédibilité                      | Étayé, contredit, non documenté avec preuve               | Remédier à la confusion absence / contradiction       |
+| 47–55 min     | Transfert écrit                             | Deux phrases : mécanisme + limite, puis un exemple inédit | Relire les justifications, pas seulement les réponses |
 
 **Prérequis de séance :** vérifier l'accès au site, préparer un document papier de repli, projeter les commandes en taille lisible, garder les fiches corrigées côté enseignant. Le prolongement Python peut prendre une séance distincte, afin de ne pas surcharger cette introduction.
 
@@ -497,14 +498,14 @@ Pas de softmax, de dérivées, de produit matriciel, de Q/K/V, de cache KV ni d'
 
 **Programme scolaire (référence normative pour la NSI) :**
 
-- Éduscol, *Programmes et ressources en numérique et sciences informatiques — voie générale* : https://eduscol.education.gouv.fr/5823/programmes-et-ressources-en-numerique-et-sciences-informatiques-voie-g
-- Ministère, *Épreuve terminale NSI à partir de la session 2027* (note de service du 11 septembre 2026, portant sur l'épreuve et non sur une prétendue obligation d'enseigner les LLM) : https://www.education.gouv.fr/bo/2026/Special4/MENE2622643N
+- Éduscol, _Programmes et ressources en numérique et sciences informatiques — voie générale_ : https://eduscol.education.gouv.fr/5823/programmes-et-ressources-en-numerique-et-sciences-informatiques-voie-g
+- Ministère, _Épreuve terminale NSI à partir de la session 2027_ (note de service du 11 septembre 2026, portant sur l'épreuve et non sur une prétendue obligation d'enseigner les LLM) : https://www.education.gouv.fr/bo/2026/Special4/MENE2622643N
 
 **Références scientifiques (pour l'enseignant ; les élèves n'ont pas à les lire avant l'activité) :**
 
-- Vaswani et al., *Attention Is All You Need* (2017) : https://arxiv.org/abs/1706.03762 — architecture Transformer originale, **encodeur-décodeur**, et non une description identique de toutes les familles GPT.
-- Hugging Face, *LLM Course : How Transformers solve tasks* : https://huggingface.co/learn/llm-course/chapter1/5 — distinction des familles de modèles, dont les modèles causaux utilisés en génération.
-- Hugging Face, *LLM Course : Text generation inference* : https://huggingface.co/learn/llm-course/chapter1/8 — principe de génération token après token.
+- Vaswani et al., _Attention Is All You Need_ (2017) : https://arxiv.org/abs/1706.03762 — architecture Transformer originale, **encodeur-décodeur**, et non une description identique de toutes les familles GPT.
+- Hugging Face, _LLM Course : How Transformers solve tasks_ : https://huggingface.co/learn/llm-course/chapter1/5 — distinction des familles de modèles, dont les modèles causaux utilisés en génération.
+- Hugging Face, _LLM Course : Text generation inference_ : https://huggingface.co/learn/llm-course/chapter1/8 — principe de génération token après token.
 
 Ces références servent à distinguer une analogie pédagogique des mécanismes documentés ; les exemples sur la médiathèque et les poids [2, 3, 5] sont **originaux et fictifs**.
 

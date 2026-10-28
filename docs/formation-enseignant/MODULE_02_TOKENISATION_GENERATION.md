@@ -1,4 +1,5 @@
 # Parcours enseignant NSI — Module 2
+
 ## Tokenisation et génération : comment une suite de texte est-elle construite ?
 
 **Version de travail V5 — 28 octobre 2026.** Cours destiné à un professeur de NSI débutant sur les LLM. **Prérequis :** module 1, chaînes de caractères, indices et boucles bornées Python. **Durée personnelle estimée :** 75 à 100 minutes. **Séance élève proposée :** 55 minutes, après préparation. Le contenu n'est pas encore validé par des enseignants novices.
@@ -45,10 +46,10 @@ Corpus fictif : « maman ».
 Séquence initiale de caractères : `m | a | m | a | n`.
 
 | Paires adjacentes | Nombre d'occurrences |
-|---|---:|
-| (« m », « a ») | 2 |
-| (« a », « m ») | 1 |
-| (« a », « n ») | 1 |
+| ----------------- | -------------------: |
+| (« m », « a »)    |                    2 |
+| (« a », « m »)    |                    1 |
+| (« a », « n »)    |                    1 |
 
 La paire (« m », « a ») est la plus fréquente. Si la règle autorise sa fusion, on obtient :
 
@@ -66,7 +67,7 @@ Pour « aaa », il existe deux occurrences adjacentes de la paire (« a », « a
 
 Certaines variantes de BPE sont fondées sur des octets plutôt que sur des caractères Unicode pris isolément. Les espaces, accents, signes spéciaux et règles de pré-tokenisation peuvent modifier les résultats. Aucun exemple de cette page n'est présenté comme une transcription fidèle du tokenizer d'un service commercial.
 
-**Sources :** Sennrich, Haddow et Birch, *Neural Machine Translation of Rare Words with Subword Units* (2016), https://arxiv.org/abs/1508.07909 ; Hugging Face, chapitre sur BPE : https://huggingface.co/learn/llm-course/chapter6/5.
+**Sources :** Sennrich, Haddow et Birch, _Neural Machine Translation of Rare Words with Subword Units_ (2016), https://arxiv.org/abs/1508.07909 ; Hugging Face, chapitre sur BPE : https://huggingface.co/learn/llm-course/chapter6/5.
 
 ---
 
@@ -191,6 +192,7 @@ Adresse : https://darksathili-jpg.github.io/llm-academy/#/activite/generation
 Une paire est représentée par un **tuple de deux caractères**. Les paires qui se chevauchent doivent être comptées.
 
 **Données d'essai :**
+
 - `"maman"` doit produire les effectifs 2 pour `("m", "a")`, 1 pour `("a", "m")`, 1 pour `("a", "n")`.
 - `"aaa"` doit produire 2 pour `("a", "a")`.
 - Une chaîne vide produit un dictionnaire vide.
@@ -277,14 +279,14 @@ print("Quatre tests réussis")
 
 ## 10. Scénario élève de 55 minutes
 
-| Temps indicatif | Action | Preuve demandée |
-|---|---|---|
-| 0–6 min | Prévision de la segmentation de « maman » | Proposition personnelle |
-| 6–16 min | Décomposition, comptage et fusion au tableau | Tableau des paires |
-| 16–28 min | Laboratoire Tokens | Avant/après et limite |
-| 28–38 min | Comparer génération autorégressive et vingt tirages | Deux schémas différents |
-| 38–49 min | Laboratoire Génération, graine puis top-k | Une variable modifiée |
-| 49–55 min | Transfert avec « aaa » ou nouveau corpus | Justification de l'absence de fusion double |
+| Temps indicatif | Action                                              | Preuve demandée                             |
+| --------------- | --------------------------------------------------- | ------------------------------------------- |
+| 0–6 min         | Prévision de la segmentation de « maman »           | Proposition personnelle                     |
+| 6–16 min        | Décomposition, comptage et fusion au tableau        | Tableau des paires                          |
+| 16–28 min       | Laboratoire Tokens                                  | Avant/après et limite                       |
+| 28–38 min       | Comparer génération autorégressive et vingt tirages | Deux schémas différents                     |
+| 38–49 min       | Laboratoire Génération, graine puis top-k           | Une variable modifiée                       |
+| 49–55 min       | Transfert avec « aaa » ou nouveau corpus            | Justification de l'absence de fusion double |
 
 Le programme Python constitue une activité **supplémentaire**, pas une obligation ajoutée à ces 55 minutes. Ne pas annoncer de durée mesurée tant qu'une classe n'a pas été observée.
 
