@@ -67,12 +67,42 @@ html {
   border-bottom: 2px solid var(--ink);
 }
 .editorial-brand {
-  font:
-    bold 2.8rem/1 Georgia,
-    serif;
-  letter-spacing: -0.1em;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
   color: var(--ink);
   text-decoration: none;
+}
+.academy-logo {
+  display: block;
+  width: clamp(94px, 10vw, 132px);
+  height: auto;
+  flex: 0 0 auto;
+  border-radius: 0.6rem;
+  background: #fff;
+}
+.academy-wordmark {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.academy-wordmark strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+.academy-wordmark span {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: var(--muted);
+}
+.editorial-brand:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 5px;
 }
 .brand-caption {
   font-size: 0.72rem;
@@ -519,6 +549,15 @@ blockquote {
 @media (max-width: 500px) {
   .academy-header {
     gap: 1rem;
+  }
+  .academy-logo {
+    width: 88px;
+  }
+  .academy-wordmark strong {
+    font-size: 1.2rem;
+  }
+  .academy-wordmark span {
+    font-size: 0.7rem;
   }
   .brand-caption {
     flex-basis: 60%;

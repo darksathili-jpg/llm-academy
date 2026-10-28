@@ -18,7 +18,7 @@ function Home() {
     <>
       <section className="editorial-hero">
         <div>
-          <div className="eyebrow">COMPRENDRE EN FAISANT / ÉDITION 02</div>
+          <div className="eyebrow">LYCÉE WATTEAU · DÉCOUVRIR LES MODÈLES DE LANGAGE</div>
           <h1>
             Une machine
             <br />
@@ -337,10 +337,25 @@ export default function App() {
         Aller au contenu
       </a>
       <header className="academy-header">
-        <a className="editorial-brand" href="#/" aria-label="LLM / Accueil">
-          LLM /
+        <a
+          className="editorial-brand"
+          href="#/"
+          aria-label="Accueil de LLM Academy — Lycée Watteau, Valenciennes"
+        >
+          <img
+            className="academy-logo"
+            src={import.meta.env.BASE_URL + 'llm-academy-watteau.webp'}
+            alt=""
+            width="160"
+            height="160"
+            decoding="async"
+          />
+          <span className="academy-wordmark">
+            <strong>LLM Academy</strong>
+            <span>Lycée Watteau · Valenciennes</span>
+          </span>
         </a>
-        <span className="brand-caption">ATELIER DES MACHINES À LANGAGE</span>
+        <span className="brand-caption">COMPRENDRE · EXPÉRIMENTER · VÉRIFIER</span>
         <a href="#/carnet">Carnet d’apprentissage</a>
       </header>
       <div className="academy-navigation">
