@@ -18,7 +18,7 @@ function Home() {
     <>
       <section className="editorial-hero">
         <div>
-          <div className="eyebrow">COMPRENDRE EN FAISANT / ÉDITION 02</div>
+          <div className="eyebrow">LYCÉE WATTEAU · DÉCOUVRIR LES MODÈLES DE LANGAGE</div>
           <h1>
             Une machine
             <br />
