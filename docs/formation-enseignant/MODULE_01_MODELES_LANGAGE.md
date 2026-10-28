@@ -28,7 +28,7 @@ Nous allons construire une réponse **sans demander de formule de réseau neuron
 ### Les seuls prérequis
 
 - Lire une phrase et comparer deux versions d'un même document.
-- Lire des pourcentages : Dans un tirage où les issues sont équiprobables, une probabilité de 20 % correspond à 20 issues favorables sur 100 issues possibles.
+- Savoir interpréter un pourcentage : dans une expérience comportant 100 issues équiprobables, dont 20 favorables, la probabilité de l'événement considéré est égale à 20 %.
 - Connaître en Python les listes, les fonctions, les instructions conditionnelles et la boucle bornée `for` pour le prolongement facultatif. Tout le reste est introduit ici.
 
 **Important pour la NSI :** le fonctionnement interne des LLM n'est pas présenté comme une notion exigible au baccalauréat. Les exercices peuvent mobiliser des notions de programmation du programme officiel ; les concepts spécialisés de l'IA sont des applications et prolongements.
@@ -92,7 +92,7 @@ Pour l'entraînement d'un modèle de langage causal, un objectif courant consist
 **Exemple schématique :**
 
 - Exemple d'entraînement : « Le chat dort sur le tapis. »
-- Après le début « Le chat dort sur le », le mot « tapis » — ou plus exactement un token de continuation suivant le vocabulaire — est un exemple de suite observée.
+- Après le début « Le chat dort sur le », la continuation observée est « tapis ». Selon le tokenizer, cette continuation peut correspondre à un seul token ou à plusieurs.
 - Après de très nombreux exemples et ajustements, les paramètres influencent la distribution des suites possibles.
 
 **Attention :** le modèle ne mémorise pas simplement une grande table avec la « bonne réponse » pour chaque question. Nous n'affirmons pas non plus qu'il n'est jamais capable de mémoriser des passages.
@@ -116,7 +116,7 @@ Lors d'une **inférence**, on exploite un modèle déjà entraîné. Sa sortie d
 
 ### 3.1 Pourquoi des tokens ?
 
-Un programme n'effectue pas directement un calcul sur une « idée ». Les modèles de langage manipulent une représentation numérique du texte. Une première étape courante consiste à découper le texte en **tokens** selon un vocabulaire et des règles de tokenisation.
+Un programme n'effectue pas directement un calcul sur une « idée ». Les modèles de langage manipulent une représentation numérique du texte. Une étape courante consiste à transformer le texte en une séquence de **tokens**, conformément aux règles et au vocabulaire du tokenizer utilisé.
 
 Un token peut correspondre à un mot, une partie de mot, un caractère ou un autre segment, selon le tokenizer. **Un token n'est donc pas nécessairement un mot.**
 
