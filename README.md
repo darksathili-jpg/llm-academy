@@ -4,6 +4,12 @@ Plateforme française pour voir, manipuler, programmer et expliquer les mécanis
 
 Qualification pédagogique V4 sur `refonte/qualification-pedagogique-v4`, construite sur la V3. La branche n'est pas fusionnée dans `main`. Sa publication de démonstration se fait directement par GitHub Actions, sous réserve de la configuration de GitHub Pages.
 
+## Formation enseignant V5 en préparation (non publiée)
+
+Quatre cours autonomes ont été rédigés dans [docs/formation-enseignant/](docs/formation-enseignant/README.md) : fonctionnement d'un modèle de langage, tokenisation et génération, apprentissage et évaluation, puis fiabilité des sources et RAG. Ils comprennent des exemples commentés, des manipulations guidées, un prolongement Python, une évaluation et des corrections argumentées.
+
+**Attention :** ces documents ne sont pas encore intégrés à l'interface enseignant et restent en attente de relectures linguistiques et pédagogiques indépendantes. Le site public V4 demeure inchangé. La [charte éditoriale V5](docs/CHARTE_EDITORIALE_FR_NSI_V5.md) s'applique aux textes et aux exercices.
+
 ## Première visite
 
 Commencer par `#/decouvrir` : quatre écrans en langage courant, sans code, pour choisir un mot puis vérifier une réponse. Les dix activités guidées expliquent les termes au voisinage des commandes ; les détails scientifiques restent accessibles. Voir [la reprise après retour enseignant](docs/PRISE_EN_MAIN_SIMPLE.md). L’ancienne appréciation de 91/100 ne représente plus une note actuelle d’utilisabilité.
