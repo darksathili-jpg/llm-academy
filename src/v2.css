@@ -89,7 +89,10 @@ html {
   min-width: 0;
 }
 .academy-wordmark strong {
-  font: 700 clamp(1.2rem, 2vw, 1.65rem)/1.15 Georgia, 'Times New Roman', serif;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.15;
   letter-spacing: 0;
 }
 .academy-wordmark span {
