@@ -10,12 +10,12 @@ Le parcours ne vise pas à mémoriser des acronymes. Il donne au professeur les 
 
 ## Progression retenue
 
-| Ordre | Cours complet | Acquis recherchés | Prolongement Python |
-| --- | --- | --- | --- |
-| 1 | [Comprendre les modèles de langage](MODULE_01_MODELES_LANGAGE.md) | Modèle, entraînement, inférence, token, contexte, probabilité et vérité | Normaliser des poids |
-| 2 | [Tokenisation et génération](MODULE_02_TOKENISATION_GENERATION.md) | Tokenizer, paires fréquentes, fusion, graine, top-k, génération autorégressive | Compter des paires adjacentes |
-| 3 | [Apprentissage et évaluation](MODULE_03_APPRENTISSAGE_EVALUATION.md) | Paramètres, perte, entraînement, validation, test, généralisation et surapprentissage | Mesurer un taux d'erreur |
-| 4 | [Fiabilité, sources et RAG](MODULE_04_FIABILITE_SOURCES_RAG.md) | Sources, abstention, recherche lexicale, RAG, limites des citations et injections d'instructions | Rechercher des sous-chaînes sans inventer de réponses |
+| Ordre | Cours complet                                                        | Acquis recherchés                                                                                | Prolongement Python                                   |
+| ----- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
+| 1     | [Comprendre les modèles de langage](MODULE_01_MODELES_LANGAGE.md)    | Modèle, entraînement, inférence, token, contexte, probabilité et vérité                          | Normaliser des poids                                  |
+| 2     | [Tokenisation et génération](MODULE_02_TOKENISATION_GENERATION.md)   | Tokenizer, paires fréquentes, fusion, graine, top-k, génération autorégressive                   | Compter des paires adjacentes                         |
+| 3     | [Apprentissage et évaluation](MODULE_03_APPRENTISSAGE_EVALUATION.md) | Paramètres, perte, entraînement, validation, test, généralisation et surapprentissage            | Mesurer un taux d'erreur                              |
+| 4     | [Fiabilité, sources et RAG](MODULE_04_FIABILITE_SOURCES_RAG.md)      | Sources, abstention, recherche lexicale, RAG, limites des citations et injections d'instructions | Rechercher des sous-chaînes sans inventer de réponses |
 
 **Durées estimées :** les cours demandent environ 6 à 8 heures de travail personnel, selon les acquis initiaux et le temps passé aux exercices. Ces durées ne sont pas issues d'une mesure auprès de participants.
 
@@ -56,16 +56,16 @@ Programme de référence : https://eduscol.education.gouv.fr/5823/programmes-et-
 
 ## Critères de réception avant le 25 novembre 2026
 
-| Domaine | Preuve demandée | État au 28 octobre |
-| --- | --- | --- |
-| Rédaction des quatre cours | Un document autonome par module, avec théorie, exemple, pratique, évaluation et corrigé | **Rédigé** |
-| Français | Relecture compétente des accords, de la syntaxe, de la terminologie et des formulations de consigne | **À faire indépendamment** |
-| Exactitude scientifique | Relecture des analogies, limites et liens entre les observations et les conclusions | **À faire indépendamment** |
-| Python NSI | Exécution des quatre corrigés et d'un jeu de cas limites | **Contrôle automatique ajouté ; résultats à vérifier dans la CI** |
-| Intégration applicative | Cours consultables dans le dossier enseignant avec une interface lisible et imprimable | **Non réalisée** |
-| Accessibilité | Clavier, lecteur d'écran, modes clair/sombre, mobile, projection réelle, impression | **Non vérifiée sur ces nouveaux cours** |
-| Compréhension humaine | Essais avec des professeurs ne connaissant pas les LLM, recueil des incompréhensions et corrections | **Non réalisés** |
-| Publication | Autorisation humaine, déploiement et contrôle du domaine public | **Non autorisée pour V5** |
+| Domaine                    | Preuve demandée                                                                                     | État au 28 octobre                                                |
+| -------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Rédaction des quatre cours | Un document autonome par module, avec théorie, exemple, pratique, évaluation et corrigé             | **Rédigé**                                                        |
+| Français                   | Relecture compétente des accords, de la syntaxe, de la terminologie et des formulations de consigne | **À faire indépendamment**                                        |
+| Exactitude scientifique    | Relecture des analogies, limites et liens entre les observations et les conclusions                 | **À faire indépendamment**                                        |
+| Python NSI                 | Exécution des quatre corrigés et d'un jeu de cas limites                                            | **Contrôle automatique ajouté ; résultats à vérifier dans la CI** |
+| Intégration applicative    | Cours consultables dans le dossier enseignant avec une interface lisible et imprimable              | **Non réalisée**                                                  |
+| Accessibilité              | Clavier, lecteur d'écran, modes clair/sombre, mobile, projection réelle, impression                 | **Non vérifiée sur ces nouveaux cours**                           |
+| Compréhension humaine      | Essais avec des professeurs ne connaissant pas les LLM, recueil des incompréhensions et corrections | **Non réalisés**                                                  |
+| Publication                | Autorisation humaine, déploiement et contrôle du domaine public                                     | **Non autorisée pour V5**                                         |
 
 **Décision actuelle :** **EN VÉRIFICATION**, et non « formation achevée et validée ».
 

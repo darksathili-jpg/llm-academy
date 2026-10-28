@@ -51,11 +51,11 @@ Au début, le système se trompe sur plusieurs exemples d'entraînement. Après 
 
 Les pourcentages suivants sont **inventés pour expliquer le raisonnement**. Ils ne proviennent pas d'un modèle entraîné dans le laboratoire.
 
-| État du système | Erreur sur entraînement | Erreur sur validation |
-|---|---:|---:|
-| Avant les ajustements | 40 % | 42 % |
-| Après plusieurs ajustements | 10 % | 18 % |
-| Après beaucoup d'ajustements | 2 % | 35 % |
+| État du système              | Erreur sur entraînement | Erreur sur validation |
+| ---------------------------- | ----------------------: | --------------------: |
+| Avant les ajustements        |                    40 % |                  42 % |
+| Après plusieurs ajustements  |                    10 % |                  18 % |
+| Après beaucoup d'ajustements |                     2 % |                  35 % |
 
 **Lecture guidée :**
 
@@ -339,14 +339,14 @@ L'enseignant est capable de :
 
 ## 8. Transposition dans une séance de 55 minutes
 
-| Temps proposé | Intervention de l'enseignant | Production observable |
-|---|---|---|
-| 0–8 min | Présenter le tableau des trois états, sans corriger | Choix justifié de l'état à conserver |
-| 8–18 min | Définir entraînement, validation et test final | Trois définitions avec un exemple |
-| 18–30 min | Montrer comment la perte évolue | Description d'un écart, sans prétendre mesurer la vérité |
-| 30–43 min | Faire manipuler le mini-réseau du laboratoire | Deux valeurs avant/après et une limite |
-| 43–51 min | Analyser un cas de surapprentissage | Conclusion argumentée à partir du tableau |
-| 51–55 min | Proposer un nouveau cas de validation | Critère à vérifier sur un exemple inédit |
+| Temps proposé | Intervention de l'enseignant                        | Production observable                                    |
+| ------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| 0–8 min       | Présenter le tableau des trois états, sans corriger | Choix justifié de l'état à conserver                     |
+| 8–18 min      | Définir entraînement, validation et test final      | Trois définitions avec un exemple                        |
+| 18–30 min     | Montrer comment la perte évolue                     | Description d'un écart, sans prétendre mesurer la vérité |
+| 30–43 min     | Faire manipuler le mini-réseau du laboratoire       | Deux valeurs avant/après et une limite                   |
+| 43–51 min     | Analyser un cas de surapprentissage                 | Conclusion argumentée à partir du tableau                |
+| 51–55 min     | Proposer un nouveau cas de validation               | Critère à vérifier sur un exemple inédit                 |
 
 Cette séance constitue un **approfondissement** : elle n'est pas à imposer à une classe qui n'a pas encore distingué modèle, token et prédiction.
 
@@ -366,8 +366,8 @@ Cette séance constitue un **approfondissement** : elle n'est pas à imposer à 
 
 **Références scientifiques :**
 
-- Hugging Face, *How do Transformers work?*, https://huggingface.co/docs/course/en/chapter1/4 — objectifs de préentraînement et distinction entre modèle initial et ajustement.
-- Hugging Face, *Causal language modeling*, https://huggingface.co/docs/transformers/tasks/language_modeling — préparation et entraînement d'un modèle causal.
-- Éduscol, *Programmes et ressources en NSI*, https://eduscol.education.gouv.fr/5823/programmes-et-ressources-en-numerique-et-sciences-informatiques-voie-g — référence pour les notions Python du lycée, et **non** pour rendre obligatoires les détails des LLM.
+- Hugging Face, _How do Transformers work?_, https://huggingface.co/docs/course/en/chapter1/4 — objectifs de préentraînement et distinction entre modèle initial et ajustement.
+- Hugging Face, _Causal language modeling_, https://huggingface.co/docs/transformers/tasks/language_modeling — préparation et entraînement d'un modèle causal.
+- Éduscol, _Programmes et ressources en NSI_, https://eduscol.education.gouv.fr/5823/programmes-et-ressources-en-numerique-et-sciences-informatiques-voie-g — référence pour les notions Python du lycée, et **non** pour rendre obligatoires les détails des LLM.
 
 **Vérifications avant acceptation :** refaire les calculs du tableau, exécuter les assertions Python, relire la terminologie et les nuances, vérifier l'interface réelle du laboratoire, faire lire le cours à un enseignant novice et observer son explication de la différence entre entraînement, validation et inférence. Les durées et la compréhension ne sont pas encore validées sur le terrain.
