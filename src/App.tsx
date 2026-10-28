@@ -344,11 +344,16 @@ export default function App() {
         >
           <img
             className="academy-logo"
-            src={import.meta.env.BASE_URL + 'llm-academy-watteau.svg'}
+            src={import.meta.env.BASE_URL + 'llm-academy-watteau.webp'}
             alt=""
-            width="360"
-            height="100"
+            width="160"
+            height="160"
+            decoding="async"
           />
+          <span className="academy-wordmark">
+            <strong>LLM Academy</strong>
+            <span>Lycée Watteau · Valenciennes</span>
+          </span>
         </a>
         <span className="brand-caption">COMPRENDRE · EXPÉRIMENTER · VÉRIFIER</span>
         <a href="#/carnet">Carnet d’apprentissage</a>
