@@ -16,11 +16,11 @@
 
 ## 1. Revenir à une situation concrète
 
-Deux personnes écrivent le même mot « chaton ». Un programme peut le segmenter en « chat » + « on » ; un autre peut le segmenter en « ch » + « at » + « on ». Cela ne veut pas dire que le sens du mot a changé : **la représentation interne dépend du tokenizer utilisé**.
+Deux personnes écrivent le même mot « chaton ». Un programme peut le segmenter en « chat » + « on » ; un autre peut le segmenter en « ch » + « at » + « on ». Cela ne signifie pas que le sens du mot a changé : **la représentation interne dépend du tokenizer utilisé**.
 
-**Question initiale :** pourquoi ne pas considérer nécessairement chaque mot comme une unité indivisible ?
+**Question initiale :** pourquoi un tokenizer ne traite-t-il pas nécessairement chaque mot comme une seule unité ?
 
-Un vocabulaire limité ne peut pas comporter confortablement toutes les variantes de mots, graphies, erreurs, noms propres et mélanges de langues. Des unités plus petites peuvent aider à représenter des formes jamais rencontrées exactement sous forme de mot complet. Ce choix comporte des compromis et ne prouve aucune compréhension sémantique.
+Un vocabulaire fini ne peut pas contenir toutes les formes de mots, tous les noms propres et toutes les graphies qui pourraient apparaître dans un texte. Des unités plus petites peuvent aider à représenter des formes jamais rencontrées exactement sous forme de mot complet. Ce choix comporte des compromis et ne prouve aucune compréhension sémantique.
 
 **Termes à définir avant toute manipulation :**
 
@@ -42,7 +42,7 @@ Le cours introduit un **principe de type BPE** : on part d'unités élémentaire
 
 Corpus fictif : « maman ».
 
-Séquence initiale de caractères : \`m | a | m | a | n\`.
+Séquence initiale de caractères : `m | a | m | a | n`.
 
 | Paires adjacentes | Nombre d'occurrences |
 |---|---:|
@@ -52,7 +52,7 @@ Séquence initiale de caractères : \`m | a | m | a | n\`.
 
 La paire (« m », « a ») est la plus fréquente. Si la règle autorise sa fusion, on obtient :
 
-\`ma | ma | n\`.
+`ma | ma | n`.
 
 Le nombre d'unités passe de 5 à 3. Ce résultat dépend du corpus et de la règle sélectionnée. Une implémentation réelle peut inclure des contraintes et des conventions supplémentaires.
 
@@ -80,7 +80,7 @@ Un modèle de langage utilise généralement des séquences produites par un tok
 
 **Contre-exemple utile :** « Si je colle une nouvelle phrase dans un champ de l'application, je réentraîne le vocabulaire de tous les LLM. » Faux. Le texte est traité selon les règles de l'application ou du tokenizer en question ; il n'y a pas nécessairement apprentissage.
 
-**Question de transfert :** peut-on comparer honnêtement la longueur en tokens de deux textes sans préciser le tokenizer utilisé ? **Non**, pas si l'on attend une valeur universelle exacte.
+**Question de transfert :** peut-on annoncer un nombre exact de tokens sans préciser le tokenizer utilisé ? **Non**, pas si l'on attend une valeur universelle exacte.
 
 ---
 
@@ -102,7 +102,7 @@ Au module 1, le modèle calculait des scores sur des continuations. Pour génér
 
 Exemple inventé :
 
-\`\`\`text
+```text
 Contexte de départ : Le chat
 Prédiction 1       : dort
 Nouveau contexte   : Le chat dort
@@ -110,13 +110,13 @@ Prédiction 2       : ici
 Nouveau contexte   : Le chat dort ici
 Prédiction 3       : .
 Texte final        : Le chat dort ici.
-\`\`\`
+```
 
-Cette trace sert uniquement à voir la **réinjection de la sortie dans le contexte**. Elle ne donne pas les scores d'un réseau et ne constitue pas une sortie vérifiée d'un modèle réel.
+Cette trace illustre uniquement **l'ajout du token produit au contexte utilisé pour la prédiction suivante**. Elle ne donne pas les scores d'un réseau et ne constitue pas une sortie vérifiée d'un modèle réel.
 
 ### Ne pas confondre avec vingt tirages indépendants
 
-Dans le laboratoire « Génération » de LLM Academy, on peut effectuer **vingt tirages** avec les mêmes réglages et la même distribution de candidats. Cela permet de comparer des distributions et de constater la reproductibilité d'une séquence pseudoaléatoire fixée.
+Dans le laboratoire « Génération » de LLM Academy, on peut effectuer **vingt tirages** avec les mêmes réglages et la même distribution de candidats. Cela permet de comparer des résultats et de constater la reproductibilité d'une suite de tirages pseudoaléatoires dans des conditions identiques.
 
 Ces tirages n'enrichissent pas nécessairement le contexte après chaque résultat. **Ils ne constituent donc pas à eux seuls une phrase générée de manière autorégressive.**
 
@@ -140,7 +140,7 @@ La définition exacte dépend de la transformation des scores ; une température
 
 ### Top-k
 
-Le **top-k** conserve au plus un certain nombre \`k\` de candidats parmi ceux ayant les scores les plus élevés, avant le choix final selon la stratégie utilisée.
+Le **top-k** conserve au plus un certain nombre `k` de candidats parmi ceux ayant les scores les plus élevés, avant le choix final selon la stratégie utilisée.
 
 Avec top-k égal à 1, un seul candidat est conservé (hors conventions particulières de scores ex æquo). Cela n'entraîne pas le modèle.
 
@@ -186,18 +186,18 @@ Adresse : https://darksathili-jpg.github.io/llm-academy/#/activite/generation
 
 ### Consigne Terminale NSI
 
-Écrire la fonction \`compter_paires\` qui reçoit une chaîne de caractères et renvoie un **dictionnaire** associant chaque couple de caractères adjacents à son nombre d'occurrences.
+Écrire la fonction `compter_paires` qui reçoit une chaîne de caractères et renvoie un **dictionnaire** associant chaque couple de caractères adjacents à son nombre d'occurrences.
 
 Une paire est représentée par un **tuple de deux caractères**. Les paires qui se chevauchent doivent être comptées.
 
 **Données d'essai :**
-- \`"maman"\` doit produire les effectifs 2 pour \`("m", "a")\`, 1 pour \`("a", "m")\`, 1 pour \`("a", "n")\`.
-- \`"aaa"\` doit produire 2 pour \`("a", "a")\`.
+- `"maman"` doit produire les effectifs 2 pour `("m", "a")`, 1 pour `("a", "m")`, 1 pour `("a", "n")`.
+- `"aaa"` doit produire 2 pour `("a", "a")`.
 - Une chaîne vide produit un dictionnaire vide.
 
 ### Première aide
 
-Parcourir les valeurs de l'indice \`i\` de 0 à \`len(texte) - 2\`. L'instruction \`texte[i]\` donne le premier caractère de la paire et \`texte[i + 1]\` le suivant.
+Parcourir les valeurs de l'indice `i` de 0 à `len(texte) - 2`. L'instruction `texte[i]` donne le premier caractère de la paire et `texte[i + 1]` le suivant.
 
 ### Seconde aide
 
@@ -205,7 +205,7 @@ Pour une paire déjà présente dans le dictionnaire, **affecter une valeur sup�
 
 ### Correction intégrale
 
-\`\`\`python
+```python
 def compter_paires(texte):
     """Compte les paires de caractères adjacents."""
     effectifs = {}
@@ -227,9 +227,9 @@ assert compter_paires("aaa") == {("a", "a"): 2}
 assert compter_paires("") == {}
 assert compter_paires("a") == {}
 print("Quatre tests réussis")
-\`\`\`
+```
 
-**Pourquoi la boucle est bornée :** le nombre de passages dépend de la longueur de la chaîne reçue, qui est finie. Dans cet algorithme, \`range(len(texte) - 1)\` évite de lire un caractère après la fin de la chaîne.
+**Pourquoi la boucle est bornée :** le nombre de passages dépend de la longueur de la chaîne reçue, qui est finie. Dans cet algorithme, `range(len(texte) - 1)` évite de lire un caractère après la fin de la chaîne.
 
 **Cas limite :** pour « aaa », les paires aux positions (0,1) et (1,2) sont toutes deux comptées. Cela ne signifie pas que deux fusions simultanées sont possibles.
 
