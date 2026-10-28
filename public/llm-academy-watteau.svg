@@ -61,6 +61,6 @@
     <text x="121" y="196" font-family="Arial, Helvetica, sans-serif" font-size="53" font-weight="800" fill="#fff" letter-spacing="1">LLM</text>
     <text x="275" y="196" font-family="Arial, Helvetica, sans-serif" font-size="51" font-weight="300" fill="#fff">Academy</text>
     <text x="4" y="254" font-family="Arial, Helvetica, sans-serif" font-size="19" letter-spacing="5" fill="#203f5e">VALENCIENNES</text>
-    <text x="400" y="253" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2" fill="#56697d">COMPRENDRE · EXPÉRIMENTER · VÉRIFIER</text>
+    <text x="365" y="253" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="1.4" fill="#56697d">COMPRENDRE · EXPÉRIMENTER · VÉRIFIER</text>
   </g>
 </svg>
