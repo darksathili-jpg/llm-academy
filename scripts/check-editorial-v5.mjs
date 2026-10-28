@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 const modules = [
   'docs/formation-enseignant/MODULE_01_MODELES_LANGAGE.md',
   'docs/formation-enseignant/MODULE_02_TOKENISATION_GENERATION.md',
+  'docs/formation-enseignant/MODULE_03_APPRENTISSAGE_EVALUATION.md',
+  'docs/formation-enseignant/MODULE_04_FIABILITE_SOURCES_RAG.md',
 ];
 
 const requiredHeadings = [
@@ -23,6 +25,7 @@ const redFlags = [
 
 let failures = 0;
 for (const path of modules) {
+  const initialFailures = failures;
   const body = readFileSync(new URL('../' + path, import.meta.url), 'utf8');
   const fences = body.split('\n').filter((line) => /^\`\`\`/.test(line));
   if (fences.length % 2 !== 0) {
@@ -41,7 +44,8 @@ for (const path of modules) {
       failures++;
     }
   }
-  if (!failures) console.log(path + ' : contrôles éditoriaux automatiques satisfaits');
+  if (failures === initialFailures)
+    console.log(path + ' : contrôles éditoriaux automatiques satisfaits');
 }
 
 if (failures) {
