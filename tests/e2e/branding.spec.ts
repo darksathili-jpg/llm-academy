@@ -7,12 +7,15 @@ test('identité LLM Academy du lycée Watteau visible et accessible', async ({ p
   });
   await expect(brand).toBeVisible();
   const logo = brand.locator('img.academy-logo');
-  await expect(logo).toHaveAttribute('src', /llm-academy-watteau\.svg$/);
+  await expect(logo).toHaveAttribute('src', /llm-academy-watteau\.webp$/);
   await expect
     .poll(async () =>
       logo.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0),
     )
     .toBe(true);
+  await expect(page.getByText('Lycée Watteau · Valenciennes', { exact: true })).toBeVisible();
+  await expect(page.locator('header.academy-header img[src$=".svg"]')).toHaveCount(0);
+  await expect(logo).toHaveJSProperty('naturalWidth', 160);
   await logo.focus();
   await expect(brand).toHaveAttribute('href', '#/');
 });
