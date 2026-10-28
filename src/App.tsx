@@ -337,10 +337,20 @@ export default function App() {
         Aller au contenu
       </a>
       <header className="academy-header">
-        <a className="editorial-brand" href="#/" aria-label="LLM / Accueil">
-          LLM /
+        <a
+          className="editorial-brand"
+          href="#/"
+          aria-label="Accueil de LLM Academy — Lycée Watteau, Valenciennes"
+        >
+          <img
+            className="academy-logo"
+            src={import.meta.env.BASE_URL + 'llm-academy-watteau.svg'}
+            alt=""
+            width="360"
+            height="100"
+          />
         </a>
-        <span className="brand-caption">ATELIER DES MACHINES À LANGAGE</span>
+        <span className="brand-caption">COMPRENDRE · EXPÉRIMENTER · VÉRIFIER</span>
         <a href="#/carnet">Carnet d’apprentissage</a>
       </header>
       <div className="academy-navigation">
