@@ -74,6 +74,16 @@ html {
   color: var(--ink);
   text-decoration: none;
 }
+.academy-logo {
+  display: block;
+  width: clamp(230px, 30vw, 360px);
+  height: auto;
+  max-width: 100%;
+}
+.editorial-brand:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 5px;
+}
 .brand-caption {
   font-size: 0.72rem;
   letter-spacing: 0.12em;
@@ -519,6 +529,9 @@ blockquote {
 @media (max-width: 500px) {
   .academy-header {
     gap: 1rem;
+  }
+  .academy-logo {
+    width: min(82vw, 320px);
   }
   .brand-caption {
     flex-basis: 60%;
