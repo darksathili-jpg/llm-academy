@@ -1,7 +1,7 @@
 # Parcours enseignant NSI — Module 1
 ## Comprendre ce que fait un modèle de langage : du texte à la génération d'une réponse
 
-**Version de travail V5 — 28 octobre 2026.** Document de formation autonome destiné aux professeurs de NSI qui découvrent les LLM. Il est conçu pour être lu **avant** de préparer la séance élève. Il ne suppose ni spécialité mathématiques, ni expérience préalable en intelligence artificielle.
+**Version de travail V5 — 28 octobre 2026.** Document de formation autonome destiné aux professeurs de NSI qui découvrent les LLM. Il est conçu pour être lu **avant** de préparer la séance élève. Il ne suppose ni d’avoir suivi la spécialité mathématiques ni de posséder une expérience préalable en intelligence artificielle.
 
 **Durée de formation personnelle conseillée :** 90 à 120 minutes (durées estimées, non mesurées). **Mise en classe proposée :** 55 minutes, après préparation. **Statut :** contenu rédigé, en attente de relecture pédagogique indépendante et d'essais avec des personnes novices. Aucun résultat d'apprentissage n'est présumé.
 
@@ -28,8 +28,8 @@ Nous allons construire une réponse **sans demander de formule de réseau neuron
 ### Les seuls prérequis
 
 - Lire une phrase et comparer deux versions d'un même document.
-- Lire des pourcentages : 20 % correspond à 20 possibilités sur 100 dans une expérience de référence appropriée.
-- Connaître en Python les listes, les fonctions, les instructions conditionnelles et la boucle bornée \`for\` pour le prolongement facultatif. Tout le reste est introduit ici.
+- Lire des pourcentages : Dans un tirage où les issues sont équiprobables, une probabilité de 20 % correspond à 20 issues favorables sur 100 issues possibles.
+- Connaître en Python les listes, les fonctions, les instructions conditionnelles et la boucle bornée `for` pour le prolongement facultatif. Tout le reste est introduit ici.
 
 **Important pour la NSI :** le fonctionnement interne des LLM n'est pas présenté comme une notion exigible au baccalauréat. Les exercices peuvent mobiliser des notions de programmation du programme officiel ; les concepts spécialisés de l'IA sont des applications et prolongements.
 
@@ -63,7 +63,7 @@ Introduisons maintenant une troisième affirmation : « La médiathèque ouvre �
 
 **Point décisif :** « non documentée » ne signifie pas « fausse ». Même « étayée » signifie ici « conforme au document fourni » : cela ne prouve pas que ce document lui-même soit exact ou à jour.
 
-**Erreur fréquente à corriger :** « Les LLM disent tout au hasard. » C'est faux également. Ils calculent des sorties à partir de régularités apprises et du contexte. Des réponses peuvent être exactes ou utiles ; leur vérification doit néanmoins être proportionnée aux enjeux.
+**Erreur fréquente à corriger :** « Les LLM choisissent toutes leurs réponses au hasard. » Cette affirmation est inexacte : leurs sorties dépendent des paramètres appris, du contexte et des réglages de génération. Le choix final peut comporter une part pseudoaléatoire. Des réponses peuvent être exactes ou utiles ; leur vérification doit néanmoins être proportionnée aux enjeux.
 
 ### Vérification de compréhension 1
 
@@ -81,7 +81,7 @@ Dans ce cours, un **modèle** est un système de calcul dont les paramètres ont
 
 Un **LLM** (« Large Language Model ») est un modèle de langage de grande taille, généralement entraîné sur de grands ensembles de données. La taille ne se réduit pas au nombre de documents : le nombre de paramètres, l'architecture et le calcul mobilisé interviennent aussi. Nous n'imposons aucun seuil arbitraire à partir duquel un modèle deviendrait « large ».
 
-**Ce que l'on peut affirmer sans simplification trompeuse :** pour expliquer la génération par un modèle autorégressif, il est pertinent de montrer la prédiction du token suivant à partir des tokens déjà disponibles. Cela ne signifie pas que toutes les architectures ou toutes les tâches d'IA fonctionnent uniquement de cette façon.
+**Ce que l'on peut expliquer sans déformer le mécanisme :** pour expliquer la génération par un modèle autorégressif, il est pertinent de montrer la prédiction du token suivant à partir des tokens déjà disponibles. Cela ne signifie pas que toutes les architectures ou toutes les tâches d'IA fonctionnent uniquement de cette façon.
 
 ### 2.2 Le terme « entraînement »
 
@@ -122,11 +122,11 @@ Un token peut correspondre à un mot, une partie de mot, un caractère ou un aut
 
 **Exemple purement pédagogique :**
 
-\`\`\`text
+```text
 Texte :       chaton
 Découpage A : chat | on
 Découpage B : ch | at | on
-\`\`\`
+```
 
 Ces deux découpages sont des illustrations fabriquées pour comprendre le principe. **Ce n'est pas le résultat certifié d'un tokenizer de production.** Un tokenizer particulier donne un résultat précis pour le texte et la version considérés.
 
@@ -197,7 +197,7 @@ Jusqu'ici, on a décrit un seul choix. Pour générer un texte, un modèle **aut
 
 **Schéma original, volontairement simplifié :**
 
-\`\`\`text
+```text
 Texte initial : « Le chat regarde la »
 
               [Contexte disponible]
@@ -216,7 +216,7 @@ Texte initial : « Le chat regarde la »
                         |
                         v
          ... jusqu'à la condition d'arrêt
-\`\`\`
+```
 
 Prenons une trace fictive :
 
@@ -226,7 +226,7 @@ Prenons une trace fictive :
 4. Une nouvelle prédiction permet éventuellement de choisir un signe de ponctuation ou une autre suite.
 5. Le processus finit selon une règle d'arrêt ou un nombre maximal de tokens.
 
-**Le fait que la réponse ressemble à un raisonnement n'est pas une preuve que chaque étape de ce raisonnement a été vérifiée factuellement.**
+**Une réponse qui semble présenter un raisonnement cohérent ne garantit pas que les affirmations qu'elle contient ont été vérifiées.**
 
 **Ce que le schéma ne représente pas :** les représentations vectorielles, les couches de Transformer, le mécanisme d'attention, les caches de calcul, les instructions de plus haut niveau et les mécanismes de sûreté. Le schéma reste exact sur le principe général du choix successif pour la génération causale, mais ne constitue pas une architecture complète.
 
@@ -306,15 +306,15 @@ Une réponse correcte au QCM, seule, ne suffit pas à valider ces apprentissages
 
 ### Énoncé à donner aux élèves
 
-Écrire une fonction \`normaliser\` qui reçoit une **liste de poids de type entier ou flottant**, tous positifs ou nuls, et qui renvoie la liste des proportions correspondantes. La somme des poids doit être strictement positive.
+Écrire une fonction `normaliser` qui reçoit une **liste de nombres de type `int` ou `float`**, tous positifs ou nuls, et qui renvoie la liste des proportions correspondantes. La somme des poids doit être strictement positive.
 
 La fonction doit refuser une liste vide, une liste dont la somme est nulle, ou une liste contenant un poids négatif.
 
 Par exemple :
 
-\`\`\`python
+```python
 normaliser([2, 3, 5])  # [0.2, 0.3, 0.5]
-\`\`\`
+```
 
 Pour résoudre le problème, prévoir une boucle bornée, calculer la somme des éléments, puis construire une nouvelle liste par ajouts successifs.
 
@@ -327,7 +327,7 @@ Pour résoudre le problème, prévoir une boucle bornée, calculer la somme des 
 
 ### Aide 2 — commencer le programme
 
-\`\`\`python
+```python
 def normaliser(poids):
     if len(poids) == 0:
         raise ValueError("Liste vide interdite")
@@ -336,11 +336,11 @@ def normaliser(poids):
         # À compléter : refus des poids négatifs et accumulation.
         pass
     # À compléter : somme nulle et construction du résultat.
-\`\`\`
+```
 
 ### Corrigé intégral, avec raisons des instructions
 
-\`\`\`python
+```python
 def normaliser(poids):
     """Renvoie les proportions associées à des poids non négatifs."""
     if len(poids) == 0:
@@ -379,17 +379,17 @@ else:
     raise AssertionError("La somme nulle aurait dû être refusée")
 
 print("Quatre vérifications réussies")
-\`\`\`
+```
 
 **Explication de l'algorithme :**
 
-- \`somme\` est une variable de type entier dans le parcours \`[2, 3, 5]\`. À chaque itération, on **affecte une nouvelle valeur** à cette variable.
-- Les deux boucles \`for\` sont des **boucles bornées** : elles parcourent chacune la liste fournie.
-- La première boucle vérifie les données et construit la somme ; la seconde remplit la liste \`proportions\`.
-- \`raise ValueError\` signale une entrée qui ne satisfait pas les conditions précisées par l'énoncé.
-- Les instructions \`assert\` vérifient ici plusieurs cas définis, mais **ne constituent pas une démonstration de correction pour toutes les entrées**.
+- `somme` est une variable de type entier dans le parcours `[2, 3, 5]`. À chaque itération, on **affecte une nouvelle valeur** à cette variable.
+- Les deux boucles `for` sont des **boucles bornées** : elles parcourent chacune la liste fournie.
+- La première boucle vérifie les données et construit la somme ; la seconde remplit la liste `proportions`.
+- `raise ValueError` signale une entrée qui ne satisfait pas les conditions précisées par l'énoncé.
+- Les instructions `assert` vérifient ici plusieurs cas définis, mais **ne constituent pas une démonstration de correction pour toutes les entrées**.
 
-**Transfert :** tester \`[4, 6, 10]\`. Expliquer pourquoi les résultats sont les mêmes qu'avec \`[2, 3, 5]\`. Proposer un autre cas limite, puis vérifier si la fonction se comporte comme prévu.
+**Transfert :** tester `[4, 6, 10]`. Expliquer pourquoi les résultats sont les mêmes qu'avec `[2, 3, 5]`. Proposer un autre cas limite, puis vérifier si la fonction se comporte comme prévu.
 
 **Limite scientifique explicite :** cette fonction n'implémente ni les logits, ni la fonction softmax, ni les couches d'un Transformer, ni la génération de texte. Elle est une **analogie arithmétique** de la construction de proportions à partir de poids valides. Le laboratoire visuel peut employer un calcul différent.
 
@@ -486,7 +486,7 @@ Pas de softmax, de dérivées, de produit matriciel, de Q/K/V, de cache KV ni d'
 - Un petit laboratoire probabiliste avec des scores choisis à l'avance n'est pas un LLM entraîné.
 - Le comptage de paires de caractères n'est pas à lui seul un tokenizer complet.
 - La prédiction du token suivant n'est pas une théorie exhaustive de toutes les capacités de tous les modèles.
-- L'inférence d'un modèle ne garantit ni véracité, ni absence de biais, ni confidentialité des données saisies dans une application tierce.
+- L'inférence d'un modèle ne garantit ni l'exactitude des réponses ni l'absence de biais. La confidentialité des données dépend également de l'application et de ses conditions d'utilisation.
 - Une source citée n'est pas automatiquement une source fiable ; il faut en vérifier l'identité, la pertinence et le contenu.
 - Un exercice réussi en Python ou un QCM correct ne prouve pas à lui seul qu'un élève sait réutiliser la notion.
 - Les temps et les remédiations de ce module n'ont pas encore été validés par des essais réels en classe.
