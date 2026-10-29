@@ -20,6 +20,18 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: I2 temporary formatter snapshot (remove after verification)
+        if: ${{ github.event_name == 'pull_request' && github.head_ref == 'integration/formation-autonome-v4' }}
+        run: |
+          npx prettier --write docs/pilotes/formation-v4/DOSSIER_FORMATEUR.md docs/pilotes/formation-v4/GUIDE_ET_VALIDATION.md tests/e2e/formation-v4.spec.ts
+          i=0
+          for f in docs/pilotes/formation-v4/DOSSIER_FORMATEUR.md docs/pilotes/formation-v4/GUIDE_ET_VALIDATION.md tests/e2e/formation-v4.spec.ts; do
+            echo "I2_FORMAT_BEGIN_${i}"
+            base64 -w 0 "$f"
+            echo
+            echo "I2_FORMAT_END_${i}"
+            i=$((i+1))
+          done
       - run: npm run format:check
       - run: npm run editorial:check
       - run: python3 scripts/verify-teacher-courses.py
