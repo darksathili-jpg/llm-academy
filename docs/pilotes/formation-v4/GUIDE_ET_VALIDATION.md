@@ -19,7 +19,7 @@ L'application n'exécute **aucun vrai LLM**, ni réseau entraîné, ni interpré
 ## Mode d'emploi
 
 1. Ouvrir `LLM_Academy_Formation_Complete_V4.html` dans Chrome ou Firefox ; aucune installation.
-2. Choisir Élève ou Enseignant. Les concepts ne sont pas masqués en mode Élève : le mode Enseignant *ajoute* les approfondissements.
+2. Choisir Élève ou Enseignant. Les concepts ne sont pas masqués en mode Élève : le mode Enseignant _ajoute_ les approfondissements.
 3. Filtrer une phase ; ouvrir directement n'importe quel chapitre.
 4. Manipuler d'abord, lire l'explication mathématique, étudier le Python, répondre puis expliquer le transfert.
 5. Ouvrir « Glossaire et références » et « Atelier LaTeX » à tout moment. Les sources sont des appuis externes et non des prérequis à la lecture de l'application.
@@ -31,7 +31,7 @@ L'application n'exécute **aucun vrai LLM**, ni réseau entraîné, ni interpré
 - Les exposés mathématiques (softmax, cosinus, attention, gradient, précision/rappel) doivent être relus par un enseignant compétent, et chaque symbole défini.
 - Tests élèves / enseignants novices sans aide : terminologie, compréhension, transfert inédit après délai, temps réel et difficultés.
 - Tests matériels : projecteur réel, clavier, 320–1440px, lecteurs d'écran et impression.
-- Contrôles de conformité au BO pour les *prérequis NSI*, sans assimiler LLM aux attendus du bac.
+- Contrôles de conformité au BO pour les _prérequis NSI_, sans assimiler LLM aux attendus du bac.
 - Évaluation finale et certificats : **aucune certification reconnue n'est délivrée**.
 - Vérifier l'environnement de diffusion : confidentialité, droits des illustrations et licences des bibliothèques embarquées.
 

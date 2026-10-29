@@ -7,9 +7,7 @@ test('V4.1 : quinze chapitres accessibles', async ({ page }) => {
   await expect(page.locator('#chapterGrid .chapter')).toHaveCount(15);
   for (let i = 0; i < 15; i++) {
     await page.evaluate((n) => {
-      const button = document.querySelector<HTMLButtonElement>(
-        `#chapterGrid [data-open="${n}"]`,
-      );
+      const button = document.querySelector<HTMLButtonElement>(`#chapterGrid [data-open="${n}"]`);
       button?.click();
     }, i);
     await expect(page.locator('#screen-course')).toBeVisible();
