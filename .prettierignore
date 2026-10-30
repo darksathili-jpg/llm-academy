@@ -3,3 +3,4 @@ dist/
 test-results/
 playwright-report/
 package-lock.json
+public/pilotes/formation-v4/index.html
