@@ -1,4 +1,14 @@
 import { LabBoundary } from './LabBoundary';
+import type { ComponentType } from 'react';
+import type { ModuleId } from '../core/exercises';
+import { useState, lazy, Suspense } from 'react';
+import { modules, type Module } from '../content/modules';
+import { moduleScore } from '../core/progress';
+import { useProgress } from './ProgressProvider';
+import { Exercises } from './Exercises';
+import { ProbabilityLab } from './ProbabilityLab';
+import { BpeLab } from './BpeLab';
+
 const ModelLab = lazy(() => import('./science/ModelLab').then((m) => ({ default: m.ModelLab })));
 const TrainingLab = lazy(() =>
   import('./science/TrainingLab').then((m) => ({ default: m.TrainingLab })),
@@ -6,8 +16,6 @@ const TrainingLab = lazy(() =>
 const GenerationLab = lazy(() =>
   import('./science/GenerationLab').then((m) => ({ default: m.GenerationLab })),
 );
-import type { ComponentType } from 'react';
-import type { ModuleId } from '../core/exercises';
 const EmbeddingLab = lazy(() =>
   import('./science/EmbeddingLab').then((m) => ({ default: m.EmbeddingLab })),
 );
@@ -18,13 +26,7 @@ const AttentionLab = lazy(() =>
 const TransformerLab = lazy(() =>
   import('./science/TransformerLab').then((m) => ({ default: m.TransformerLab })),
 );
-import { useState, lazy, Suspense } from 'react';
-import { modules, type Module } from '../content/modules';
-import { moduleScore } from '../core/progress';
-import { useProgress } from './ProgressProvider';
-import { Exercises } from './Exercises';
-import { ProbabilityLab } from './ProbabilityLab';
-import { BpeLab } from './BpeLab';
+
 const laboratories: Record<ModuleId, ComponentType> = {
   '01': ProbabilityLab,
   '02': BpeLab,
