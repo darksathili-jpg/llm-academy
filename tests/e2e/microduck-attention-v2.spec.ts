@@ -1,0 +1,30 @@
+import { expect, test } from '@playwright/test';
+const url='pilotes/microduck-attention-v2/index.html';
+test('V2 : sprites réels, hypothèse puis masque correct',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(url);
+ await expect(page.locator('#assetError')).toBeHidden();
+ await expect(page.locator('#stage img.sprite')).toHaveCount(1);
+ const loaded=await page.locator('#stage img.sprite').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth===256);
+ expect(loaded).toBe(true);
+ await expect(page.locator('#show')).toBeDisabled();
+ await page.locator('[data-guess="3"]').click();
+ await page.locator('#show').click();
+ await expect(page.locator('#verify')).toBeVisible();
+ await expect(page.locator('#matrix td.allow')).toHaveCount(21);
+ await expect(page.locator('#matrix td.deny')).toHaveCount(15);
+ expect(errors).toEqual([]);
+});
+test('V2 : déplacement un seul Microduck et transfert argumenté',async({page})=>{
+ await page.goto(url);
+ await page.locator('[data-guess="3"]').click();
+ await page.locator('#show').click();
+ await page.locator('#next').click();
+ await expect(page.locator('#moving')).toContainText('position 3');
+ await expect(page.locator('#stage img.sprite')).toHaveCount(1);
+ await page.locator('#toTransfer').click();
+ await page.locator('#number').fill('7');
+ await page.locator('#reason').fill('Indices 0 à 6 : futur 7 à 9 interdit.');
+ await page.locator('#check').click();
+ await expect(page.locator('#transferFeedback')).toContainText('Évaluation humaine nécessaire');
+});
