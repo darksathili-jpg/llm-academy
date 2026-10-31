@@ -13,15 +13,27 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-TEXT = ("""le chat regarde la lune.
-le chien regarde le jardin.
-la pluie tombe sur la ville.
-le soleil brille sur la ville.
-la lune éclaire le jardin.
-le chat dort dans la maison.
-le chien joue dans le jardin.
-le vent souffle dans la ville.
-""" * 50)
+TRAIN_SENTENCES = [
+    "le chat regarde la lune.", "le chien regarde le jardin.",
+    "la pluie tombe sur la ville.", "le soleil brille sur la ville.",
+    "la lune éclaire le jardin.", "le chat dort dans la maison.",
+    "le chien joue dans le jardin.", "le vent souffle dans la ville.",
+]
+VAL_SENTENCES = [
+    "le chat joue dans le jardin.", "le chien dort dans la maison.",
+    "le vent souffle sur la ville.", "la lune brille sur le jardin.",
+]
+
+def make_split_data(repeats=50):
+    """Séparation par phrases avant répétition : aucune phrase identique partagée."""
+    assert set(TRAIN_SENTENCES).isdisjoint(VAL_SENTENCES)
+    vocabulary = sorted(set("".join(TRAIN_SENTENCES + VAL_SENTENCES) + "\n"))
+    enc = {char: i for i, char in enumerate(vocabulary)}
+    dec = {i: char for char, i in enc.items()}
+    train_text = ("\n".join(TRAIN_SENTENCES) + "\n") * repeats
+    val_text = "\n".join(VAL_SENTENCES) + "\n"
+    return (torch.tensor([enc[x] for x in train_text], dtype=torch.long),
+            torch.tensor([enc[x] for x in val_text], dtype=torch.long), enc, dec)
 
 def make_data(text: str):
     chars = sorted(set(text))
@@ -131,7 +143,7 @@ def main():
     torch.set_num_threads(1)
     random.seed(args.seed)
     torch.manual_seed(args.seed)
-    train, val, enc, dec = make_data(TEXT)
+    train, val, enc, dec = make_split_data()
     model=MiniTransformer(len(enc))
     opt=torch.optim.AdamW(model.parameters(), lr=0.003)
     sampler=torch.Generator().manual_seed(args.seed + 1)
