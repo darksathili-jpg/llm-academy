@@ -19,7 +19,7 @@ test('évaluation graduée : pas de passage sans réponse, traces et six niveaux
 });
 test('enseignant : protocole explicite et réinitialisation',async({page})=>{
  await page.goto(url);await page.locator('#role').selectOption('enseignant');
- await expect(page.getByText('Pour un enseignant, demander en supplément')).toBeHidden();
+ await expect(page.locator('#teacherTask')).toContainText('deux conceptions initiales');
  await page.locator('#response').fill('Diagnostic de prérequis');await page.locator('#submit').click();
  await expect(page.locator('#progress')).toContainText('1 niveau(x)');
  await page.locator('#reset').click();
