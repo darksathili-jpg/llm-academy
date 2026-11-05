@@ -23,4 +23,4 @@ $('checkDot').onclick=()=>{if(close('dot',2)){$('dotFeedback').textContent='Corr
 $('checkCos').onclick=()=>{if(close('cos',1/Math.sqrt(2))){$('cosFeedback').textContent='Correct : 1/√2 ≈ 0,71. Ce nombre mesure l’alignement des directions.';$('go4').disabled=false}else $('cosFeedback').textContent='Le calcul attendu est 2/(2×√2)=1/√2 ≈ 0,71.'};
 $('go4').onclick=()=>show('transfer');
 $('checkTransfer').onclick=()=>{const ok=close('uv',5)&&close('uw',3);$('transferFeedback').textContent=(ok?'Distances correctes : UV = 5, UW = 3. ':'Distances attendues : UV = 5 et UW = 3. ')+($('justify').value.trim().length>=40?'La justification doit être examinée par un enseignant : elle n’est pas certifiée automatiquement.':'Explique le calcul et la différence entre identifiant et vecteur dans une réponse argumentée.')};
-</script></body></html>
+</script><div data-llm-calculator></div><script defer src="../shared/numworks-calculator.js"></script></body></html>
