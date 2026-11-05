@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 const url='pilotes/evaluation-attention-n0-n5/index.html';
 async function openEvaluation(page: import('@playwright/test').Page) {
- const response=await openEvaluation(page);
+ const response=await page.goto(url);
  expect(response?.status(), 'La page doit être disponible dans dist. Exécuter npm run build avant Playwright.').toBe(200);
  await expect(page.locator('#level'), 'Page N0–N5 absente : dist obsolète. Exécuter npm run build.').toBeVisible();
 }
