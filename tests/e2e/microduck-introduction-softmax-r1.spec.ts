@@ -29,7 +29,9 @@ test('softmax : hypothèse avant révélation, distribution et changement de tem
  const vals2=await page.locator('#bars output').allTextContents();
  expect(vals2).toEqual(['0,506','0,307','0,186']);
  await expect(page.locator('#sum')).toContainText('1,000000000000');
- await expect(page.locator('.duck img')).toHaveCount(1);
+ await expect(page.locator('#part1 .duck img')).toHaveCount(1);
+ await expect(page.locator('#part4 .duck img')).toHaveCount(1);
+ await expect(page.locator('.duck img')).toHaveCount(2);
  expect(errors).toEqual([]);
 });
 test('softmax : réponses numériques fausses ne débloquent pas le défi ; NumWorks optionnelle',async({page})=>{
