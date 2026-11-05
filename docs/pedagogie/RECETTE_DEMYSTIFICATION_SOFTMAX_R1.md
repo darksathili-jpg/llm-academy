@@ -16,11 +16,11 @@ N2 : modifier T dans [0,5 ; 3] et distinguer concentration / aplatissement des p
 
 N3 : calculer pA pour (2,1,0) et T=1, puis justifier l'invariance des poids quand on ajoute la même constante aux trois scores.
 
-N4 : problème inédit (2,0,-1) à T=2 avec les trois probabilités numériques et une justification, Microduck présent comme compagnon sans fournir la méthode.
+N4-A : problème inédit (2,0,-1) à T=2 avec les trois probabilités numériques et une justification, Microduck présent comme compagnon sans fournir la méthode.\n\nN4-B : **problème inverse distinct** : pour les scores (2,0), retrouver T > 0 tel que pA≈0,80 et justifier le résultat. Oracle : T = 2/ln(4) ≈ 1,442695. Le passage au défi critique requiert les deux résultats numériques et leurs justifications rédigées, qui restent soumises à correction humaine.
 
-N5 : discerner le débordement numérique possible sur les scores (1000,999,998), proposer une softmax stable et un test Python.
+N5 : discerner le débordement numérique possible sur les scores (1000,999,998), proposer une softmax stable et un test Python. **Mode enseignant** : fournir en outre deux diagnostics d'erreurs distinctes, une remédiation active et une question nouvelle avec critères de correction. Une longueur minimale ne prouve pas la qualité de ces réponses.
 
-Les tâches N4 et N5 n'automatisent que certains contrôles ou l'accès à la grille ; **elles ne certifient pas les explications libres**. Pas de qualification officielle sans un second transfert inédit, correction humaine et étude différée.
+Les tâches N4 et N5 n'automatisent que certains contrôles ou l'accès à la grille ; **elles ne certifient pas les explications libres**. Deux problèmes N4 différents sont désormais présents. Pas de qualification officielle sans correction humaine, deuxième N5 contradictoire et étude différée.
 
 ## Valeurs de référence indépendantes
 
@@ -43,4 +43,4 @@ npx playwright test "microduck-introduction-softmax-r1" --reporter=list
 
 URL en développement : `http://localhost:5173/llm-academy/pilotes/microduck-introduction-softmax-r1/index.html`.
 
-**Statut : réalisé sur branche ; résultats Playwright non communiqués et maîtrise réelle non vérifiée.** Aucune fusion `main`, aucune publication officielle.
+**Statut : travaux R2 réalisés sur branche ; dernier résultat utilisateur avant R2 : 3/4 tests réussis (une assertion d'images trop stricte, corrigée depuis). La réussite de la nouvelle suite Playwright n'a pas été vérifiée ; maîtrise réelle non mesurée.** Aucune fusion `main`, aucune publication officielle.
