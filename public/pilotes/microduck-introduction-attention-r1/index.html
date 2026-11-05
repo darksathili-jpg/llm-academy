@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LLM Academy · Avant Q/K/V : comprendre l’attention</title>
+<style>
+:root{font:16px/1.55 system-ui,sans-serif;color:#163143;background:#edf5f8}*{box-sizing:border-box}
+body{margin:0}main{max-width:1000px;margin:auto;padding:24px 18px 72px}h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.1}
+h2{font-size:1.45rem;line-height:1.3}.panel{border:1px solid #b0c9d2;border-radius:16px;background:white;padding:22px;margin:18px 0}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;font-weight:800;color:#176966}.muted{color:#456372}.explain{border-left:4px solid #1d7c78;padding:12px 16px;background:#e6f4f2}.feedback{border-left:4px solid #b37c1d;padding:12px 16px;background:#f8f0dc;margin:12px 0}
+.steps{display:flex;flex-wrap:wrap;gap:8px}.step{background:#dfecef;border-radius:99px;padding:6px 12px}.step.active{color:#fff;background:#136d69}
+button{font:inherit;background:#136d69;color:white;border:0;border-radius:8px;padding:11px 15px;cursor:pointer;margin:4px}button.secondary{background:#3b586a}button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #f0ae37;outline-offset:3px}
+input,textarea{font:inherit;border:1px solid #648394;border-radius:8px;padding:9px}textarea{width:100%}label{font-weight:650}
+.hidden{display:none!important}.tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:18px 0}.tile{border:2px solid #a5bfca;border-radius:10px;text-align:center;min-height:130px;padding:7px;position:relative}.tile.allowed{background:#e1f3e9}.tile.forbidden{background:#f5e2e1}.tile.current{border-color:#0d826b}.tile b{display:block;font-size:1.2rem}.tile small{display:block}.tile img{width:70px;height:70px;object-fit:contain;display:block;margin:auto}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{border:1px solid #acc6cc;border-radius:10px;padding:14px}.line{height:14px;background:#d8e6ed;border-radius:5px;overflow:hidden}.fill{height:100%;background:#268a79}
+.range{width:100%;margin:12px 0}.math{font-variant-numeric:tabular-nums;background:#edf4f5;padding:12px;border-radius:8px}
+details{margin:14px 0}summary{cursor:pointer;font-weight:750}.error{color:#823026}.small{font-size:.9rem}
+@media(max-width:670px){.panel{padding:14px}.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.cards{grid-template-columns:1fr}}
+@media(prefers-color-scheme:dark){:root{color:#ecf6f9;background:#122434}.panel{background:#20394a;border-color:#577589}.muted{color:#c6dce5}.explain{background:#254b49}.feedback{background:#403827}.step{background:#345467}.step.active{background:#128675}.tile.allowed{background:#255044}.tile.forbidden{background:#533637}.card{border-color:#5c7a88}.math{background:#294558}.line{background:#3c5865}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style></head><body><main>
+<p class="eyebrow">LLM ACADEMY · PRÉREQUIS CONCEPTUEL AVANT Q/K/V</p>
+<h1>À quoi sert l’attention dans un Transformer ?</h1>
+<p>Objectif : comprendre le <strong>problème résolu</strong> par l’attention et la différence entre <strong>position accessible</strong>, <strong>poids</strong> et <strong>information combinée</strong>. Aucun calcul Q/K/V n’est demandé avant ces distinctions.</p>
+<div class="steps" aria-label="Étapes"><span id="tab1" class="step active">1. Besoin</span><span id="tab2" class="step">2. Accès</span><span id="tab3" class="step">3. Poids</span><span id="tab4" class="step">4. Transfert</span></div>
+<section id="part1" class="panel">
+<h2>1. Pourquoi ne pas regarder une seule position ?</h2>
+<p>Considère un modèle qui traite la séquence de caractères <strong>« ababa »</strong>. Pour produire une représentation utile de la position d’indice 3 (le deuxième « b »), il peut être nécessaire de tenir compte d’autres caractères du contexte.</p>
+<p>Le mécanisme d’<strong>auto-attention</strong> permet à chaque position de construire une nouvelle représentation en <strong>combinant des informations issues de plusieurs positions</strong>. Les informations ne sont pas toutes nécessairement pondérées de la même façon.</p>
+<div class="explain"><strong>Attention à l’analogie :</strong> le modèle ne « regarde » pas comme un humain et ne choisit pas consciemment des mots importants. Dans notre Mini-Transformer, les positions correspondent à des <strong>caractères</strong>. Les poids sont calculés à partir de vecteurs appris.</div>
+<p><strong>Avant de continuer :</strong> quelle affirmation décrit le mieux le rôle de l’auto-attention ?</p>
+<button data-intuition="look">Elle combine des informations de plusieurs positions</button>
+<button data-intuition="copy">Elle recopie obligatoirement un seul caractère</button>
+<button data-intuition="human">Elle comprend consciemment le sens du texte</button>
+<p id="intuitionFeedback" class="feedback" aria-live="polite">Choisis une hypothèse, puis explique pourquoi.</p>
+<label for="why">Ma justification</label><textarea id="why" rows="3" placeholder="J’explique avec mes mots le problème que résout le mécanisme…"></textarea>
+<p><button id="go2" disabled>Étape suivante : quelles positions ?</button></p></section>
+<section id="part2" class="panel hidden">
+<h2>2. Accessible ne veut pas dire important</h2>
+<p>Nous utilisons ici la position <strong>2</strong> de « ababa ». Dans un modèle autorégressif à masque causal, les positions 0, 1 et 2 sont accessibles ; les positions 3 et 4 sont interdites car elles sont dans le futur.</p>
+<div class="tiles" id="tiles" aria-label="Positions de la séquence"></div>
+<p>Microduck représente seulement <strong>l’indice de la position qui consulte</strong>, et non un calcul neuronal ou une interprétation humaine.</p>
+<p>Si les positions 0, 1 et 2 sont autorisées, les poids d’attention doivent-ils être identiques ?</p>
+<button data-access="equal">Oui, toujours identiques</button><button data-access="different">Non, ils peuvent être différents</button>
+<p id="accessFeedback" class="feedback" aria-live="polite">Réponds avant de voir les poids.</p>
+<button id="go3" disabled>Observer une combinaison pondérée</button>
+</section>
+<section id="part3" class="panel hidden">
+<h2>3. Deux valeurs et des poids qui varient</h2>
+<p>Pour isoler le mécanisme, nous utilisons <strong>deux valeurs numériques choisies pour cet exercice</strong>, et non les sorties du Mini-Transformer. Le contexte accessible apporte les valeurs 2 et 8. Nous allons les combiner avec deux poids non négatifs dont la somme vaut 1.</p>
+<div class="cards"><div class="card"><strong>Valeur A = 2</strong><div class="line"><div id="barA" class="fill"></div></div><p>Poids A : <output id="weightA">25 %</output></p></div><div class="card"><strong>Valeur B = 8</strong><div class="line"><div id="barB" class="fill"></div></div><p>Poids B : <output id="weightB">75 %</output></p></div></div>
+<label for="slider">Modifier le poids de A (celui de B est son complément)</label>
+<input class="range" id="slider" type="range" min="0" max="100" value="25" step="5">
+<p id="formula" class="math" aria-live="polite"></p>
+<p>Si le poids de A augmente, le résultat se rapproche-t-il de 2 ou de 8 ?</p>
+<button data-weight="two">De 2</button><button data-weight="eight">De 8</button>
+<p id="weightFeedback" class="feedback" aria-live="polite">Formule ton hypothèse.</p>
+<div class="explain"><strong>Ce que l’on vient de comprendre :</strong> l’attention utilise des poids pour effectuer une combinaison de valeurs. Dans le véritable mécanisme Q/K/V, ces valeurs sont des <strong>vecteurs V</strong>, pas simplement des nombres. Les poids sont calculés avec Q, K, le masque causal et la softmax ; l’élève découvrira ces calculs ensuite.</div>
+<button id="go4" disabled>Vérifier ma compréhension sans Microduck</button>
+</section>
+<section id="part4" class="panel hidden">
+<h2>4. Expliquer seul sur un nouveau cas</h2>
+<p>Une séquence contient <strong>7 caractères</strong>. À l’indice <strong>4</strong>, une tête d’attention donne aux positions accessibles les poids (0,10 ; 0,15 ; 0,25 ; 0,30 ; 0,20). Les positions futures sont interdites.</p>
+<p>Les cinq valeurs simplifiées de l’exercice sont (1 ; 3 ; 5 ; 7 ; 9).</p>
+<label for="count">Combien de positions sont accessibles ?</label> <input id="count" type="number" min="0" max="7" step="1">
+<p><label for="output">Quelle est la combinaison pondérée ?</label> <input id="output" type="number" step="0.01"></p>
+<p><label for="explanation">Explique pourquoi les positions 5 et 6 ne contribuent pas et pourquoi les poids ne sont pas obligatoirement égaux.</label></p>
+<textarea id="explanation" rows="4" placeholder="Justification sans Microduck…"></textarea>
+<p><button id="check">Vérifier les valeurs numériques</button></p>
+<p id="transferFeedback" class="feedback" aria-live="polite">Une justification écrite reste à évaluer. Le résultat numérique ne suffit pas.</p>
+<div id="nextLinks" class="hidden"><p><strong>Pour approfondir :</strong> les nombres ne sont qu’une introduction. Le niveau suivant calcule réellement les poids Q/K/V, puis les compare aux poids exportés du Mini-Transformer.</p><p><a href="../microduck-qkv-r1/index.html">Passer à la mission Q/K/V</a> · <a href="../microduck-attention-reelle-r1/index.html">Observer les poids réels exportés par PyTorch</a> · <a href="../evaluation-attention-n0-n5/index.html">Évaluation progressive N0 à N5</a></p></div>
+</section>
+<section class="panel"><details><summary>Pour l’enseignant — objectifs et limites de la démystification</summary><p><strong>Pré-requis :</strong> indices de chaînes, lecture de nombres et notion élémentaire de moyenne pondérée. Le produit scalaire et la fonction exponentielle ne sont pas encore supposés connus.</p><p><strong>Distinctions à faire verbaliser :</strong> autorisation par le masque ≠ poids ; poids de la tête ≠ probabilité du prochain caractère ; illustration par nombres ≠ vecteurs de valeurs appris ; poids élevé ≠ explication causale fiable de la prédiction.</p><p><strong>Remédiation :</strong> si un apprenant dit « Microduck choisit la bonne lettre », rappeler que Microduck est un repère graphique d’indice et demander quelle opération mathématique produit réellement la sortie. Une tâche de transfert sans aide doit confirmer la compréhension.</p><p><strong>Prochain niveau :</strong> Q, K, V, produit scalaire, division par √d, masque avant softmax, somme pondérée des V. Un enseignant doit être capable d’expliquer les limites de l’analogie, de construire un contre-exemple et d’identifier une confusion.</p></details></section>
+</main><script>
+'use strict';const $=id=>document.getElementById(id);let intuition='',access='',choice='';
+function unlock(id,target){$(id).disabled=false;$(target).textContent='Hypothèse enregistrée. Compare maintenant ton explication aux faits scientifiques.'}
+function openPart(n){$('part'+n).classList.remove('hidden');$('tab'+n).classList.add('active');$('part'+n).scrollIntoView({block:'start'})}
+document.querySelectorAll('[data-intuition]').forEach(b=>b.onclick=()=>{intuition=b.dataset.intuition;$('intuitionFeedback').textContent=intuition==='look'?'Hypothèse correcte : plusieurs positions peuvent contribuer à une représentation.':'Hypothèse à revoir : le mécanisme combine des représentations de plusieurs positions, sans conscience ni recopie obligatoire.';if($('why').value.trim().length>=20)$('go2').disabled=false});
+$('why').oninput=()=>{$('go2').disabled=!(intuition&&$('why').value.trim().length>=20)};
+$('go2').onclick=()=>openPart(2);
+const tiles=$('tiles');for(let i=0;i<5;i++){const box=document.createElement('div');box.className='tile '+(i===2?'current':i<2?'allowed':'forbidden');const label=document.createElement('b');label.textContent='ababa'[i];const idx=document.createElement('small');idx.textContent='indice '+i;box.append(label);if(i===2){const img=document.createElement('img');img.src='../microduck-attention-v2/right_idle.png';img.alt='Microduck, repère de la position 2';img.onerror=()=>{img.remove();box.append(document.createTextNode('Microduck : image indisponible'))};box.append(img)}else{const gap=document.createElement('div');gap.style.height='70px';box.append(gap)}const state=document.createElement('small');state.textContent=i<=2?'Accessible':'Futur interdit';box.append(idx,state);tiles.append(box)}
+document.querySelectorAll('[data-access]').forEach(b=>b.onclick=()=>{access=b.dataset.access;$('accessFeedback').textContent=access==='different'?'Exact : la permission ne force pas des poids identiques.':'Non : plusieurs positions peuvent être autorisées tout en recevant des poids différents.';$('go3').disabled=false});
+$('go3').onclick=()=>{openPart(3);updateSlider()};
+function updateSlider(){const a=Number($('slider').value)/100,b=1-a;const v=a*2+b*8;$('weightA').textContent=Math.round(100*a)+' %';$('weightB').textContent=Math.round(100*b)+' %';$('barA').style.width=(a*100)+'%';$('barB').style.width=(b*100)+'%';$('formula').textContent='Résultat = '+a.toFixed(2)+' × 2 + '+b.toFixed(2)+' × 8 = '+v.toFixed(2).replace('.',',')+'.'}
+$('slider').oninput=updateSlider;
+document.querySelectorAll('[data-weight]').forEach(b=>b.onclick=()=>{choice=b.dataset.weight;$('weightFeedback').textContent=choice==='two'?'Correct : plus A reçoit de poids, plus la combinaison se rapproche de 2.':'Vérifie : augmenter le poids de A rapproche le résultat de 2, pas de 8.';$('go4').disabled=false});
+$('go4').onclick=()=>openPart(4);
+$('check').onclick=()=>{const c=$('count').value.trim(),v=$('output').value.trim(),reason=$('explanation').value.trim();const ok=c!==''&&Number(c)===5&&v!==''&&Math.abs(Number(v)-5.5)<.011; $('transferFeedback').textContent=(ok?'Résultats numériques corrects : 5 positions et 5,50. ':'Vérifie : 5 positions, combinaison = 0,10×1 + 0,15×3 + 0,25×5 + 0,30×7 + 0,20×9 = 5,70. ')+(reason.length<35?'Rédige une justification de plusieurs phrases.':'La justification doit être évaluée par un enseignant : le navigateur ne certifie pas la maîtrise.');$('nextLinks').classList.remove('hidden')};
+</script></body></html>
