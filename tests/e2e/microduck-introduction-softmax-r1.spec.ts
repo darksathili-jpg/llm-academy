@@ -69,3 +69,24 @@ test('oracles : softmax stable et invariance par translation',async()=>{
  for(let i=0;i<3;i++)expect(a[i]).toBeCloseTo(b[i],12);
  expect(c.reduce((x,y)=>x+y,0)).toBeCloseTo(1,12);
 });
+
+test('les conceptions erronées déclenchent une remédiation avant progression',async({page})=>{
+ await open(page);
+ await page.locator('[data-guess="yes"]').click();
+ await page.locator('#why').fill('J’avais cru que le score valait directement une probabilité.');
+ await expect(page.locator('#go2')).toBeDisabled();
+ await page.locator('[data-guess="no"]').click();
+ await expect(page.locator('#go2')).toBeEnabled();
+ await page.locator('#go2').click();
+ await page.locator('[data-predict="sharp"]').click();
+ await expect(page.locator('#go3')).toBeDisabled();
+ await page.locator('[data-predict="flat"]').click();
+ await expect(page.locator('#go3')).toBeEnabled();
+ await page.locator('#go3').click();
+ await page.locator('#pA').fill('0.665');
+ await page.locator('#checkPA').click();
+ await page.locator('[data-shift="different"]').click();
+ await expect(page.locator('#go4')).toBeDisabled();
+ await page.locator('[data-shift="same"]').click();
+ await expect(page.locator('#go4')).toBeEnabled();
+});
