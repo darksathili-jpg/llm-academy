@@ -3,6 +3,7 @@ const url='pilotes/microduck-qkv-r1/index.html';
 test('QKV : hypothèse, produits scalaires, softmax et somme pondérée',async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(url);
+ await expect(page.getByRole('link',{name:/pourquoi l’attention existe/})).toHaveAttribute('href','../microduck-introduction-attention-r1/index.html');
  await expect(page.locator('#step2')).toBeHidden();
  await expect(page.locator('#unlock')).toBeDisabled();
  await page.locator('[data-mask="current"]').click();await page.locator('#unlock').click();
