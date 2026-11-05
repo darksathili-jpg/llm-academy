@@ -16,6 +16,10 @@ test('évaluation graduée : pas de passage sans réponse, traces et six niveaux
   if(i===1)await page.locator('#hint').click();
   await page.locator('#submit').click();
   await expect(page.locator('#rubric')).toBeVisible();
+  await expect(page.locator('#next')).toBeDisabled();
+  for(const id of ['rConcept','rEvidence','rHelp']) await page.locator('#'+id).check();
+  await page.locator('#reviewNote').fill('Je dois vérifier ma justification indépendamment.');
+  await expect(page.locator('#next')).toBeEnabled();
   if(i<5)await page.locator('#next').click();
  }
  await expect(page.locator('#progress')).toContainText('6 niveau(x)');
@@ -31,4 +35,21 @@ test('enseignant : protocole explicite et réinitialisation',async({page})=>{
  await page.locator('#reset').click();
  await expect(page.locator('#progress')).toContainText('0 niveau(x)');
  await expect(page.locator('#level')).toContainText('N0');
+});
+
+test('transfert difficile : pas d’aide avant première tentative',async({page})=>{
+ await openEvaluation(page);
+ for(let i=0;i<4;i++){
+  await page.locator('#response').fill('Explication préparatoire argumentée');
+  await page.locator('#submit').click();
+  for(const id of ['rConcept','rEvidence','rHelp'])await page.locator('#'+id).check();
+  await page.locator('#reviewNote').fill('Mon argument doit être vérifié indépendamment.');
+  await page.locator('#next').click();
+ }
+ await expect(page.locator('#level')).toContainText('N4');
+ await page.locator('#hint').click();
+ await expect(page.locator('#feedback')).toContainText('première tentative');
+ await page.locator('#response').fill('Je commence par identifier les positions et les vecteurs.');
+ await page.locator('#hint').click();
+ await expect(page.locator('#feedback')).toContainText('identifie les données');
 });
