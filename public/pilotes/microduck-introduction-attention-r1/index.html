@@ -21,7 +21,7 @@ details{margin:14px 0}summary{cursor:pointer;font-weight:750}.error{color:#82302
 <p class="eyebrow">LLM ACADEMY · PRÉREQUIS CONCEPTUEL AVANT Q/K/V</p>
 <h1>À quoi sert l’attention dans un Transformer ?</h1>
 <p>Objectif : comprendre le <strong>problème résolu</strong> par l’attention et la différence entre <strong>position accessible</strong>, <strong>poids</strong> et <strong>information combinée</strong>. Aucun calcul Q/K/V n’est demandé avant ces distinctions.</p>
-<div class="steps" aria-label="Étapes"><span id="tab1" class="step active">1. Besoin</span><span id="tab2" class="step">2. Accès</span><span id="tab3" class="step">3. Poids</span><span id="tab4" class="step">4. Transfert</span></div>
+<div class="steps" aria-label="Étapes"><span id="tab1" class="step active">1. Besoin</span><span id="tab2" class="step">2. Accès</span><span id="tab3" class="step">3. Poids</span><span id="tab4" class="step">4. Autonomie</span></div>
 <section id="part1" class="panel">
 <h2>1. Pourquoi ne pas regarder une seule position ?</h2>
 <p>Considère un modèle qui traite la séquence de caractères <strong>« ababa »</strong>. Pour produire une représentation utile de la position d’indice 3 (le deuxième « b »), il peut être nécessaire de tenir compte d’autres caractères du contexte.</p>
@@ -55,10 +55,10 @@ details{margin:14px 0}summary{cursor:pointer;font-weight:750}.error{color:#82302
 <button data-weight="two">De 2</button><button data-weight="eight">De 8</button>
 <p id="weightFeedback" class="feedback" aria-live="polite">Formule ton hypothèse.</p>
 <div class="explain"><strong>Ce que l’on vient de comprendre :</strong> l’attention utilise des poids pour effectuer une combinaison de valeurs. Dans le véritable mécanisme Q/K/V, ces valeurs sont des <strong>vecteurs V</strong>, pas simplement des nombres. Les poids sont calculés avec Q, K, le masque causal et la softmax ; l’élève découvrira ces calculs ensuite.</div>
-<button id="go4" disabled>Vérifier ma compréhension sans Microduck</button>
+<button id="go4" disabled>Relever le défi d’autonomie</button>
 </section>
 <section id="part4" class="panel hidden">
-<h2>4. Défi d’autonomie — expliquer un nouveau cas</h2>
+<h2>4. Défi d’autonomie — expliquer un nouveau cas</h2><p class="muted"><img src="../microduck-attention-v2/right_idle.png" alt="Microduck, compagnon de progression" width="54" height="54" style="vertical-align:middle;object-fit:contain"> Microduck t’accompagne toujours, mais ne donne plus d’indice sur la méthode.</p>
 <p>Une séquence contient <strong>7 caractères</strong>. À l’indice <strong>4</strong>, une tête d’attention donne aux positions accessibles les poids (0,10 ; 0,15 ; 0,25 ; 0,30 ; 0,20). Les positions futures sont interdites.</p>
 <p>Les cinq valeurs simplifiées de l’exercice sont (1 ; 3 ; 5 ; 7 ; 9).</p>
 <label for="count">Combien de positions sont accessibles ?</label> <input id="count" type="number" min="0" max="7" step="1">
