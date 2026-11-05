@@ -54,6 +54,10 @@ test('softmax : réponses numériques fausses ne débloquent pas le défi ; NumW
  await expect(page.locator('#go5')).toBeDisabled();
  await page.locator('#transferReason').fill('Je divise les scores par T, je calcule leurs exponentielles, puis je normalise. Une probabilité ne garantit pas la vérité.');
  await page.locator('#checkTransfer').click();
+ await expect(page.locator('#go5')).toBeDisabled();
+ await page.locator('#inverseTemp').fill('1.44');
+ await page.locator('#inverseReason').fill('Je réapplique la softmax aux scores 2 et 0 avec cette température pour vérifier que la probabilité de la première issue vaut environ 0,80.');
+ await page.locator('#checkInverse').click();
  await expect(page.locator('#go5')).toBeEnabled();
  await page.locator('#go5').click();
  await expect(page.locator('#part5')).toBeVisible();
@@ -91,4 +95,40 @@ test('les conceptions erronées déclenchent une remédiation avant progression'
  await expect(page.locator('#go4')).toBeDisabled();
  await page.locator('[data-shift="same"]').click();
  await expect(page.locator('#go4')).toBeEnabled();
+});
+
+test('softmax : second transfert inverse exige température et justification',async({page})=>{
+ await open(page);await unlockCalculate(page);
+ await page.locator('#pA').fill('0.665');await page.locator('#checkPA').click();
+ await page.locator('[data-shift="same"]').click();await page.locator('#go4').click();
+ for(const [id,value] of [['transferD','0.629'],['transferE','0.231'],['transferF','0.140']])await page.locator('#'+id).fill(value);
+ await page.locator('#transferReason').fill('Je transforme les scores par T=2, puis je normalise les exponentielles. Les scores ne mesurent pas la vérité.');
+ await page.locator('#checkTransfer').click();
+ await expect(page.locator('#go5')).toBeDisabled();
+ await page.locator('#inverseTemp').fill('2');
+ await page.locator('#inverseReason').fill('Je vérifie la première probabilité en calculant les exponentielles stabilisées et leur somme.');
+ await page.locator('#checkInverse').click();
+ await expect(page.locator('#go5')).toBeDisabled();
+ await page.locator('#inverseTemp').fill('1.44');
+ await page.locator('#checkInverse').click();
+ await expect(page.locator('#go5')).toBeEnabled();
+});
+test('enseignant : la grille critique exige également une remédiation documentée',async({page})=>{
+ await open(page);await unlockCalculate(page);
+ await page.locator('#pA').fill('0.665');await page.locator('#checkPA').click();
+ await page.locator('[data-shift="same"]').click();await page.locator('#go4').click();
+ for(const [id,value] of [['transferD','0.629'],['transferE','0.231'],['transferF','0.140']])await page.locator('#'+id).fill(value);
+ await page.locator('#transferReason').fill('Je divise les scores par 2, je calcule la softmax stable et je vérifie les sommes et les limites.');
+ await page.locator('#checkTransfer').click();
+ await page.locator('#inverseTemp').fill('1.44');
+ await page.locator('#inverseReason').fill('Je retrouve une température en exigeant une probabilité voisine de 0,80 pour le score 2.');
+ await page.locator('#checkInverse').click();await page.locator('#go5').click();
+ await page.locator('#profile').selectOption('enseignant');
+ await expect(page.locator('#teacherPrompt')).toBeVisible();
+ await page.locator('#criticalReason').fill('Le calcul direct de exp(1000) peut déborder. Pour tester la stabilité, je soustrais le maximum puis je compare des distributions.');
+ await page.locator('#showRubric').click();
+ await expect(page.locator('#rubric')).toBeHidden();
+ await page.locator('#teacherReason').fill('Erreur 1 : score confondu avec probabilité. Erreur 2 : instabilité numérique ignorée. Remédiation : faire calculer deux distributions avec et sans décalage, comparer et expliquer. Nouvelle évaluation : vérifier un cas extrême avec tolérance.');
+ await page.locator('#showRubric').click();
+ await expect(page.locator('#rubric')).toBeVisible();
 });
