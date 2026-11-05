@@ -47,9 +47,24 @@ test('transfert difficile : pas d’aide avant première tentative',async({page}
   await page.locator('#next').click();
  }
  await expect(page.locator('#level')).toContainText('N4');
+ await expect(page.locator('#prompt')).toContainText('Deuxième situation indépendante');
  await page.locator('#hint').click();
  await expect(page.locator('#feedback')).toContainText('première tentative');
  await page.locator('#response').fill('Je commence par identifier les positions et les vecteurs.');
  await page.locator('#hint').click();
  await expect(page.locator('#feedback')).toContainText('identifie les données');
+});
+
+test('N5 teste aussi les limites de généralisation indépendamment du masque',async({page})=>{
+ await openEvaluation(page);
+ for(let i=0;i<5;i++){
+   await page.locator('#response').fill('Tentative de raisonnement argumenté et hypothèses');
+   await page.locator('#submit').click();
+   for(const id of ['rConcept','rEvidence','rHelp'])await page.locator('#'+id).check();
+   await page.locator('#reviewNote').fill('La réponse doit être confrontée aux preuves.');
+   await page.locator('#next').click();
+ }
+ await expect(page.locator('#level')).toContainText('N5');
+ await expect(page.locator('#prompt')).toContainText('Deuxième critique distincte');
+ await expect(page.locator('#prompt')).toContainText('généralisation');
 });
