@@ -46,3 +46,8 @@ npx playwright test "microduck-introduction-softmax-r1|microduck-softmax-evidenc
 ## Décision
 
 **Feu vert pour une expérimentation pédagogique encadrée sur la branche pilote**, après succès de G-T, sans changement de `main`. **Pas de fusion ni publication officielle** tant que G-P, G-E et G-D n'ont pas été franchies. Pour une publication officielle, ajouter le contrôle d'accessibilité et le traitement des données.
+
+
+## Addendum — confirmation utilisateur de la suite R2
+
+Le 6 novembre 2026, l'utilisateur indique : « tout est ok pour les tests », en réponse à la commande de recette visant les 8 tests Playwright des fichiers `microduck-introduction-softmax-r1.spec.ts` et `microduck-softmax-evidence-r2.spec.ts`. **G-T : RÉUSSITE DÉCLARÉE PAR L'UTILISATEUR (8 tests visés)**. La sortie détaillée Playwright et ses artefacts ne sont pas joints ; ne pas prétendre les avoir audités indépendamment. La recette manuelle 8/8 était déjà déclarée OK. **Décision : autoriser une expérimentation pédagogique encadrée G-P/G-E ; aucune qualification pédagogique complète, aucun déploiement officiel ni fusion `main`.**
