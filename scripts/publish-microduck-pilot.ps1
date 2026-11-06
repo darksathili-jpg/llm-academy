@@ -46,10 +46,33 @@ foreach($cmd in @('git','gh')) {
 }
 & gh auth status
 if($LASTEXITCODE -ne 0){throw 'Connexion GitHub manquante : exécuter gh auth login.'}
+# En Windows PowerShell 5.1, la sortie stderr d'une commande native peut
+# produire une erreur terminante avec ErrorActionPreference = Stop.
+# Pour les sondes attendues (404 GitHub), exécuter silencieusement en processus.
+function Invoke-CommandStatus {
+  param([string]$Command, [string[]]$Arguments)
+  $exe = (Get-Command $Command -ErrorAction Stop).Source
+  $psi = New-Object System.Diagnostics.ProcessStartInfo
+  $psi.FileName = $exe
+  $psi.Arguments = (($Arguments | ForEach-Object { '"' + ($_.Replace('"','\\"')) + '"' }) -join ' ')
+  $psi.UseShellExecute = $false
+  $psi.RedirectStandardOutput = $true
+  $psi.RedirectStandardError = $true
+  $psi.CreateNoWindow = $true
+  $process = New-Object System.Diagnostics.Process
+  $process.StartInfo = $psi
+  [void]$process.Start()
+  $stdout = $process.StandardOutput.ReadToEnd()
+  $stderr = $process.StandardError.ReadToEnd()
+  $process.WaitForExit()
+  if($process.ExitCode -ne 0 -and $stderr){
+    Write-Verbose ($stderr.Trim())
+  }
+  return $process.ExitCode
+}
 $repoFull = "$Owner/$RepoName"
-$repoExists = $true
-& gh repo view $repoFull --json name *> $null
-if($LASTEXITCODE -ne 0){$repoExists = $false}
+# L'absence du dépôt avant sa création est normale et ne doit PAS arrêter le script.
+$repoExists = (Invoke-CommandStatus -Command 'gh' -Arguments @('api',"repos/$repoFull",'--silent')) -eq 0
 if(-not $repoExists) {
   Write-Host "Création du dépôt public séparé $repoFull ..."
   & gh repo create $repoFull --public --description 'Préproduction pédagogique LLM Academy Microduck — élèves et enseignants'
@@ -58,8 +81,10 @@ if(-not $repoExists) {
 $tmp = Join-Path ([IO.Path]::GetTempPath()) ('microduck-pilote-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $tmp -Force | Out-Null
 try {
-  & git clone "https://github.com/$repoFull.git" $tmp
-  if($LASTEXITCODE -ne 0){throw 'Impossible de cloner le dépôt de préproduction.'}
+  Write-Host 'Clonage du dépôt de préproduction...'
+  if((Invoke-CommandStatus -Command 'git' -Arguments @('clone',"https://github.com/$repoFull.git",$tmp)) -ne 0){
+    throw 'Impossible de cloner le dépôt de préproduction.'
+  }
   $marker = Join-Path $tmp '.microduck-pilot-managed'
   $other = @(Get-ChildItem -LiteralPath $tmp -Force | Where-Object {$_.Name -ne '.git'})
   if($repoExists -and $other.Count -gt 0 -and -not (Test-Path -LiteralPath $marker)){
@@ -70,26 +95,29 @@ try {
   Get-ChildItem -LiteralPath $pilots -Force | Copy-Item -Destination $tmp -Recurse -Force
   Set-Content -LiteralPath (Join-Path $tmp '.nojekyll') -Value '' -Encoding ascii
   Set-Content -LiteralPath $marker -Value 'Dépôt de préproduction géré depuis llm-academy/public/pilotes' -Encoding utf8
-  & git -C $tmp checkout -B main
-  if($LASTEXITCODE -ne 0){throw 'Impossible de sélectionner la branche main du dépôt pilote.'}
+  if((Invoke-CommandStatus -Command 'git' -Arguments @('-C',$tmp,'checkout','-B','main')) -ne 0){
+    throw 'Impossible de sélectionner la branche main du dépôt pilote.'
+  }
   & git -C $tmp add -A
   & git -C $tmp diff --cached --quiet
   if($LASTEXITCODE -eq 1){
     & git -C $tmp commit -m 'deploy: publier les pilotes pédagogiques Microduck'
     if($LASTEXITCODE -ne 0){throw 'Commit impossible : configurer user.name et user.email pour Git.'}
-    & git -C $tmp push -u origin main
-    if($LASTEXITCODE -ne 0){throw 'Push impossible : vérifier les droits GitHub.'}
+    Write-Host 'Envoi vers la branche main du dépôt pilote...'
+    if((Invoke-CommandStatus -Command 'git' -Arguments @('-C',$tmp,'push','-u','origin','main')) -ne 0){
+      throw 'Push impossible : vérifier les droits GitHub.'
+    }
   } elseif($LASTEXITCODE -ne 0) {
     throw 'Erreur dans le contrôle de la copie Git.'
   } else {
     Write-Host 'Contenu identique : aucune modification à pousser.'
   }
   # Paramétrer GitHub Pages seulement s'il n'est pas déjà configuré.
-  & gh api "repos/$repoFull/pages" --silent 2>$null
-  if($LASTEXITCODE -ne 0){
+  $pagesReady = (Invoke-CommandStatus -Command 'gh' -Arguments @('api',"repos/$repoFull/pages",'--silent')) -eq 0
+  if(-not $pagesReady){
     Write-Host 'Activation de GitHub Pages depuis main, racine du dépôt...'
-    & gh api --method POST "repos/$repoFull/pages" -f 'source[branch]=main' -f 'source[path]=/'
-    if($LASTEXITCODE -ne 0){
+    $activated = (Invoke-CommandStatus -Command 'gh' -Arguments @('api','--method','POST',"repos/$repoFull/pages",'-f','source[branch]=main','-f','source[path]=/')) -eq 0
+    if(-not $activated){
       Write-Warning "Publication poussée, mais activation Pages manuelle requise : https://github.com/$repoFull/settings/pages (Deploy from a branch, main, /(root))."
     }
   }
