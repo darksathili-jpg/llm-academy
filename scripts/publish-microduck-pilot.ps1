@@ -75,8 +75,10 @@ $repoFull = "$Owner/$RepoName"
 $repoExists = (Invoke-CommandStatus -Command 'gh' -Arguments @('api',"repos/$repoFull",'--silent')) -eq 0
 if(-not $repoExists) {
   Write-Host "Création du dépôt public séparé $repoFull ..."
-  & gh repo create $repoFull --public --description 'Préproduction pédagogique LLM Academy Microduck — élèves et enseignants'
-  if($LASTEXITCODE -ne 0){throw 'Création du dépôt impossible. Vérifier les droits sur le compte GitHub.'}
+  if((Invoke-CommandStatus -Command 'gh' -Arguments @('repo','create',$repoFull,'--public','--description','Préproduction pédagogique LLM Academy Microduck - élèves et enseignants')) -ne 0){
+    throw 'Création du dépôt impossible. Vérifier les droits sur le compte GitHub.'
+  }
+  Write-Host "Dépôt créé : https://github.com/$repoFull"
 }
 $tmp = Join-Path ([IO.Path]::GetTempPath()) ('microduck-pilote-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $tmp -Force | Out-Null
