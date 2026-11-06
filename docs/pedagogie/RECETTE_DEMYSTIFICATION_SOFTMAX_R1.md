@@ -16,7 +16,9 @@ N2 : modifier T dans [0,5 ; 3] et distinguer concentration / aplatissement des p
 
 N3 : calculer pA pour (2,1,0) et T=1, puis justifier l'invariance des poids quand on ajoute la même constante aux trois scores.
 
-N4-A : problème inédit (2,0,-1) à T=2 avec les trois probabilités numériques et une justification, Microduck présent comme compagnon sans fournir la méthode.\n\nN4-B : **problème inverse distinct** : pour les scores (2,0), retrouver T > 0 tel que pA≈0,80 et justifier le résultat. Oracle : T = 2/ln(4) ≈ 1,442695. Le passage au défi critique requiert les deux résultats numériques et leurs justifications rédigées, qui restent soumises à correction humaine.
+N4-A : problème inédit (2,0,-1) à T=2 avec les trois probabilités numériques et une justification, Microduck présent comme compagnon sans fournir la méthode.
+
+N4-B : **problème inverse distinct** : pour les scores (2,0), retrouver T > 0 tel que pA≈0,80 et justifier le résultat. Oracle : T = 2/ln(4) ≈ 1,442695. Le passage au défi critique requiert les deux résultats numériques et leurs justifications rédigées, qui restent soumises à correction humaine.
 
 N5 : discerner le débordement numérique possible sur les scores (1000,999,998), proposer une softmax stable et un test Python. **Mode enseignant** : fournir en outre deux diagnostics d'erreurs distinctes, une remédiation active et une question nouvelle avec critères de correction. Une longueur minimale ne prouve pas la qualité de ces réponses.
 
