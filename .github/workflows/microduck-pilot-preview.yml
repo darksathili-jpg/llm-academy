@@ -1,0 +1,49 @@
+name: Microduck pilot — build and downloadable preview
+on:
+  push:
+    branches:
+      - feature/academy-pedagogie-microduck-r1
+    paths:
+      - 'public/pilotes/**'
+      - 'tests/e2e/microduck-pilot-hub.spec.ts'
+      - 'tests/e2e/microduck-introduction-softmax-r1.spec.ts'
+      - 'tests/e2e/microduck-softmax-evidence-r2.spec.ts'
+      - 'src/**'
+      - 'scripts/**'
+      - 'package*.json'
+      - 'vite.config.ts'
+      - 'playwright.config.ts'
+      - '.github/workflows/microduck-pilot-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Vérifier le portail et la recette Softmax
+        run: npx playwright test "microduck-pilot-hub|microduck-introduction-softmax-r1|microduck-softmax-evidence-r2" --reporter=list
+      - name: Vérifier les fichiers de l'archive
+        shell: bash
+        run: |
+          test -s dist/index.html
+          test -s dist/pilotes/index.html
+          test -s dist/pilotes/microduck-introduction-softmax-r1/index.html
+          test -s dist/pilotes/microduck-introduction-embeddings-r1/index.html
+          test -s dist/pilotes/attention-reelle-instructions/index.html
+      - name: Fournir le site compilé téléchargeable (sans déployer sur Pages)
+        uses: actions/upload-artifact@v4
+        with:
+          name: llm-academy-microduck-pilote
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
