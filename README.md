@@ -19,6 +19,25 @@ npm run dev
 
 L'accès direct à la **Softmax R2** est http://localhost:5173/llm-academy/pilotes/microduck-introduction-softmax-r1/index.html (le dossier conserve le suffixe `r1` pour éviter de casser les liens et tests existants).
 
+### Publier un vrai site HTTPS pour les élèves (préproduction indépendante)
+
+Le paquet GitHub Actions ci-dessous **ne crée pas de site web**. Pour obtenir une URL que des élèves peuvent ouvrir depuis n'importe quel poste, un site GitHub Pages **dans un dépôt séparé** est nécessaire. La branche de travail contient le script Windows [`scripts/publish-microduck-pilot.ps1`](scripts/publish-microduck-pilot.ps1), qui publie uniquement les pages statiques de `public/pilotes/`, sans modifier le dépôt `llm-academy` ni son GitHub Pages public.
+
+**Pré-requis :** Git, GitHub CLI (`gh`), puis `gh auth login` si nécessaire. Le script a besoin de droits permettant de créer le dépôt public `darksathili-jpg/llm-academy-pilote` et d'activer GitHub Pages. Il vérifie le contenu obligatoire et refuse de remplacer un dépôt existant non géré par lui.
+
+```powershell
+git switch feature/academy-pedagogie-microduck-r1
+git pull --ff-only
+gh auth status
+.\scripts\publish-microduck-pilot.ps1
+```
+
+Si PowerShell interdit l'exécution du script, utiliser dans **ce seul terminal** : `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`, après lecture de son contenu. Il ne faut pas désactiver les protections globalement.
+
+Après le push et l'activation de Pages, vérifier dans [Settings > Pages du dépôt pilote](https://github.com/darksathili-jpg/llm-academy-pilote/settings/pages) et ouvrir l'**URL attendue (à vérifier, non encore publiée)** : `https://darksathili-jpg.github.io/llm-academy-pilote/`.
+
+Pour une mise à jour après corrections, réexécuter le même script. Les élèves accèdent aux activités sans GitHub, sans `npm` ni installation locale. **Attention :** GitHub Pages est public ; éviter toute donnée personnelle ou trace pédagogique publiée dans ce dépôt. L'activité conserve l'export JSON en local, mais ne l'envoie pas au serveur.
+
 ### Télécharger le paquet compilé depuis GitHub Actions
 
 Le workflow [**Microduck pilot — build and downloadable preview**](.github/workflows/microduck-pilot-preview.yml) génère un artefact `llm-academy-microduck-pilote` depuis cette branche et **ne déploie pas sur GitHub Pages**. Dans l'onglet [Actions du dépôt](https://github.com/darksathili-jpg/llm-academy/actions/workflows/microduck-pilot-preview.yml), ouvrir la dernière exécution **réussie** de ce workflow, puis télécharger l'artefact en bas de la page. Une connexion GitHub peut être nécessaire pour le téléchargement ; l'archive n'est pas une URL de démonstration hébergée.
