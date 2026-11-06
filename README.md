@@ -1,5 +1,37 @@
 # LLM / Atelier des machines à langage
 
+## Pilote pédagogique Microduck — accès complet sur cette branche
+
+**Branche de recette :** `feature/academy-pedagogie-microduck-r1`. Cette version **n'est pas fusionnée dans `main`**, et son paquet n'est pas le site public officiel.
+
+**[Ouvrir le portail des missions dans le dépôt](public/pilotes/index.html)** (source HTML ; GitHub affiche le code, et non l'activité exécutée). Le portail rassemble les activités disponibles dans l'ordre conseillé : tokenisation, embeddings, softmax, masque causal, démystification de l'attention, Q/K/V et évaluation N0–N5.
+
+### Voir l'interface fonctionner en local
+
+```powershell
+git switch feature/academy-pedagogie-microduck-r1
+git pull --ff-only
+npm ci
+npm run dev
+```
+
+**Ouvrir ensuite :** http://localhost:5173/llm-academy/pilotes/index.html
+
+L'accès direct à la **Softmax R2** est http://localhost:5173/llm-academy/pilotes/microduck-introduction-softmax-r1/index.html (le dossier conserve le suffixe `r1` pour éviter de casser les liens et tests existants).
+
+### Télécharger le paquet compilé depuis GitHub Actions
+
+Le workflow [**Microduck pilot — build and downloadable preview**](.github/workflows/microduck-pilot-preview.yml) génère un artefact `llm-academy-microduck-pilote` depuis cette branche et **ne déploie pas sur GitHub Pages**. Dans l'onglet [Actions du dépôt](https://github.com/darksathili-jpg/llm-academy/actions/workflows/microduck-pilot-preview.yml), ouvrir la dernière exécution **réussie** de ce workflow, puis télécharger l'artefact en bas de la page. Une connexion GitHub peut être nécessaire pour le téléchargement ; l'archive n'est pas une URL de démonstration hébergée.
+
+Le paquet `dist/` contient l'application compilée et les pilotes ; pour l'afficher correctement sous le préfixe `/llm-academy/`, le plus simple est de travailler depuis le dépôt après `npm run build`, puis `npm run preview` et ouvrir http://127.0.0.1:4173/llm-academy/pilotes/index.html. L'artefact sert à vérifier, conserver et transmettre la construction ; il ne doit pas être ouvert directement par double-clic dans l'Explorateur Windows.
+
+**Attention réelle PyTorch :** la page d'exploration issue d'un modèle entraîné est générée à la demande par `python experiments/mini_transformer/export_microduck_attention.py` ; elle ne figure pas dans le dépôt sous forme d'HTML prêt à publier. Le portail mène donc à une notice honnête et pas à une page manquante.
+
+**Qualification :** recette manuelle Softmax R2 8/8 rapportée et tests automatisés déclarés réussis par l'utilisateur. Le pilote global n'est pas encore qualifié pédagogiquement auprès de débutants ; voir la [grille de recette humaine Softmax R2](docs/pedagogie/GRILLE_RECETTE_HUMAINE_SOFTMAX_R2.md) et le [registre des quinze notions](docs/pedagogie/REGISTRE_QUALIFICATION_15_NOTIONS_R1.md).
+
+---
+
+
 Plateforme française pour voir, manipuler, programmer et expliquer les mécanismes des modèles de langage.
 
 Qualification pédagogique V4 sur `refonte/qualification-pedagogique-v4`, construite sur la V3. La branche n'est pas fusionnée dans `main`. Sa publication de démonstration se fait directement par GitHub Actions, sous réserve de la configuration de GitHub Pages.
