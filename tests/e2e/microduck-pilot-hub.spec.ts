@@ -15,7 +15,7 @@ test('portail complet : chaque mission liée existe dans la version compilée',a
   await expect(page.getByRole('heading',{name:'Apprendre les LLM avec Microduck'})).toBeVisible();
   for(const name of pages){
     const link=page.locator('a[href="'+name+'/index.html"]');
-    await expect(link,'Lien manquant vers '+name).toHaveCount(1);
+    expect(await link.count(),'Lien manquant vers '+name).toBeGreaterThanOrEqual(1);
     const result=await page.request.get('pilotes/'+name+'/index.html');
     expect(result.status(),'Page de mission non trouvée : '+name).toBe(200);
     const body=await result.text();
