@@ -1,0 +1,329 @@
+<section id="screen-generation" class="section" hidden>
+  <article class="article">
+    <div class="lesson-top">
+      <h1 id="v4-generation-title" tabindex="-1">Générer un texte, un token à la fois</h1>
+      <p>
+        Comment une réponse se construit-elle et pourquoi s’arrête-t-elle ? Suis chaque choix dans
+        un petit modèle de langage par comptage.
+      </p>
+    </div>
+    <div class="lesson-body">
+      <p>
+        Un <strong>token</strong> est une unité de texte. Ici, une règle sépare les mots et les
+        signes <code>.</code>, <code>!</code> et <code>?</code>. Chaque token distinct reçoit un
+        identifiant de type entier, dans l’ordre de sa première apparition.
+      </p>
+      <p>
+        Le modèle compte les paires de tokens consécutifs dans le <strong>corpus</strong>,
+        l’ensemble des phrases d’apprentissage. Il calcule une probabilité en divisant le compte
+        d’une suite par le total des suites du même contexte. Ici, seul le dernier token sert de
+        contexte.
+      </p>
+      <p>
+        Essaie avec « le chat » dans le corpus proposé. Sur trois occurrences de « chat », deux sont
+        suivies de « dort » et une de « joue ». Prédis les deux probabilités avant de lancer
+        l’expérience.
+      </p>
+      <form id="v4-generation-form" class="interaction">
+        <label for="v4-corpus">Corpus</label>
+        <textarea id="v4-corpus" rows="4" maxlength="2000" required>
+le chat dort. le chat dort. le chat joue. le chaton joue.</textarea>
+        <div class="v4-generation-settings">
+          <label
+            >Début du texte <input id="v4-prefix" value="le chat" maxlength="100" required
+          /></label>
+          <label
+            >Nombre maximal de nouveaux tokens
+            <input id="v4-budget" type="number" min="1" max="20" value="8" required
+          /></label>
+          <label
+            >Graine du tirage
+            <input id="v4-seed" type="number" min="0" max="4294967295" value="2026" required
+          /></label>
+        </div>
+        <div class="buttonrow">
+          <button class="secondary" type="submit">Recommencer avec ces valeurs</button>
+          <button class="primary" id="v4-step" type="button" disabled>Générer un token</button>
+        </div>
+        <p>
+          La graine fixe la suite des nombres utilisés pour les tirages. Reprends la même graine et
+          les mêmes réglages pour reproduire une trace.
+        </p>
+      </form>
+      <p id="v4-generation-status" role="status"></p>
+      <div class="figure">
+        <p><strong>Texte obtenu</strong> <span id="v4-generated-text"></span></p>
+        <p><strong>Texte découpé et identifiants</strong> <span id="v4-generated-ids"></span></p>
+        <details>
+          <summary>Vocabulaire appris et identifiants</summary>
+          <p id="v4-vocabulary"></p>
+        </details>
+        <h2>Trace de génération</h2>
+        <ol id="v4-generation-trace"></ol>
+      </div>
+      <p>
+        Compare les débuts « le chat » et « chat » avec la même graine. Puis essaie un budget de 1
+        et un début inconnu comme « dragon ». Relève la cause de chaque arrêt. La ponctuation sert
+        ici de règle d’arrêt. Un grand modèle de langage peut apprendre un marqueur de fin et
+        consulter un contexte plus long.
+      </p>
+      <button class="secondary" type="button" data-v4-open="tp" data-v4-target="v4-tp-generation">
+        Faire le travail pratique de génération
+      </button>
+    </div>
+  </article>
+</section>
+<section id="screen-tp" class="section" hidden>
+  <article class="article">
+    <div class="lesson-top">
+      <h1 id="v4-tp-title" tabindex="-1">
+        Travaux pratiques de numérique et sciences informatiques (NSI)
+      </h1>
+      <p>
+        Ouvre chaque fichier dans ton éditeur Python. Complète la fonction, exécute les assertions
+        fournies et ajoute tes propres cas de test. Remets ton fichier et ta justification.
+      </p>
+    </div>
+    <div class="lesson-body">
+      <section class="chapter-section" aria-labelledby="v4-tp-fusion">
+        <h2 id="v4-tp-fusion" tabindex="-1">Première · Fusionner deux unités</h2>
+        <p>
+          Une fusion remplace deux unités adjacentes par une seule. Avec la paire
+          <code>("a", "b")</code>, la liste <code>["z", "a", "b", "a"]</code> devient
+          <code>["z", "ab", "a"]</code>.
+        </p>
+        <ol>
+          <li>
+            Complète <code>fusionner(unites, gauche, droite)</code>. Parcours la liste de gauche à
+            droite. Une unité consommée par une fusion ne peut plus être utilisée. Conserve les
+            unités isolées et laisse la liste reçue intacte.
+          </li>
+          <li>
+            Ajoute une assertion pour une liste vide et une pour la paire
+            <code>("x", "x")</code> dans <code>["x", "x", "x"]</code>.
+          </li>
+          <li>Explique le résultat du second test et le rôle de l’indice lors d’une fusion.</li>
+        </ol>
+        <button class="secondary" type="button" data-v4-python="fusion">
+          Télécharger fusion.py
+        </button>
+      </section>
+      <section class="chapter-section" aria-labelledby="v4-tp-recherche">
+        <h2 id="v4-tp-recherche" tabindex="-1">Première · Retrouver des passages</h2>
+        <p>
+          Une recherche textuelle repère les passages qui contiennent une chaîne donnée. « rive »
+          apparaît dans « La rive est accessible » et dans « La rivière monte ».
+        </p>
+        <ol>
+          <li>
+            Complète <code>chercher(documents, requete)</code>. Les documents forment un
+            dictionnaire dont chaque clé est un identifiant. Ignore la casse et les espaces en
+            bordure de la requête. Renvoie une liste d’identifiants dans l’ordre du dictionnaire.
+            Une requête vide renvoie une liste vide.
+          </li>
+          <li>
+            Ajoute une assertion avec plusieurs passages correspondants et une autre avec une
+            requête composée uniquement d’espaces.
+          </li>
+          <li>
+            Donne un exemple où une correspondance est trouvée mais où le passage ne permet pas de
+            conclure.
+          </li>
+        </ol>
+        <button class="secondary" type="button" data-v4-python="recherche">
+          Télécharger recherche.py
+        </button>
+      </section>
+      <section class="chapter-section" aria-labelledby="v4-tp-generation">
+        <h2 id="v4-tp-generation" tabindex="-1">Terminale · Générer une suite par comptage</h2>
+        <p>
+          Les comptes <code>{"brille": {"ici": 2, "dehors": 1}}</code> donnent trois suites
+          observées après « brille ». La fonction fournie choisit la plus fréquente pour rendre les
+          tests reproductibles.
+        </p>
+        <ol>
+          <li>
+            Complète <code>generer(comptes, debut, limite)</code>. Copie la liste de départ et
+            ajoute au plus <code>limite</code> nouveaux tokens à l’aide de
+            <code>choisir_suite</code>. Après chaque ajout, prends le dernier token comme nouveau
+            contexte. Arrête-toi après un signe de fin ou en l’absence de suite.
+          </li>
+          <li>
+            Ajoute une assertion avec un budget de zéro et une autre avec un contexte inconnu.
+            Vérifie que la liste de départ reste intacte.
+          </li>
+          <li>
+            Calcule la probabilité empirique de « dehors » et explique pourquoi ce programme choisit
+            systématiquement « ici ». Compare avec le tirage de l’atelier.
+          </li>
+        </ol>
+        <button class="secondary" type="button" data-v4-python="generation">
+          Télécharger generation.py
+        </button>
+      </section>
+      <section class="chapter-section" aria-labelledby="v4-tp-synthese">
+        <h2 id="v4-tp-synthese">
+          Synthèse · Appliquer les trois mécanismes à des données nouvelles
+        </h2>
+        <p>
+          Sans reprendre les données des travaux pratiques, écris une trace pour chaque question.
+          Indique quelle règle produit chaque résultat.
+        </p>
+        <ol>
+          <li>
+            Fusionne la paire <code>("m", "n")</code> dans <code>["m", "m", "n", "m", "n"]</code>.
+            Annote les indices consommés.
+          </li>
+          <li>
+            Cherche « LAC » dans les documents A « Le lac déborde » et B « La glace fond ». Quels
+            passages sont ramenés ? Lequel permet d’affirmer que le lac déborde ? Cite le passage.
+          </li>
+          <li>
+            Après « neige », les comptes sont « tombe » 3 et « fond » 1. Après « tombe », seul « . »
+            a été observé. Donne la probabilité empirique des deux suites, puis la trace du choix du
+            maximum avec des budgets de 1 et de 2 nouveaux tokens.
+          </li>
+        </ol>
+      </section>
+    </div>
+  </article>
+</section>
+<section id="screen-teacher" class="section" hidden>
+  <article class="article">
+    <div class="lesson-top">
+      <h1 id="v4-teacher-title" tabindex="-1">Fiches de séance pour les enseignants</h1>
+      <p>
+        Les trois séances mobilisent des notions de programmation de numérique et sciences
+        informatiques (NSI). La tokenisation et les modèles de langage servent de situations
+        d’application.
+      </p>
+    </div>
+    <div class="lesson-body">
+      <section class="chapter-section">
+        <h2>Première · Parcourir une liste et fusionner deux unités</h2>
+        <p>
+          <strong>Capacité et prérequis.</strong> Construire une liste à partir d’un parcours par
+          indice. Connaître les listes, les chaînes, les fonctions et l’instruction conditionnelle
+          <code>if</code>.
+        </p>
+        <p>
+          <strong>Déroulé proposé, 55 min.</strong> 5 min de prédiction, 10 min de trace à la main,
+          25 min de programmation et tests, 10 min de confrontation des traces, 5 min de bilan.
+        </p>
+        <p>
+          <strong>Production et correction.</strong> Attendre le programme, deux assertions et une
+          trace. Une fusion fait avancer l’indice de deux. Ainsi <code>["x", "x", "x"]</code> donne
+          <code>["xx", "x"]</code>. La fonction renvoie une nouvelle liste.
+        </p>
+        <p>
+          <strong>Erreurs et aides.</strong> Si le dernier élément semble disparaître, faire tracer
+          l’indice et demander où vérifier l’existence du voisin. Si les fusions se recouvrent,
+          barrer les deux unités consommées et faire écrire le prochain indice.
+        </p>
+        <p>
+          <strong>Cas différé.</strong> Fusionner <code>("s", "s")</code> dans
+          <code>["s", "s", "s", "t", "s", "s"]</code>. Attendu <code>["ss", "s", "t", "ss"]</code>,
+          avec justification pour le troisième « s ».
+        </p>
+        <button class="secondary" type="button" data-v4-python="fusion-corrige">
+          Télécharger le corrigé Python de la fusion
+        </button>
+      </section>
+      <section class="chapter-section">
+        <h2>Première · Parcourir un dictionnaire et rechercher une chaîne</h2>
+        <p>
+          <strong>Capacité et prérequis.</strong> Parcourir les couples clé-valeur d’un dictionnaire
+          à l’aide d’une boucle bornée <code>for</code>. Connaître les chaînes, les listes et le
+          test d’appartenance avec <code>in</code>.
+        </p>
+        <p>
+          <strong>Déroulé proposé, 55 min.</strong> 5 min de prédiction, 10 min de recherche à la
+          main, 25 min de programmation et tests, 10 min de lecture contradictoire des sources, 5
+          min de bilan.
+        </p>
+        <p>
+          <strong>Production et correction.</strong> Attendre une liste d’identifiants, deux
+          assertions et un contre-exemple. La normalisation s’applique à la requête et aux
+          documents. « rive » apparaît dans « rivière » au sens du test retenu.
+        </p>
+        <p>
+          <strong>Erreurs et aides.</strong> Si une requête blanche sélectionne toutes les sources,
+          faire tester <code>"" in "lac"</code>, puis ajouter un retour anticipé. Si la recherche
+          renvoie les textes, annoter la différence entre clés et valeurs dans un dictionnaire à
+          deux entrées.
+        </p>
+        <p>
+          <strong>Cas différé.</strong> Chercher « PORT » dans A « Le portail ferme », B « Le port
+          ouvre » et C « La gare ouvre ». Attendu <code>["A", "B"]</code>. Seul B appuie
+          l’affirmation « Le port ouvre ».
+        </p>
+        <button class="secondary" type="button" data-v4-python="recherche-corrige">
+          Télécharger le corrigé Python de la recherche
+        </button>
+      </section>
+      <section class="chapter-section">
+        <h2>Terminale · Actualiser un contexte et justifier l’arrêt</h2>
+        <p>
+          <strong>Capacité et prérequis.</strong> Combiner dictionnaires imbriqués, décomposition en
+          fonctions et boucle bornée <code>for</code>. Savoir lire un rapport d’effectifs.
+        </p>
+        <p>
+          <strong>Déroulé proposé, 55 min.</strong> 5 min de prédiction, 10 min de trace dans
+          l’atelier, 25 min de programmation et tests, 10 min de comparaison entre tirage et choix
+          du maximum, 5 min de bilan.
+        </p>
+        <p>
+          <strong>Production et correction.</strong> Attendre une trace contexte → choix → ajout →
+          arrêt, le programme et deux tests. Avec « brille », la suite « dehors » a une probabilité
+          empirique de 1/3. La stratégie programmée sélectionne « ici », dont le compte est
+          supérieur.
+        </p>
+        <p>
+          <strong>Erreurs et aides.</strong> Si le même token se répète, faire souligner le dernier
+          token après chaque ajout. Si le texte de départ est compté dans le budget, entourer les
+          tokens ajoutés pendant la boucle et les compter séparément.
+        </p>
+        <p>
+          <strong>Cas différé.</strong> Après « monte », « haut » a un compte de 2 et « . » de 1.
+          Après « haut », seul « ! » est observé. Attendu avec un budget de 2
+          <code>["monte", "haut", "!"]</code> avec arrêt sur « ! ». Avec un budget de 1, l’arrêt
+          vient du quota.
+        </p>
+        <button class="secondary" type="button" data-v4-python="generation-corrige">
+          Télécharger le corrigé Python de la génération
+        </button>
+      </section>
+      <section class="chapter-section">
+        <h2>Corriger la synthèse</h2>
+        <ol>
+          <li>
+            <code>["m", "mn", "mn"]</code>. Les indices 1–2 et 3–4 sont consommés, en numérotant à
+            partir de zéro.
+          </li>
+          <li>
+            A et B contiennent la chaîne « lac » après conversion en minuscules. Seul A étaye
+            l’affirmation, par « Le lac déborde ».
+          </li>
+          <li>
+            Les probabilités empiriques valent 3/4 et 1/4. Budget 1, « neige tombe » avec arrêt à la
+            limite. Budget 2, « neige tombe. » avec arrêt sur le point.
+          </li>
+        </ol>
+        <p>
+          Évaluer trois aspects dans chaque production, le résultat, la règle utilisée et la
+          justification sur les données nouvelles.
+        </p>
+      </section>
+      <section class="chapter-section">
+        <h2>Essai en classe à documenter</h2>
+        <p>
+          Commencer par la fusion en Première. Recueillir une prédiction individuelle avant la
+          manipulation, puis le programme et une justification. À la séance suivante, proposer le
+          cas différé sans fiche. Relever anonymement le nombre d’élèves qui obtiennent la bonne
+          sortie, justifient l’avancée de l’indice et traitent correctement un cas limite. Noter les
+          aides réellement utilisées et ajuster la consigne à partir des erreurs observées.
+        </p>
+      </section>
+    </div>
+  </article>
+</section>

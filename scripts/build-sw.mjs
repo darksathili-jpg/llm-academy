@@ -1,6 +1,7 @@
 ﻿import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
+import { buildFormationV4 } from './build-formation-v4.mjs';
 const root = 'dist';
 async function list(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -12,6 +13,7 @@ async function list(dir) {
   }
   return files;
 }
+await buildFormationV4(join(root, 'pilotes/formation-v4/index.html'));
 const files = await list(root);
 const hash = createHash('sha256');
 hash.update(await readFile(new URL(import.meta.url)));

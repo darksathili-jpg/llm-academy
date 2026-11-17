@@ -1,0 +1,35 @@
+#v4-corpus,
+#v4-prefix {
+  width: 100%;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+}
+#v4-corpus {
+  display: block;
+  margin: 0.4rem 0 1rem;
+  resize: vertical;
+}
+.v4-generation-settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 1rem;
+}
+.v4-generation-settings input {
+  display: block;
+  max-width: 100%;
+  margin-top: 0.4rem;
+}
+#v4-generation-trace,
+#v4-vocabulary,
+#v4-generated-ids {
+  overflow-wrap: anywhere;
+}
+@media print {
+  [data-v4-python] {
+    display: none;
+  }
+}
